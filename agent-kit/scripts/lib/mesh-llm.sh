@@ -57,12 +57,18 @@ EOF
 
 # Classify availability from probe facts (pure).
 # Args: binary_present yes|no, endpoint_ok yes|no, gpu_eligible yes|no
-# Prints one of: server | client-only | unavailable
+# Roles (mutually exclusive priority):
+#   server         — local bin + LLM GPU + /v1 up (this host is serving)
+#   server-capable — local bin + LLM GPU, endpoint not up yet
+#   client-peer    — /v1 up but this host cannot serve (no bin and/or no GPU)
+#   client-only    — bin present, no GPU, no endpoint (API client tooling only)
+#   unavailable    — no bin, no endpoint
 classify_mesh_role() {
   local bin="${1:-no}"
   local ep="${2:-no}"
   local gpu="${3:-no}"
-  if [[ "$ep" == "yes" ]]; then
+
+  if [[ "$bin" == "yes" && "$gpu" == "yes" && "$ep" == "yes" ]]; then
     echo "server"
     return 0
   fi
@@ -70,34 +76,50 @@ classify_mesh_role() {
     echo "server-capable"
     return 0
   fi
-  if [[ "$bin" == "yes" ]]; then
-    echo "client-only"
+  # Endpoint reachable but this host is not a full-setup server (remote mesh or GPU-less)
+  if [[ "$ep" == "yes" ]]; then
+    echo "client-peer"
     return 0
   fi
-  # No binary: still a mesh *client* via any OpenAI client if a peer serves /v1
-  if [[ "$ep" == "yes" ]]; then
-    echo "server"
+  if [[ "$bin" == "yes" ]]; then
+    echo "client-only"
     return 0
   fi
   echo "unavailable"
 }
 
-# True if role can consume OpenAI-compatible mesh API (local or remote).
-mesh_can_consume() {
-  local role="${1:-unavailable}"
-  case "$role" in
-    server|server-capable|client-only) return 0 ;;
-    *) return 1 ;;
-  esac
+# True if this host may start `mesh-llm serve` (binary + LLM GPU gate).
+# Does NOT use endpoint alone — a remote peer's /v1 must not imply we can serve.
+# Args: binary_present yes|no, gpu_eligible yes|no
+# (Optional 3rd arg role is ignored for capability — kept for call-site compat.)
+mesh_can_serve() {
+  local bin="${1:-no}"
+  local gpu="${2:-no}"
+  # Back-compat: if called with a single role string (old API), map carefully.
+  if [[ $# -eq 1 ]]; then
+    case "$bin" in
+      server|server-capable) return 0 ;;
+      client-peer|client-only|unavailable|yes|no) return 1 ;;
+      *) return 1 ;;
+    esac
+  fi
+  [[ "$bin" == "yes" && "$gpu" == "yes" ]]
 }
 
-# True if role may start mesh-llm serve on this host (needs binary + GPU gate).
-mesh_can_serve() {
-  local role="${1:-unavailable}"
-  case "$role" in
-    server|server-capable) return 0 ;;
-    *) return 1 ;;
-  esac
+# True if consumers can use OpenAI-compatible mesh (local or remote).
+# Args: endpoint_ok yes|no, binary_present yes|no
+# Or single role string (back-compat).
+mesh_can_consume() {
+  local a="${1:-no}"
+  local b="${2:-}"
+  if [[ -z "$b" ]]; then
+    case "$a" in
+      server|server-capable|client-peer|client-only) return 0 ;;
+      *) return 1 ;;
+    esac
+  fi
+  # Live facts: endpoint up OR mesh-llm binary (client mode / future serve)
+  [[ "$a" == "yes" || "$b" == "yes" ]]
 }
 
 # Parse OpenAI /v1/models JSON → model ids (one per line). Pure.
@@ -185,6 +207,11 @@ collect_mesh_facts() {
   fi
 
   role="$(classify_mesh_role "$bin" "$ep" "$gpu")"
+  # Capabilities from facts, not from collapsing role alone:
+  # serve = binary + GPU; consume = endpoint up OR binary present.
+  local can_serve="no" can_consume="no"
+  if mesh_can_serve "$bin" "$gpu"; then can_serve="yes"; fi
+  if mesh_can_consume "$ep" "$bin"; then can_consume="yes"; fi
 
   cat <<EOF
 mesh_llm_binary=${bin}
@@ -193,8 +220,8 @@ mesh_llm_role=${role}
 mesh_llm_base_url=${base}
 mesh_llm_port=${port}
 mesh_llm_models_live_count=${nmodels}
-mesh_llm_can_serve=$(mesh_can_serve "$role" && echo yes || echo no)
-mesh_llm_can_consume=$(mesh_can_consume "$role" && echo yes || echo no)
+mesh_llm_can_serve=${can_serve}
+mesh_llm_can_consume=${can_consume}
 mesh_llm_primary=yes
 EOF
 }

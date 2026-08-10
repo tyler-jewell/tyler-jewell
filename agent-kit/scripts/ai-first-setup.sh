@@ -136,7 +136,7 @@ if [[ "$MESH_EP" == "yes" ]]; then
 else
   warn "endpoint not reachable at ${MESH_BASE} (start with: mesh-llm serve --auto)"
 fi
-ok "mesh role=${MESH_ROLE} (server|server-capable|client-only|unavailable)"
+ok "mesh role=${MESH_ROLE} (server|server-capable|client-peer|client-only|unavailable)"
 echo "--- consumer env contract ---"
 mesh_env_export_lines "$MESH_BASE" | sed 's/^/  /'
 

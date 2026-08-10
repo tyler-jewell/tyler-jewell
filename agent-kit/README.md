@@ -16,10 +16,13 @@ Orchestrates **agent-owned** setup after the Nix/privileged floor.
 
 | Role | When | Action |
 |------|------|--------|
-| **server** | endpoint answering `/v1/models` | Prefer `OPENAI_BASE_URL=http://127.0.0.1:9337/v1` |
-| **server-capable** | `mesh-llm` on PATH + LLM GPU, not serving yet | `mesh-llm setup` then `mesh-llm serve --auto` (upstream) |
-| **client-only** | binary or network peer, no local serve | Point tools at mesh base URL; `mesh-llm client --auto` |
-| **unavailable** | no binary, no endpoint | Install via [upstream](https://github.com/Mesh-LLM/mesh-llm); still document client contract |
+| **server** | `mesh-llm` + LLM GPU + `/v1` up on this host | Prefer `OPENAI_BASE_URL=http://127.0.0.1:9337/v1` |
+| **server-capable** | `mesh-llm` + LLM GPU, endpoint not up yet | `mesh-llm setup` then `mesh-llm serve --auto` (upstream) |
+| **client-peer** | `/v1` up but this host cannot serve (no bin and/or no GPU) | Point tools at mesh base URL — do **not** treat as local serve |
+| **client-only** | binary, no GPU, no endpoint | `mesh-llm client --auto` / set base URL when a peer exists |
+| **unavailable** | no binary, no endpoint | Install via [upstream](https://github.com/Mesh-LLM/mesh-llm); client contract still documented |
+
+`mesh_llm_can_serve` is **binary ∧ LLM GPU** only — a remote peer’s open `/v1` never implies this host can serve.
 
 Never hardcode model ids — list them live: `curl -s "$OPENAI_BASE_URL/models"`.
 
