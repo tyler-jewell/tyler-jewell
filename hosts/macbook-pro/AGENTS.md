@@ -23,7 +23,7 @@ Do **not** commit machine-private absolute paths into public docs. Use `$HOME`, 
 3. Declarative user env: `$HOME/system` (Nix + home-manager). Day-0 root (human once):  
    `sudo "$HOME/system/scripts/privileged-setup.sh"`
 4. GitHub-oriented clones: `$HOME/github-repos/` (or your preferred clone root).
-5. Public Herdr UI: link **herdr-kit** (`herdr plugin link` under umbrella).
+5. Herdr methodology: **herdr-kit** (`herdr plugin link` under umbrella).
 6. **Mesh-LLM** is the primary local/mesh LLM resource: OpenAI-compatible `OPENAI_BASE_URL` (default `http://127.0.0.1:9337/v1`). Install/serve via upstream `mesh-llm`; discover models live at `/v1/models` — never freeze a model list.
 7. AI-first stack after Nix: `agent-kit/scripts/agent-status.sh` (AXI) and `ai-first-setup.sh --dry-run`
 8. All agent-invokable CLIs/skills must follow [AXI](https://axi.md) (umbrella rule 11).
