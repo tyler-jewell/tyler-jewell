@@ -4,7 +4,7 @@ Canon: [https://axi.md](https://axi.md).
 Scoring: each of 10 principles = **met** | **na** | **fail**.  
 **10/10** = all *applicable* principles **met** (na excluded from denominator).
 
-Last audited: 2026-08-09 · Owner surfaces under `tyler-jewell` + `herdr-web` agents use.
+Last audited: 2026-08-09 (post skeptic re-score) · Owner surfaces under `tyler-jewell` + `herdr-web` agents use.
 
 ## Legend (principles P1–P10)
 
@@ -32,14 +32,15 @@ Last audited: 2026-08-09 · Owner surfaces under `tyler-jewell` + `herdr-web` ag
 | `scripts/pipe-agents.sh` | CLI | **ours** | met | met | na | na | met | met | na | met | met | met | **7/7** | Emits charter; `--help` + help[] |
 | `scripts/hierarchy-order.sh` | CLI | **ours** | met | met | na | met | met | met | na | met | met | met | **8/8** | Outer→inner paths; empty fails loud |
 | `agent-kit/skills/ai-first-host-setup/SKILL.md` | skill | **ours** | met | met | na | met | na | met | met | met | met | met | **8/8** | Ambient guidance; points to AXI status |
-| `herdr-web/scripts/serve.sh` + bridge | tool | **ours** | met | met | met | met | met | met | na | met | met | met | **9/9** | Agents use pure herdr argv; JSON minimal |
+| `herdr-web/scripts/serve.sh` | CLI | **ours** | met | met | na | met | met | met | na | met | met | met | **8/8** | --help, exit 2 unknown flags, structured errors; starts only after parse |
+| `herdr-web/scripts/bridge.py` | API | **ours** | met | met | na | na | met | met | na | na | na | na | **4/4** | Validates argv only; pure herdr subprocess; not a full CLI |
 | `herdr-web` UI (browser) | UI | **ours** | na | na | na | met | met | na | na | met | met | na | **4/4** | Human UI; agent path is CLI/bridge |
 | `herdr` CLI | upstream | third-party | — | — | — | — | — | — | — | — | — | — | **prefer AXI/wrap** | Do not claim 10/10; use live status via our adapters |
 | `mesh-llm` CLI | upstream | third-party | — | — | — | — | — | — | — | — | — | — | **prefer AXI/wrap** | Our mesh helpers + `/v1/models` live |
 | `gh` CLI | upstream | third-party | — | — | — | — | — | — | — | — | — | — | **prefer [gh-axi](https://github.com/kunchenguid/gh-axi)** | Sacred: use AXI catalog when available |
 | `home-manager` / `nix` | upstream | third-party | — | — | — | — | — | — | — | — | — | — | **prefer wrap** | bootstrap thin glue only |
-| `system/scripts/bootstrap.sh` | CLI | **ours** | met | met | na | met | met | met | na | met | met | met | **8/8** | Agent-safe check/apply; no interactive install |
-| `system/scripts/privileged-setup.sh` | CLI | **ours** | na | na | na | met | met | met | na | na | met | met | **5/5** | Human-root only; agents print path and stop |
+| `system/scripts/bootstrap.sh` | CLI | **ours** | met | met | na | met | met | met | na | met | met | met | **8/8** | --help fixed (no $(parse_args) capture); exit 2 unknown opts |
+| `system/scripts/privileged-setup.sh` | CLI | **ours** | na | na | na | met | met | met | na | na | met | met | **5/5** | --help before root check; human-root only for real work |
 | Host `AGENTS.md` templates | docs | **ours** | na | na | na | na | na | na | met | na | met | na | **2/2** | Point at sacred AXI + agent-status |
 
 ### Owned agent-facing CLIs claimed 10/10
@@ -52,6 +53,7 @@ Last audited: 2026-08-09 · Owner surfaces under `tyler-jewell` + `herdr-web` ag
 - Added sacred rule 11 + scorecard  
 - Added `axi-out.sh` + `agent-status.sh`  
 - pipe-agents / hierarchy-order / discover-hosts / ai-first-setup: `--help`, exit 2, help[], aggregates, empty states  
+- **Skeptic re-score fixes:** `bootstrap.sh --help` (no longer captures usage via `$(parse_args)`); `serve.sh` unknown flags exit 2 + `--help`; `privileged-setup.sh --help` before root check  
 
 ### Explicit non-claims
 
