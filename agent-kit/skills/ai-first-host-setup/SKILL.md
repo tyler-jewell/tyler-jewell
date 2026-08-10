@@ -38,4 +38,4 @@ Setting up or verifying a Tyler Jewell machine (MBP, Studio, GPU Linux) after th
 
 ## Sacred
 
-Umbrella `tyler-jewell/AGENTS.md` rules 9–11 (live discovery, Mesh-LLM, **[AXI](https://axi.md)** for every agent CLI/skill/MCP) and dual-write law. Scorecard: `docs/axi/axi-scorecard.md`.
+Umbrella `tyler-jewell/AGENTS.md` rules 9–13 (live discovery, Mesh-LLM, **[AXI](https://axi.md)**, herdr-web isolatable product, **[LSP](../../docs/lsp/README.md) rule 13** — use language servers when coding, no suppressions) and dual-write law. Scorecard: `docs/axi/axi-scorecard.md`.

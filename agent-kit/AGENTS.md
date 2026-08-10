@@ -10,8 +10,9 @@ Grok and other agents use this kit **after** the privileged Nix floor exists.
 
 ## Sacred constraints
 
-- Umbrella `../AGENTS.md` (esp. dual-write, no secrets, **live CLI discovery**, **AXI rule 11** — https://axi.md).
+- Umbrella `../AGENTS.md` (esp. dual-write, no secrets, **live CLI discovery**, **AXI rule 11**, **LSP rule 13**).
 - Every agent-invokable kit CLI/skill must meet applicable AXI principles (see `docs/axi/axi-scorecard.md`). Prefer **`scripts/agent-status.sh`** as the compact AXI status entry.
+- **Languages in use:** Bash. **Public LSP:** bash-language-server. Agents MUST use LSP tools when coding; no suppressions-as-fix; root-cause only (rule 13).
 - No curl installers for Grok/Herdr here; Mesh-LLM install is **upstream only** (`mesh-llm` CLI / documented install — do not reimplement the mesh).
 - No frozen Herdr integration target lists — use `herdr integration status` / `--help`.
 - No frozen model/peer catalogs for Mesh — use live `/v1/models` and CLI help.

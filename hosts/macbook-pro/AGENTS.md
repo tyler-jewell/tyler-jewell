@@ -27,7 +27,8 @@ Do **not** commit machine-private absolute paths into public docs. Use `$HOME`, 
 6. **Mesh-LLM** is the primary local/mesh LLM resource: OpenAI-compatible `OPENAI_BASE_URL` (default `http://127.0.0.1:9337/v1`). Install/serve via upstream `mesh-llm`; discover models live at `/v1/models` — never freeze a model list.
 7. AI-first stack after Nix: `agent-kit/scripts/agent-status.sh` (AXI) and `ai-first-setup.sh --dry-run`
 8. All agent-invokable CLIs/skills must follow [AXI](https://axi.md) (umbrella rule 11).
-9. Do not put app-specific coding standards in this host file.
+9. **LSP (umbrella rule 13):** any coding under this host’s projects must use public LSPs per language; agents MUST use LSP tools; no ignore/suppression workarounds; root-cause only.
+10. Do not put app-specific coding standards in this host file.
 
 ## Hierarchy
 

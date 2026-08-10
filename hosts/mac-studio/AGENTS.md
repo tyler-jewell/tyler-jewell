@@ -24,3 +24,4 @@ This directory is a **parity template**. It is not proof that a Studio is online
 4. Privileged floor on Studio still needs human sudo once if Nix missing.
 5. Do not invent Studio inventory entries without a real probe or human request.
 6. Discover models live (`GET …/v1/models`) — never hardcode model inventories.
+7. **LSP (umbrella rule 13):** public LSP per language in every AGENTS-managed project; agents MUST use LSP when coding; no suppressions-as-fix.

@@ -5,6 +5,7 @@ Agents maintaining this tree keep the **AXI scorecard** honest and current.
 ## Rules
 
 1. Sacred umbrella rule **11** (https://axi.md) applies to every agent-invokable surface we ship.
+1b. Sacred rule **13** (LSP): coding surfaces must declare languages + public LSPs; agents use LSP tools; no suppressions-as-fix (see `docs/lsp/`).
 2. Score **only** agent-facing CLIs/skills/MCP/tools — not every markdown paragraph or pure library helper (mark pure libs as N/A where appropriate).
 3. Claim **10/10** only for surfaces we own and have remediated; third-party binaries get honest “prefer AXI wrapper” rows.
 4. Dual-write: update `README.md` when the scorecard layout changes.

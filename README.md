@@ -74,6 +74,10 @@ After Nix exists on a machine:
 ./agent-kit/test/run-tests.sh
 ```
 
+### LSP when coding
+
+Sacred **rule 13**: every tree with `AGENTS.md` keeps public LSP setup for languages it uses; agents **MUST** use LSP tools; no suppressions-as-fix; root-cause only. Guide: [docs/lsp/README.md](docs/lsp/README.md).
+
 ### AXI (agent-facing CLIs)
 
 Every agent-runnable skill/tool/CLI/MCP we ship must follow **[AXI](https://axi.md)** (sacred rule 11).  
