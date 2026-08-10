@@ -7,7 +7,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 |------|--------|
 | **Last rescore (UTC)** | 2026-08-10 |
 | **Rescore reason** | Add sacred rule 19 DRY/SSoT; extend scorecard to rules 1–19 |
-| **tyler-jewell @ score** | aea0a1df3d456200db62bb6bd0cf7122186931c0 |
+| **tyler-jewell @ score** | `df6a36699182639f4dd79ae46cc8040de4971529` |
 | **herdr-web @ score** | `e2b81becd9ecdb267c276f20b9b30cbf665fe6fd` |
 | **host system flake** | `go` / `gopls` / `vercel-cli.nix` present under `$HOME/system` but were **staged, not necessarily committed/pushed** at score time → **not fully replicable from git alone** |
 
@@ -60,7 +60,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | 16 | WebAuthn passkeys | **15** | development | tyler-jewell `4e96e63` | Policy only (rule 16 + docs/web) | **No passkey implementation** in any web app/backend; no shared Go WebAuthn module; no eval |
 | 17 | Public hosting on Vercel | **40** | development | system `vercel-cli.nix` (local) · tyler-jewell `4e96e63` | Policy; Vercel CLI shim module; `vercel` on this host PATH after apply | **No public app/DB/MCP deployed on Vercel from this stack**; vercel login is human and not proven in VC; CLI install uses bun+XDG (replicable only after HM apply **and** network); module may be uncommitted; no `vercel.json` / project link in herdr-web |
 | 18 | Requirements maturity scoring | **70** | development | tyler-jewell `328c5a7` | Scorecard + rule 18 + eval `09-requirements-scorecard`; public gate BLOCKED | All rows mature; automated rescore discipline proven across sessions; host flake commits included in logged hashes |
-| 19 | DRY / SSoT (stop multi-file copy) | **35** | development | tyler-jewell `aea0a1d` | Sacred rule 19 + README pointer; related to rule 9 live discovery | No mechanical “second/third file same fact” lint; known doc/code duplications not inventoried; agent habit not proven; shared libs/generators for repeated config still ad hoc |
+| 19 | DRY / SSoT (stop multi-file copy) | **35** | development | tyler-jewell `df6a366` | Sacred rule 19 + README pointer; related to rule 9 live discovery | No mechanical “second/third file same fact” lint; known doc/code duplications not inventoried; agent habit not proven; shared libs/generators for repeated config still ad hoc |
 
 ---
 
