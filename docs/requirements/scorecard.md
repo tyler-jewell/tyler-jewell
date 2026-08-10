@@ -7,7 +7,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 |------|--------|
 | **Last rescore (UTC)** | 2026-08-10 |
 | **Rescore reason** | Add sacred rule 20 simplicity / tests-not-debt; scorecard rules 1–20 |
-| **tyler-jewell @ score** | d60725dbca39c95a5a982a47b7560e6a532c4cc2 |
+| **tyler-jewell @ score** | 9db877c8fa25e9ee693dfaf22ccb30af6d3531ac |
 | **herdr-web @ score** | `e2b81becd9ecdb267c276f20b9b30cbf665fe6fd` |
 | **host system flake** | `go` / `gopls` / `vercel-cli.nix` present under `$HOME/system` but were **staged, not necessarily committed/pushed** at score time → **not fully replicable from git alone** |
 
@@ -61,7 +61,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | 17 | Public hosting on Vercel | **40** | development | system `vercel-cli.nix` (local) · tyler-jewell `4e96e63` | Policy; Vercel CLI shim module; `vercel` on this host PATH after apply | **No public app/DB/MCP deployed on Vercel from this stack**; vercel login is human and not proven in VC; CLI install uses bun+XDG (replicable only after HM apply **and** network); module may be uncommitted; no `vercel.json` / project link in herdr-web |
 | 18 | Requirements maturity scoring | **70** | development | tyler-jewell `328c5a7` | Scorecard + rule 18 + eval `09-requirements-scorecard`; public gate BLOCKED | All rows mature; automated rescore discipline proven across sessions; host flake commits included in logged hashes |
 | 19 | DRY / SSoT (stop multi-file copy) | **35** | development | tyler-jewell `df6a366` | Sacred rule 19 + README pointer; related to rule 9 live discovery | No mechanical “second/third file same fact” lint; known doc/code duplications not inventoried; agent habit not proven; shared libs/generators for repeated config still ad hoc |
-| 20 | Simplicity / tests must not drive debt | **35** | development | tyler-jewell `d60725d` | Sacred rule 20 + README; stop-and-fix paired with rule 19 | Cultural only so far; no review checklist automation; known over-complex tests/evals not inventoried; habit not proven across agents |
+| 20 | Simplicity / tests must not drive debt | **35** | development | tyler-jewell `9db877c` | Sacred rule 20 + README; stop-and-fix paired with rule 19 | Cultural only so far; no review checklist automation; known over-complex tests/evals not inventoried; habit not proven across agents |
 
 ---
 
@@ -85,7 +85,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 |----------|-------------------|--------|------|
 | 2026-08-10 | tyler-jewell `f1b13fe` (scorecard + rule 18) · pin `62e5be9` · herdr-web `e2b81be` / `bed5218` | Baseline honest maturity scoring for all sacred requirements 1–17 | BLOCKED |
 | 2026-08-10 | tyler-jewell `df6a366` (rule 19 DRY/SSoT + scorecard 1–19) · pin `cd6d2c6` | Add DRY core requirement; scorecard covers 1–19 | BLOCKED |
-| 2026-08-10 | tyler-jewell `d60725d` (rule 20 simplicity / tests-not-debt) | Add stop-and-fix simplicity requirement; scorecard 1–20 | BLOCKED |
+| 2026-08-10 | tyler-jewell `9db877c` (rule 20 simplicity / tests-not-debt) | Add stop-and-fix simplicity requirement; scorecard 1–20 | BLOCKED |
 
 *(Each rescore: append a row here and rewrite the table above — do not delete history rows.)*
 
