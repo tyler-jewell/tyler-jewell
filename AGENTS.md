@@ -107,7 +107,7 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 
 17. **Public hosting on Vercel** — All **public-facing** web apps, databases, MCPs, and similar internet-exposed product surfaces **are hosted on [Vercel](https://vercel.com)**. Do not invent a second primary public host for those surfaces. Local/dev and private mesh tooling may run on-host; production public URLs go through Vercel. Host Nix/home-manager flakes **must** provide the **Vercel CLI** on PATH (and document `vercel login` as a one-time human auth step, like `gh auth login`). Agents deploy/link with the CLI after the human has authenticated — never commit Vercel tokens.
 
-18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–25**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
+18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–26**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
 
    - **100% / `mature` only** when the requirement is met by **core, version-controlled setup** that a **clean machine can replicate** (policy + implementation + proof; gaps empty). See scorecard definition of 100%.
    - **Any score &lt; 100% is `development` mode.** Agents must treat that requirement as unfinished infrastructure — not done.
@@ -177,6 +177,15 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
    5. **Avoid** new glue whose sole purpose is “agent X doesn’t understand NL.” Fix the prompt, the goal, or the agent choice — not another special-case script.
    6. **SSoT:** [`docs/integration-agnostic/README.md`](docs/integration-agnostic/README.md).
 
+26. **Agent-driven commit workflow — humans never need to say “commit the changes”** — Completing durable work includes **shipping it to git** under a **strict, agent-run commit workflow**. The human should **not** have to prompt “commit the changes” as a separate afterthought.
+
+   1. **Default duty:** when an agent finishes a goal-scoped change that belongs in version control, the agent **runs the commit workflow** (checks → stage → commit message → commit). Push/PR when the goal requires shared visibility (rule 5 for irreversible shared actions).
+   2. **Strict workflow (SSoT):** [`docs/commit-workflow/README.md`](docs/commit-workflow/README.md) and portable entrypoint [`scripts/commit-workflow.sh`](scripts/commit-workflow.sh) — **runnable from any directory** (resolves the relevant git root from CWD or an explicit path).
+   3. **Agent-driven and contextual:** the workflow inspects **what changed** and **risk**, then runs **only the tests/checks needed** for that blast radius — not a blind full-suite tax on every one-line doc fix. High-risk or wide changes expand the check set.
+   4. **Unclear scope or risk:** **use your ask-user-question capability** before committing (or before expanding checks / pushing). Never invent consent for force-push, secrets, or destructive git (rules 2–3).
+   5. **Quality bar:** do not commit known-failing required checks; fix or explicitly document a blocked state with human-visible note. Prefer complete sentences in commit messages; group related work; no secrets.
+   6. **Not a license to spam commits:** still batch coherent units of work; still dual-write when layout/commands change; still re-score when requirements change (rule 18).
+
 ---
 
 ## What does *not* belong here
@@ -192,6 +201,7 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 - Lax auto-compact thresholds or one-off compaction rituals (→ rule 23 + `docs/compaction/`)
 - Raw chat → immediate code without research/goal/implement lane (→ rule 24 + `docs/intent-to-implement/`)
 - Product-specific slash commands, brand-named agent recipes, or tool-id magic strings in methodology (→ rule 25 + `docs/integration-agnostic/`)
+- Leaving durable work uncommitted until the human says “commit” (→ rule 26 + `docs/commit-workflow/`)
 
 ---
 
@@ -201,6 +211,7 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 |---------|---------|
 | `./scripts/pipe-agents.sh` | Print this umbrella AGENTS.md only (stdout) |
 | `./scripts/hierarchy-order.sh <path>` | List every `AGENTS.md` from umbrella root → path (authoritative outer→inner order) |
+| `./scripts/commit-workflow.sh` | Contextual checks + commit (from any CWD; see rule 26) |
 | `./test/run-hierarchy-check.sh` | Prove depth≥3 chain order on the in-repo fixture |
 
 ---

@@ -2,7 +2,7 @@
 
 **Single source of truth for scores:** [scorecard.md](scorecard.md)
 
-This tracks every **umbrella sacred requirement** (AGENTS.md rules 1–25) with:
+This tracks every **umbrella sacred requirement** (AGENTS.md rules 1–26) with:
 
 | Field | Meaning |
 |-------|---------|

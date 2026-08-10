@@ -115,6 +115,10 @@ Auto-compact at **≤ 50%** context. Every compact is a chance to **promote reus
 
 Stay **~99% product-agnostic**. Prefer natural language (“implement this plan”) over vendor slash hacks. SSoT: [docs/integration-agnostic/](docs/integration-agnostic/).
 
+### Commit workflow (rule 26)
+
+Agents **commit as part of finishing work** — humans should not need to say “commit the changes.” Contextual checks only (by path + risk). From any directory: `scripts/commit-workflow.sh`. SSoT: [docs/commit-workflow/](docs/commit-workflow/).
+
 ### Requirements maturity (rule 18) — public gate
 
 Every sacred requirement has an **honest score**, **mode** (`development` unless 100%), and **commit hash** in:

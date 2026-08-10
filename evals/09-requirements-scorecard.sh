@@ -72,8 +72,15 @@ if grep -nE 'always (run|use) `/|prefer `/implement|prefer `/plan' "$A" 2>/dev/n
   exit 1
 fi
 
-# Every requirement ID 1–25 appears as a scored row (markdown table)
-for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25; do
+# Sacred rule 26 commit workflow
+grep -E '^26\. \*\*Agent-driven commit workflow' "$A"
+grep -qi 'commit-workflow\|commit workflow' "$A"
+grep -qi 'contextual' "$A"
+test -f "$ROOT/docs/commit-workflow/README.md"
+test -x "$ROOT/scripts/commit-workflow.sh" || test -f "$ROOT/scripts/commit-workflow.sh"
+
+# Every requirement ID 1–26 appears as a scored row (markdown table)
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26; do
   grep -E "^\\| *${i} +\\|" "$SC" >/dev/null || {
     echo "FAIL: scorecard missing row for requirement $i"
     exit 1
