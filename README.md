@@ -95,6 +95,10 @@ If a single change needs the **same fact** updated in a **second** (or **third**
 
 On every create or update: **Could this be simpler?** **Are tests driving tech debt?** If yes → **stop and fix** (same bar as DRY). Tests protect behavior; they must not force worse product shape.
 
+### Instruction authority + herdr-kit (rule 21)
+
+Sacred umbrella wins among project instruction layers; load AGENTS **outer→inner**. Core tooling: **`herdr-kit/`** (flash dry-run default, wipe/bootstrap, pipe-agents). See [docs/herdr-native/](docs/herdr-native/). **No herdr-web/browser in core path.** Multi-host only after Mac soak.
+
 ### Requirements maturity (rule 18) — public gate
 
 Every sacred requirement has an **honest score**, **mode** (`development` unless 100%), and **commit hash** in:

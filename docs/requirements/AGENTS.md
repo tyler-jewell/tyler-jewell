@@ -2,7 +2,7 @@
 
 ## Authority
 
-Umbrella **AGENTS.md** sacred rules 1–20 plus **maturity / re-score** obligations documented in [README.md](README.md). Include **rule 19 DRY/SSoT** and **rule 20 simplicity / tests-not-debt**: stop-and-fix when complexity or harness-driven design appears.
+Umbrella **AGENTS.md** sacred rules 1–21 plus **maturity / re-score** obligations documented in [README.md](README.md). Include DRY (19), simplicity (20), and **instruction authority / herdr-kit (21)**.
 
 ## Rules for agents
 

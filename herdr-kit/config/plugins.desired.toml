@@ -1,0 +1,7 @@
+# SSoT desired plugins for core stack — methodology kit only.
+
+[[plugin]]
+id = "tyler-jewell.herdr-kit"
+source = "github"
+repo = "tyler-jewell/tyler-jewell/herdr-kit"
+# ref = "main"

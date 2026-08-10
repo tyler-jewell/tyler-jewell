@@ -36,8 +36,13 @@ grep -qi 'Could this be simpler' "$A"
 grep -qi 'tech debt' "$A"
 grep -qi 'STOP and fix\|stop and fix' "$A"
 
-# Every requirement ID 1–20 appears as a scored row (markdown table)
-for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
+# Sacred rule 21 instruction authority
+grep -E '^21\. \*\*Instruction authority' "$A"
+grep -qi 'outer→inner\|outer -> inner\|Load outer' "$A"
+grep -qi 'herdr-kit' "$A"
+
+# Every requirement ID 1–21 appears as a scored row (markdown table)
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21; do
   grep -E "^\\| *${i} +\\|" "$SC" >/dev/null || {
     echo "FAIL: scorecard missing row for requirement $i"
     exit 1

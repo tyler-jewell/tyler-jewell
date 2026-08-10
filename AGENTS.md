@@ -8,22 +8,31 @@ You are operating under the **Tyler Jewell** umbrella. This file is the **overal
 
 ## Authority order (overall → specialization)
 
-When multiple `AGENTS.md` files apply, treat them as a chain:
+**Sacred rule 21** is binding. Summary:
 
-1. **This file (umbrella)** — overall identity and non-negotiable rules for Tyler Jewell.
-2. **Host** — machine-specific admin (`hosts/<host>/AGENTS.md`).
-3. **Project / deeper trees** — product or folder specialization.
+**Conflict priority (highest → lowest):**
 
-**Conflict rule:** specialization may *narrow* scope, add local conventions, or describe host paths. It may **never** contradict or cancel a sacred umbrella rule. (Product loaders may show deeper files later in context; sacred rules still win.)
+0. Explicit **human chat** for this turn  
+1. **Sacred rules in this file** (umbrella)  
+2. **Deepest** `AGENTS.md` on the work path (specialization)  
+3. Parent `AGENTS.md` files walking up toward host / umbrella non-sacred sections  
+4. Optional short agent-global pointers (`~/.codex/AGENTS.md`, …)  
+5. Vendor model system prompt (always present — we do **not** claim to erase it)
 
-Grok (and similar tools) discover rules from a **git repo root toward CWD**. Nested git roots do **not** automatically load parent folders. When a session is outside this repo, inject this charter with:
+**Load / merge order** for tools we control: **outer → inner** (umbrella first, deepest last).
+
+**Conflict rule:** deeper files may *narrow* scope, add local commands, or host paths. They may **never** contradict or cancel a **sacred** umbrella rule.
+
+**Discovery gap:** many agents only load from **git root → CWD**. Nested git roots do **not** load this umbrella automatically. Inject with:
 
 ```bash
-# from any machine with this repo checked out:
-cat path/to/tyler-jewell/AGENTS.md
-# or:
 ./scripts/pipe-agents.sh
+# or herdr-kit:
+herdr plugin action invoke tyler-jewell.herdr-kit.pipe-agents
+./herdr-kit/scripts/agents-chain.sh <path-under-umbrella>
 ```
+
+Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No product web/browser in the core kit path. See `docs/herdr-native/`.
 
 ---
 
@@ -98,7 +107,7 @@ cat path/to/tyler-jewell/AGENTS.md
 
 17. **Public hosting on Vercel** — All **public-facing** web apps, databases, MCPs, and similar internet-exposed product surfaces **are hosted on [Vercel](https://vercel.com)**. Do not invent a second primary public host for those surfaces. Local/dev and private mesh tooling may run on-host; production public URLs go through Vercel. Host Nix/home-manager flakes **must** provide the **Vercel CLI** on PATH (and document `vercel login` as a one-time human auth step, like `gh auth login`). Agents deploy/link with the CLI after the human has authenticated — never commit Vercel tokens.
 
-18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–20**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
+18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–21**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
 
    - **100% / `mature` only** when the requirement is met by **core, version-controlled setup** that a **clean machine can replicate** (policy + implementation + proof; gaps empty). See scorecard definition of 100%.
    - **Any score &lt; 100% is `development` mode.** Agents must treat that requirement as unfinished infrastructure — not done.
@@ -123,6 +132,14 @@ cat path/to/tyler-jewell/AGENTS.md
    - **Then:** simplify the design, collapse layers, delete dead paths, rewrite tests so they **protect behavior** without dictating a worse product shape, or thin the surface until the honest answer is “this is as simple as the problem allows.”
    - **On everyone:** agents and humans stay on the lookout during new work **and** refactors of old code. Prefer fewer concepts, fewer files, fewer flags, and direct code over cleverness.
    - **Not an excuse** to skip necessary tests, sacred evals, or safety checks — tests serve the product; the product does not contort to serve brittle tests.
+
+21. **Instruction authority chain (umbrella supreme; full AGENTS chain)** — For every agent session under the Tyler Jewell identity (including agents started or supervised through **Herdr**), the **sacred rules in this file** are the **highest-priority project instruction layer**. They outrank host and project `AGENTS.md` files, agent-global instruction files, and any “closest AGENTS only” default when those would cancel sacred rules.
+
+   - **Chain:** Resolve every `AGENTS.md` from the **umbrella root along the work path to CWD** (tools: `hierarchy-order.sh`, herdr-kit `agents-chain` / `pipe-agents`). **Load outer→inner.**
+   - **Conflict:** deeper files may *specialize*; they may **never** contradict or cancel a sacred umbrella rule.
+   - **Honesty:** Vendor model system prompts remain; we do not claim to erase them. Explicit **human chat** for the current turn still outranks docs (industry standard). Nested git roots do **not** auto-load parents — agents **must** inject this charter when the session root is outside this repo.
+   - **Herdr:** Herdr is the **runtime** only. **herdr-kit** owns flash, dry-run, wipe/bootstrap helpers, and pipe/chain actions. Do not invent Herdr system-prompt hacks.
+   - **Core path:** no herdr-web / browser product required for authority or flash. See `docs/herdr-native/` and `herdr-kit/`.
 
 ---
 

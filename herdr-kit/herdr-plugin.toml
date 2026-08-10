@@ -1,0 +1,61 @@
+# Core methodology kit — no product web/browser (https://herdr.dev/docs/plugins/)
+id = "tyler-jewell.herdr-kit"
+name = "Tyler Jewell Herdr Kit"
+version = "0.1.0"
+min_herdr_version = "0.8.0"
+description = "Config flash, dry-run, wipe/bootstrap, AGENTS pipe/chain — core only"
+platforms = ["linux", "macos"]
+
+[[actions]]
+id = "status"
+title = "Kit / Herdr status"
+contexts = ["workspace"]
+command = ["bash", "scripts/status.sh"]
+
+[[actions]]
+id = "pipe-agents"
+title = "Pipe sacred umbrella AGENTS.md"
+contexts = ["workspace"]
+command = ["bash", "scripts/pipe-agents.sh"]
+
+[[actions]]
+id = "agents-chain"
+title = "AGENTS chain outer→inner (pass path after --)"
+contexts = ["workspace"]
+command = ["bash", "scripts/agents-chain.sh"]
+
+[[actions]]
+id = "flash"
+title = "Flash desired config (dry-run default; --apply to write)"
+contexts = ["workspace"]
+command = ["bash", "scripts/flash.sh"]
+
+[[actions]]
+id = "wipe"
+title = "Graduated wipe (dry-run default; needs --level; apply needs --yes)"
+contexts = ["workspace"]
+command = ["bash", "scripts/wipe.sh"]
+
+[[actions]]
+id = "bootstrap"
+title = "Bootstrap from SSoT (dry-run default)"
+contexts = ["workspace"]
+command = ["bash", "scripts/bootstrap.sh"]
+
+[[actions]]
+id = "cycle"
+title = "Wipe → bootstrap → verify (dry-run default)"
+contexts = ["workspace"]
+command = ["bash", "scripts/cycle.sh"]
+
+[[actions]]
+id = "evals-list"
+title = "List kit + umbrella evals"
+contexts = ["workspace"]
+command = ["bash", "scripts/evals.sh", "list"]
+
+[[actions]]
+id = "evals-run"
+title = "Run kit + umbrella evals"
+contexts = ["workspace"]
+command = ["bash", "scripts/evals.sh", "run"]

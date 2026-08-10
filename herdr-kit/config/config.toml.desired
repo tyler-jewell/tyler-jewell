@@ -1,0 +1,4 @@
+# Portable Herdr settings (SSoT for flash). No secrets. No host-absolute paths.
+# Merge into ~/.config/herdr/config.toml on flash --apply.
+
+onboarding = false
