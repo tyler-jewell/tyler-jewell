@@ -1,0 +1,14 @@
+Graphics/Displays:
+
+    Intel Iris Plus Graphics:
+
+      Chipset Model: Intel Iris Plus Graphics
+      Type: GPU
+      Bus: Built-In
+      VRAM (Dynamic, Max): 1536 MB
+      Vendor: Intel
+      Device ID: 0x8a5c
+      Displays:
+        Color LCD:
+          Display Type: Built-In
+          Resolution: 2560 x 1600

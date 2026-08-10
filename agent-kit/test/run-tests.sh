@@ -41,6 +41,18 @@ assert '! accept_full_setup_target llm-gpu:no' "reject llm-gpu:no"
 NV_FAIL="$(cat "${FIX}/gpu-nvidia-fail.txt")"
 assert '! classify_llm_gpu_from_text "$NV_FAIL"' "nvidia failed → reject"
 
+# --- Intel display GPU only (Type: GPU without Metal/Apple M/NVIDIA) MUST reject ---
+INTEL_DISP="$(cat "${FIX}/gpu-intel-display.txt")"
+assert 'echo "$INTEL_DISP" | grep -qi "Type: GPU"' "intel fixture contains Type: GPU bait"
+assert 'echo "$INTEL_DISP" | grep -qi "Intel"' "intel fixture is Intel chipset"
+assert '! echo "$INTEL_DISP" | grep -qiE "Metal Support: Metal|Apple M[0-9]|NVIDIA|GeForce"' "intel fixture lacks LLM signals"
+assert '! classify_llm_gpu_from_text "$INTEL_DISP"' "intel display Type:GPU → LLM GPU no"
+assert '! accept_full_setup_target no' "intel path: full_setup reject when no"
+# Also: if someone mapped classify→flag incorrectly, gate stays closed
+INTEL_LABEL="$(classify_llm_gpu_label "$INTEL_DISP")"
+assert '[[ "$INTEL_LABEL" == "llm-gpu:no" ]]' "intel label is llm-gpu:no"
+assert '! accept_full_setup_target "$INTEL_LABEL"' "accept_full_setup rejects llm-gpu:no from intel"
+
 # --- SSH config parse (pure) ---
 SSH_FIX="$(cat "${FIX}/ssh-config.txt")"
 HOSTS="$(parse_ssh_config_hosts "$SSH_FIX")"

@@ -18,12 +18,16 @@ classify_llm_gpu_from_text() {
     fi
   fi
 
-  # Apple Metal / Apple Silicon GPU (Metal-capable = LLM-capable for our stack)
-  if echo "$text" | grep -qiE 'Metal Support: Metal|Chipset Model: Apple M[0-9]|Apple M[0-9].*GPU|Type: GPU'; then
+  # Apple Silicon + Metal only (never bare "Type: GPU" — that matches Intel HD/Iris).
+  # Require Metal Support and/or Apple M* chipset (covers M1–M9+).
+  if echo "$text" | grep -qiE 'Metal Support: Metal'; then
+    return 0
+  fi
+  if echo "$text" | grep -qiE 'Chipset Model: Apple M[0-9]|Apple M[0-9]+( Pro| Max| Ultra)?'; then
     return 0
   fi
 
-  # AMD discrete with enough signal (optional; treat as capable if named GPU)
+  # AMD discrete / Instinct (LLM-capable class); not Intel integrated display GPUs
   if echo "$text" | grep -qiE 'AMD Radeon|Radeon Pro|Instinct'; then
     return 0
   fi
