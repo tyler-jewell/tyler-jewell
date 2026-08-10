@@ -7,7 +7,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 |------|--------|
 | **Last rescore (UTC)** | 2026-08-10 |
 | **Rescore reason** | Initial maturity scorecard (rule 18): objective baseline for rules 1–17 after Go/PWA/passkey/Vercel policy + herdr-web Go bridge |
-| **tyler-jewell @ score** | `f01b8f894edb72ec162ae89d9325fcf9b72c8501` |
+| **tyler-jewell @ score** | `f1b13fed354905540a78fd99b7141d31c2723f18` (scorecard introduction on `main`; this pin commit follows) |
 | **herdr-web @ score** | `e2b81becd9ecdb267c276f20b9b30cbf665fe6fd` |
 | **host system flake** | `go` / `gopls` / `vercel-cli.nix` present under `$HOME/system` but were **staged, not necessarily committed/pushed** at score time → **not fully replicable from git alone** |
 
