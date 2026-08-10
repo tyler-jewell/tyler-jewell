@@ -7,7 +7,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 |------|--------|
 | **Last rescore (UTC)** | 2026-08-10 |
 | **Rescore reason** | Rule 26 agent-driven contextual commit workflow |
-| **tyler-jewell @ score** | (pin after land) |
+| **tyler-jewell @ score** | d86b4c488e76301bcd8a4048157257143ae2a3a5 |
 | **product UI** | removed from local stack |
 | **host system flake** | floor only; methodology via herdr-kit |
 | **Compact threshold** | host agent runtime ≤50% (this machine) |
@@ -70,7 +70,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | 23 | Aggressive compact + promote on compact | **45** | development | tyler-jewell + host agent config | Rule 23; docs/compaction; ≤50% threshold on this host | Habit/PR-on-compact not proven; multi-host runtime config not uniform |
 | 24 | Never raw-ask → code; goal then implement | **40** | development | tyler-jewell | Rule 24; docs/intent-to-implement; NL plan/implement + ask-user-question capability | Agent habit unproven; no mechanical gate before edits |
 | 25 | 99% integration-agnostic NL | **50** | development | tyler-jewell `c2fd344` | Rule 25; docs/integration-agnostic; sacred rules scrubbed of product slash hacks | Host docs/scripts may still name install paths; historical scorecard logs may retain old brand notes |
-| 26 | Agent-driven contextual commits | **45** | development | tyler-jewell (this change) | Rule 26 in AGENTS; docs/commit-workflow; scripts/commit-workflow.sh (from any CWD) | Habit unproven; home allowlist path edge cases; risk classifier still heuristic |
+| 26 | Agent-driven contextual commits | **45** | development | tyler-jewell `d86b4c4` | Rule 26 in AGENTS; docs/commit-workflow; scripts/commit-workflow.sh (from any CWD) | Habit unproven; home allowlist path edge cases; risk classifier still heuristic |
 
 ---
 
@@ -100,7 +100,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | 2026-08-10 | tyler-jewell `e8fc660` (rule 23 compaction) | ≤50% auto-compact; compact → worktree/PR promotion guidelines | BLOCKED |
 | 2026-08-10 | tyler-jewell `2e646fb` (rule 24 intent→implement) | Ban raw-ask execution; research, goal, deliberate implement + ask_user_question | BLOCKED |
 | 2026-08-10 | tyler-jewell `c2fd344` (rule 25 integration-agnostic) | NL over product slash hacks; brand-neutral sacred process | BLOCKED |
-| 2026-08-10 | tyler-jewell (rule 26 commit workflow) | Agent-driven contextual commits; portable commit-workflow.sh | BLOCKED |
+| 2026-08-10 | tyler-jewell `d86b4c4` (rule 26 commit workflow) | Agent-driven contextual commits; portable commit-workflow.sh | BLOCKED |
 
 *(Each rescore: append a row here and rewrite the table above — do not delete history rows.)*
 
