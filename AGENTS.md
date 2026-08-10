@@ -83,6 +83,20 @@ cat path/to/tyler-jewell/AGENTS.md
    | Language | Public LSP |
    |----------|------------|
    | Bash (`scripts/`, `evals/`, `agent-kit/`) | [bash-language-server](https://github.com/bash-lsp/bash-language-server) |
+   | Go (when present under this umbrella) | [gopls](https://github.com/golang/tools/tree/master/gopls) — must be on PATH from the host Nix/home-manager flake |
+
+14. **Go only — never Python** — Agents **must not** write Python of any kind: product code, tests, one-offs, scratch, or “tmp” helpers. **Go** is the only language for **scripting** and **all backend** services under this umbrella (and for herdr-web / web-app backends). Prefer a small Go binary or `go run` over shell when logic grows beyond thin glue. Shell remains allowed for thin CLI glue and evals that only orchestrate. **If a tree needs a backend or non-trivial script, it is Go + gopls (rule 13).** Do not add `*.py`, `pyrightconfig.json`, or Python LSPs to our trees. Upstream third-party tools may still invoke Python (e.g. a vendor hook we do not own); agents still **must not** author Python to extend them — wrap or reimplement in Go when we own the surface.
+
+15. **Frontend stack + PWA bar + UI package** — All **frontend** code for web apps is **vanilla HTML, CSS, and JavaScript** only (no React/Vue/Svelte/Angular app frameworks as the product surface). Web apps **must** target the **latest Progressive Web App (PWA) standards** and be scored against the single source of truth before release:
+
+   - **PWA SSoT (score here):** https://web.dev/learn/pwa  
+   - **Release bar:** use Lighthouse PWA audits (and the learn/pwa checklist) so every public web app ships installable, offline-capable, and standards-aligned.
+
+   The **only UI component package** allowed for now is **[shadcn](https://ui.shadcn.com/)** (and its official variants that still leave shipped UI as HTML/CSS/JS under our control). Do not introduce other UI kits (MUI, Bootstrap, Chakra, Ant, etc.). Prefer zero package + hand-crafted CSS when shadcn is unnecessary.
+
+16. **WebAuthn passkeys for web auth** — All web apps and their backends that authenticate users **must** use **WebAuthn passkeys** as the auth mechanism (passwordless public-key credentials). Do not ship password-primary login, ad-hoc session cookies without WebAuthn enrollment, or parallel custom auth stacks. New public surfaces start passkey-first; existing ones migrate rather than grow a second scheme.
+
+17. **Public hosting on Vercel** — All **public-facing** web apps, databases, MCPs, and similar internet-exposed product surfaces **are hosted on [Vercel](https://vercel.com)**. Do not invent a second primary public host for those surfaces. Local/dev and private mesh tooling may run on-host; production public URLs go through Vercel. Host Nix/home-manager flakes **must** provide the **Vercel CLI** on PATH (and document `vercel login` as a one-time human auth step, like `gh auth login`). Agents deploy/link with the CLI after the human has authenticated — never commit Vercel tokens.
 
 ---
 

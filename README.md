@@ -78,6 +78,15 @@ After Nix exists on a machine:
 
 Sacred **rule 13**: every tree with `AGENTS.md` keeps public LSP setup for languages it uses; agents **MUST** use LSP tools; no suppressions-as-fix; root-cause only. Guide: [docs/lsp/README.md](docs/lsp/README.md).
 
+### Stack non-negotiables (rules 14–17)
+
+| Rule | Bar |
+|------|-----|
+| **14 Go only** | No Python (not even tmp). Scripting + all backends are **Go**. Host flake: `go` + **gopls**. |
+| **15 Frontend + PWA** | Vanilla **HTML/CSS/JS**; score PWAs at **https://web.dev/learn/pwa**; only UI package: **shadcn**. |
+| **16 Passkeys** | WebAuthn passkeys for web app auth. |
+| **17 Vercel** | Public web apps / DBs / MCPs on **Vercel**; flake installs CLI; human **`vercel login`**. |
+
 ### AXI (agent-facing CLIs)
 
 Every agent-runnable skill/tool/CLI/MCP we ship must follow **[AXI](https://axi.md)** (sacred rule 11).  
