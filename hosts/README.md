@@ -18,6 +18,4 @@ A host is a **full-setup** target only if live discovery reports **≥1 LLM-capa
 3. Dual-write `AGENTS.md` + `README.md`; keep paths as `$HOME` / `~` / relative  
 4. Commit in this repo (never secrets, never private absolute homes in public branches)
 
-## herdr-web
 
-Integrations UI is a **separate public repo**: [tyler-jewell/herdr-web](https://github.com/tyler-jewell/herdr-web) — two-step stand-up, no hosts registry.

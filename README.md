@@ -3,7 +3,7 @@
 Public **identity umbrella** and methodology for Tyler Jewell agent work across machines.  
 This is a normal GitHub repo — **not** the OS home directory and not a dump of private absolute paths.
 
-Related product: **[herdr-web](https://github.com/tyler-jewell/herdr-web)** — Integrations UI (clone + `./scripts/serve.sh`).
+Core Herdr surface: **`herdr-kit/`** (flash, dry-run, wipe/bootstrap, AGENTS pipe/chain).
 
 ## Manual prerequisites (human — before agents run the process)
 
@@ -97,7 +97,7 @@ On every create or update: **Could this be simpler?** **Are tests driving tech d
 
 ### Instruction authority + herdr-kit (rule 21)
 
-Sacred umbrella wins among project instruction layers; load AGENTS **outer→inner**. Core tooling: **`herdr-kit/`** (flash dry-run default, wipe/bootstrap, pipe-agents). See [docs/herdr-native/](docs/herdr-native/). **No herdr-web/browser in core path.** Multi-host only after Mac soak.
+Sacred umbrella wins among project instruction layers; load AGENTS **outer→inner**. Core tooling: **`herdr-kit/`** (flash dry-run default, wipe/bootstrap, pipe-agents). See [docs/herdr-native/](docs/herdr-native/). Multi-host only after Mac soak.
 
 ### Local ports (rule 22)
 
@@ -127,17 +127,12 @@ Scorecard: [docs/axi/axi-scorecard.md](docs/axi/axi-scorecard.md). Preferred com
 
 See [agent-kit/README.md](agent-kit/README.md). Studio SSH parity: [hosts/mac-studio/](hosts/mac-studio/).
 
-## herdr-web (only isolatable product)
-
-Shared Integrations UI as a **Herdr plugin** (hot-reload by default). Core layers consume/contribute — no second UI.
+## herdr-kit (isolatable Herdr methodology)
 
 ```bash
-git clone https://github.com/tyler-jewell/herdr-web.git
-cd herdr-web
-./scripts/serve.sh                    # isolation (2 steps)
-# or side-by-side in Herdr:
-herdr plugin link .
-herdr plugin pane open --plugin tyler-jewell.herdr-web --entrypoint integrations
+herdr plugin link ./herdr-kit
+herdr plugin action invoke tyler-jewell.herdr-kit.status
+herdr plugin action invoke tyler-jewell.herdr-kit.flash   # dry-run default
 ```
 
 ### Layered compliance evals (≤10 each)
@@ -146,14 +141,12 @@ herdr plugin pane open --plugin tyler-jewell.herdr-web --entrypoint integrations
 |-------|------|
 | Methodology | `evals/` |
 | Agent-kit | `agent-kit/evals/` |
-| herdr-web | (in herdr-web repo) `evals/` |
+| herdr-kit | `herdr-kit/evals/` |
 
 ```bash
 ./evals/run.sh run
 ./agent-kit/evals/run.sh run
-# multi-layer via plugin:
-HERDR_EVALS_LAYERS="$PWD/evals:$PWD/agent-kit/evals" \
-  bash ../herdr-web/scripts/evals.sh run
+./herdr-kit/scripts/evals.sh run
 ```
 
 ## Publish
@@ -161,11 +154,7 @@ HERDR_EVALS_LAYERS="$PWD/evals:$PWD/agent-kit/evals" \
 Requires **`gh auth login` already completed** (see prerequisites above).
 
 ```bash
-# methodology umbrella (this repo)
 gh repo create tyler-jewell/tyler-jewell --public --source=. --remote=origin --push
-
-# Integrations UI (sibling product)
-# see herdr-web README — two steps: clone + ./scripts/serve.sh
 ```
 
 Do **not** force-push. Never publish secrets or private absolute home paths.

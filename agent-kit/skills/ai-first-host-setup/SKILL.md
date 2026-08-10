@@ -1,6 +1,5 @@
 ---
 name: ai-first-host-setup
-description: AI-first host setup after Nix floor — discover GPU hosts, Herdr, herdr-web, Studio SSH parity
 ---
 
 # AI-first host setup
@@ -13,7 +12,7 @@ Setting up or verifying a Tyler Jewell machine (MBP, Studio, GPU Linux) after th
 
 1. **Privileged (human):** `sudo ~/system/scripts/privileged-setup.sh` — CLT + Nix only.
 2. **Nix/HM:** `home-manager switch --flake ~/system#…`
-3. **This skill / agent-kit:** Herdr, integrations (live CLI), herdr-web, **Mesh-LLM** (primary OpenAI-compatible mesh at `/v1`), hosts registry, remote apply.
+3. **This skill / agent-kit:** Herdr, integrations (live CLI), herdr-kit, **Mesh-LLM** (primary OpenAI-compatible mesh at `/v1`), hosts registry, remote apply.
 
 ## Procedure
 
@@ -38,4 +37,4 @@ Setting up or verifying a Tyler Jewell machine (MBP, Studio, GPU Linux) after th
 
 ## Sacred
 
-Umbrella `tyler-jewell/AGENTS.md` rules 9–13 (live discovery, Mesh-LLM, **[AXI](https://axi.md)**, herdr-web isolatable product, **[LSP](../../docs/lsp/README.md) rule 13** — use language servers when coding, no suppressions) and dual-write law. Scorecard: `docs/axi/axi-scorecard.md`.
+Umbrella `tyler-jewell/AGENTS.md` rules 9–13 (live discovery, Mesh-LLM, **[AXI](https://axi.md)**, herdr-kit isolatable surface, **[LSP](../../docs/lsp/README.md) rule 13** — use language servers when coding, no suppressions) and dual-write law. Scorecard: `docs/axi/axi-scorecard.md`.

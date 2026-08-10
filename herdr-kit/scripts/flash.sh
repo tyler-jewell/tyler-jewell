@@ -55,7 +55,7 @@ fi
 echo "plan[1]: merge config.toml.desired → ${HERDR_CONFIG_DIR}/config.toml"
 echo "plan[2]: ensure tyler-jewell.herdr-kit registered (link local kit or github install)"
 echo "plan[3]: herdr config check"
-echo "plan[4]: no herdr-web / browser"
+echo "plan[4]: no product web UI / browser"
 
 if [[ "$APPLY" -eq 0 ]]; then
   echo "result: dry-run (no writes)"

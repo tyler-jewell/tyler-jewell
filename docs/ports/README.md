@@ -17,10 +17,10 @@ Every directory with `AGENTS.md` has a sibling:
 
 ```toml
 # Optional metadata
-# tree = "herdr-web"
+# tree = "my-app"
 
 [[port]]
-app = "herdr-web"           # short id
+app = "example-app"           # short id
 port = 8765                 # claimed TCP port
 host = "127.0.0.1"          # bind/advertise host
 purpose = "Integrations UI + bridge"

@@ -4,7 +4,7 @@
 
 Core **Tyler Jewell** Herdr methodology only: flash, dry-run, wipe/bootstrap, AGENTS pipe/chain, evals.
 
-**Not here:** herdr-web, browsers, product UI.
+**Not here:** product web UI, browsers, product UI.
 
 ## Rules
 

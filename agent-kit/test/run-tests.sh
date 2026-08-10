@@ -160,7 +160,7 @@ if command -v herdr >/dev/null 2>&1; then
   source "${KIT_ROOT}/scripts/lib/herdr-ops.sh"
   OUT="$(herdr_integration_status 2>&1 || true)"
   assert 'echo "$OUT" | grep -q ":"' "live herdr integration status has lines"
-  assert 'herdr_web_no_frozen_targets' "herdr-web no OFFICIAL_TARGETS"
+  assert 'herdr_kit_no_frozen_targets' "herdr-kit no OFFICIAL_TARGETS"
 else
   echo "WARN: herdr missing — skipped live herdr asserts"
 fi

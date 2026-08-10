@@ -35,7 +35,6 @@ If a language has no public **standalone** LSP (installable without a proprietar
 | `tyler-jewell/` (umbrella, scripts) | Bash; Go when present | bash-language-server; gopls (rule 13 + 14) |
 | `tyler-jewell/agent-kit/` | Bash | bash-language-server |
 | `tyler-jewell/docs/*`, `hosts/*` | Markdown (docs) | none required for pure docs |
-| `herdr-web/` | Go, JavaScript, Bash, HTML, CSS | gopls, typescript-language-server, bash-language-server, vscode-langservers-extracted (html+css; no VS Code app) |
 | `$HOME/system/` (machine) | Nix, Bash | nil/nixd, bash-language-server; packages: `go`, `gopls`, Vercel CLI |
 
 Update this table when a tree adds or drops a language (live declaration).

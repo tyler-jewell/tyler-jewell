@@ -6,7 +6,8 @@ Canon: umbrella **AGENTS.md rule 21** + **herdr-kit**.
 
 | In | Out |
 |----|-----|
-| herdr-kit plugin, desired config, flash | herdr-web / Integrations UI |
+| herdr-kit plugin, desired config, flash | product web UI / browser panes |
+
 | pipe-agents / agents-chain | Browser panes / Chromium |
 | dry-run default, graduated wipe, bootstrap | Multi-host until Mac soak green |
 | MacBook Pro soak cycles | Product PWA / passkeys / Vercel deploys |

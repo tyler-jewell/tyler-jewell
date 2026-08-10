@@ -9,7 +9,6 @@ Orchestrates **agent-owned** setup after the Nix/privileged floor.
 3. Report **Mesh-LLM** status (primary local/mesh OpenAI-compatible layer at `…/v1`, default port `9337`)
 4. Propose/update tyler-jewell `hosts/` entries
 5. Run pure `herdr` health + integration status
-6. Verify herdr-web Integrations path
 7. Document Studio (or any remote Mac) parity via SSH
 
 ### Mesh-LLM (main LLM availability)

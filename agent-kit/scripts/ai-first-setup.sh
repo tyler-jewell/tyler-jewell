@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# AI-first setup entry: discover → (approval) → herdr + herdr-web verify.
+# AI-first setup entry: discover → (approval) → herdr + herdr-kit verify.
 # Default is --dry-run (no host-file writes, no mass installs).
 set -euo pipefail
 
@@ -184,17 +184,12 @@ if grep -R --include='*.sh' -nE 'OFFICIAL_MODELS\s*=' "${KIT_ROOT}/scripts" 2>/d
 fi
 ok "no frozen OFFICIAL_MODELS in agent-kit"
 
-# --- 5. herdr-web ---
-log "herdr-web frozen-target guard + tests"
-herdr_web_no_frozen_targets || warn "herdr-web guard failed"
-if [[ "${SKIP_HERDR_WEB_TESTS:-0}" != "1" ]]; then
-  if herdr_web_run_tests; then
-    ok "herdr-web tests"
-  else
-    warn "herdr-web tests failed or skipped"
-  fi
+# --- 5. herdr-kit ---
+log "herdr-kit frozen-target guard"
+if herdr_kit_no_frozen_targets; then
+  ok "herdr-kit no frozen targets"
 else
-  warn "SKIP_HERDR_WEB_TESTS=1"
+  warn "herdr-kit guard failed or missing"
 fi
 
 # --- 6. Optional host proposal ---

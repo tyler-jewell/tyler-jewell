@@ -18,7 +18,6 @@ This directory is a **parity template**. It is not proof that a Studio is online
 
 ## Agent scope (when SSH + permission exist)
 
-1. Same stack as MacBook Pro: umbrella AGENTS, `$HOME/system`, Herdr, integrations via live CLI, **herdr-web** (public clone), agent-kit, **Mesh-LLM** as primary OpenAI-compatible mesh (`OPENAI_BASE_URL`, default port 9337).
 2. Full-setup **serve** only if live GPU probe reports LLM-capable GPU (Apple Silicon Metal — expected on Studio); otherwise join/consume as mesh client.
 3. Prefer agent-kit over SSH after the tree is seeded on the Studio.
 4. Privileged floor on Studio still needs human sudo once if Nix missing.

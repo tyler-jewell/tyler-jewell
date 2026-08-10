@@ -1,29 +1,18 @@
-# Skills / agents access controls by layer
+# Access controls
 
-## Layers
-
-| Layer | Repo | Agents own | Must not |
-|-------|------|------------|----------|
-| **herdr-web** (isolatable product) | `tyler-jewell/herdr-web` | Plugin, UI, serve/HMR, product evals | Require home-admin tree; hardcode integration lists; secrets |
-| **Methodology umbrella** | `tyler-jewell/tyler-jewell` | Sacred AGENTS, hosts templates, layer evals, docs | Replace herdr-web with a second UI product |
-| **Agent-kit** | under umbrella | Discovery, mesh/herdr status, AXI status CLI, kit evals | Curl reinstall Grok/Herdr/Mesh; invent GPU hosts |
-| **Home/system admin** | machine `$HOME` sparse git | Local apply, privileged once | Force-push; osascript elevation; publish secrets |
-
-## Skills
-
-| Skill | Location | Access |
-|-------|----------|--------|
-| `ai-first-host-setup` | `agent-kit/skills/` | Read/run on host after Nix; mutations need approval (`--apply --yes` / ask_user_question) |
+| Surface | Repo / path | Agents may | Must not |
+|---------|-------------|------------|----------|
+| **herdr-kit** | `tyler-jewell/herdr-kit` | Flash, status, pipe/chain, wipe/bootstrap (dry-run default) | Secrets; invent always-on without human ask |
+| **Methodology umbrella** | `tyler-jewell/tyler-jewell` | Sacred AGENTS, hosts, evals, docs | Parallel installers; product web UI under umbrella |
+| **Host system** | `$HOME/system` | HM packages, host-runtime.toml | Privilege elevation without human |
 
 ## Evals
 
-- **Purpose:** compliance do/don't, not adversarial challenges.
-- **Cap:** ≤10 per layer.
-- **Herdr entry:** herdr-web plugin actions `evals-list` / `evals-run`.
+- Umbrella: `evals/`
+- Agent-kit: `agent-kit/evals/`
+- herdr-kit: `herdr-kit/evals/` or `herdr plugin action invoke tyler-jewell.herdr-kit.evals-run`
 
-## Controls checklist for agents
+## Dev notes
 
-1. `gh auth login` already done by human before publish.
-2. Prefer `herdr plugin link` for herdr-web side-by-side dev.
-3. Prefer `agent-status.sh` (AXI) for kit status.
-4. Never commit secrets; never hardcode tool enums (sacred rules 2, 9, 11, 12).
+1. Prefer `herdr plugin link` for herdr-kit side-by-side dev.
+2. Config-first: desired plugins in `herdr-kit/config/plugins.desired.toml` and/or `system/files/herdr/plugins.desired.toml`.

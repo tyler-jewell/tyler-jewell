@@ -7,7 +7,7 @@ Canon: umbrella **AGENTS.md** rules **15**, **16**, **17**.
 
 - **Vanilla HTML, CSS, JavaScript** only (no React/Vue/Svelte/Angular product surface).
 - **Only UI package:** [shadcn](https://ui.shadcn.com/) when a component kit is needed. No MUI, Bootstrap, Chakra, Ant, etc.
-- Prefer zero UI package + hand CSS when possible (e.g. herdr-web today).
+- Prefer zero UI package + hand CSS when possible (when a web app exists).
 
 ## PWA — single source of truth
 

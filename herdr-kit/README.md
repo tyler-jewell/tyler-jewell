@@ -7,7 +7,7 @@ GitHub-installable **core** Herdr plugin for Tyler Jewell methodology.
 - Graduated wipe → bootstrap (prove cold path)  
 - Pipe / chain sacred AGENTS  
 
-**Not included:** herdr-web, browser panes.
+**Not included:** product web UI, browser panes.
 
 ## Install
 

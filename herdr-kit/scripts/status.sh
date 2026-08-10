@@ -46,7 +46,7 @@ else
 fi
 echo "desired_config: $DESIRED_CONFIG ($(test -f "$DESIRED_CONFIG" && echo present || echo missing))"
 echo "desired_plugins: $DESIRED_PLUGINS ($(test -f "$DESIRED_PLUGINS" && echo present || echo missing))"
-echo "scope: core only (no herdr-web / browser)"
+echo "scope: core only (no product web UI / browser)"
 kit_help \
   "Run flash dry-run: \`scripts/flash.sh\`" \
   "Pipe AGENTS: \`scripts/pipe-agents.sh\`" \

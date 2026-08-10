@@ -14,9 +14,7 @@ ssh user@mac-studio.local 'hostname; uname -m'
 ssh -t user@mac-studio.local 'sudo "$HOME/system/scripts/privileged-setup.sh"'
 # (after seeding system/ + tyler-jewell trees into $HOME)
 
-# 4) Seed methodology + herdr-web (example patterns — adjust clone root):
 #    git clone https://github.com/tyler-jewell/tyler-jewell.git "$HOME/github-repos/tyler-jewell"
-#    git clone https://github.com/tyler-jewell/herdr-web.git "$HOME/github-repos/herdr-web"
 
 # 5) Agent dry-run on Studio:
 ssh user@mac-studio.local '"$HOME/github-repos/tyler-jewell/agent-kit/scripts/ai-first-setup.sh" --dry-run'
@@ -30,7 +28,6 @@ ssh user@mac-studio.local '"$HOME/github-repos/tyler-jewell/agent-kit/scripts/ai
 - [ ] Umbrella `tyler-jewell` AGENTS present under a clone path you choose
 - [ ] Nix + home-manager apply
 - [ ] `herdr` on PATH; `herdr config check`; integrations via live status
-- [ ] herdr-web: `./scripts/serve.sh` (two-step clone + serve)
 - [ ] Host registered under `hosts/<slug>/` with dual-write (portable paths)
 - [ ] LLM GPU classified yes (live Metal probe)
 

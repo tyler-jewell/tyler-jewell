@@ -18,14 +18,14 @@ This tracks every **umbrella sacred requirement** (AGENTS.md rules 1–22) with:
 
 While any row is `development`, agents and humans must treat the stack as **in development**: improve, fix bugs, refine, and **re-score** — do not claim full maturity or ship “we’re done” narratives.
 
-“Go public” here means: declaring the **core methodology + host flake + product stack bar** complete for others to clone and run without heroics. Individual open-source repos (e.g. herdr-web) may already be public as **in-progress** products; they still inherit `development` requirements until scores hit 100%.
+“Go public” here means: declaring the **core methodology + host flake + product stack bar** complete for others to clone and run without heroics. Individual open-source repos (e.g. herdr-kit) may already be public as **in-progress** products; they still inherit `development` requirements until scores hit 100%.
 
 ## What 100% means (objective)
 
 A requirement is **100%** only when **all** of the following are true:
 
 1. **Policy** is written in sacred / project AGENTS (or linked SSoT).
-2. **Implementation** lives in **version-controlled** core setup (public tyler-jewell / herdr-web and/or the host `system` flake that machines apply).
+2. **Implementation** lives in **version-controlled** core setup (public tyler-jewell / tyler-jewell and/or the host `system` flake that machines apply).
 3. **Replicable** on a clean machine following docs only (no uncommitted local magic, no “works on my laptop” secrets).
 4. **Automated or scripted proof** exists where applicable (`evals/`, tests, documented score procedure).
 5. **No known gaps** remain in the Gaps column (must be empty or “none”).
@@ -74,7 +74,7 @@ cat docs/requirements/scorecard.md
 # 2. Gather evidence (evals, paths, commits)
 ./evals/run.sh run
 git -C . rev-parse HEAD
-git -C ../herdr-web rev-parse HEAD 2>/dev/null || true
+git -C . rev-parse HEAD
 # 3. Edit scorecard.md honestly
 # 4. Commit scorecard with the code/docs change that triggered the rescore
 ```
