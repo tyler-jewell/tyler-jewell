@@ -83,7 +83,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | UTC date | Primary commit(s) | Reason | Gate |
 |----------|-------------------|--------|------|
 | 2026-08-10 | tyler-jewell `f1b13fe` (scorecard + rule 18) · pin `62e5be9` · herdr-web `e2b81be` / `bed5218` | Baseline honest maturity scoring for all sacred requirements 1–17 | BLOCKED |
-| 2026-08-10 | tyler-jewell `aea0a1d` (rule 19 DRY/SSoT + scorecard 1–19) | Add DRY core requirement; scorecard covers 1–19 | BLOCKED |
+| 2026-08-10 | tyler-jewell `df6a366` (rule 19 DRY/SSoT + scorecard 1–19) · pin `cd6d2c6` | Add DRY core requirement; scorecard covers 1–19 | BLOCKED |
 
 *(Each rescore: append a row here and rewrite the table above — do not delete history rows.)*
 
