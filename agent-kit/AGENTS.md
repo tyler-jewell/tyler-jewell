@@ -10,7 +10,8 @@ Grok and other agents use this kit **after** the privileged Nix floor exists.
 
 ## Sacred constraints
 
-- Umbrella `../AGENTS.md` (esp. dual-write, no secrets, **live CLI discovery — no hard-coded tool enums**).
+- Umbrella `../AGENTS.md` (esp. dual-write, no secrets, **live CLI discovery**, **AXI rule 11** — https://axi.md).
+- Every agent-invokable kit CLI/skill must meet applicable AXI principles (see `docs/axi/axi-scorecard.md`). Prefer **`scripts/agent-status.sh`** as the compact AXI status entry.
 - No curl installers for Grok/Herdr here; Mesh-LLM install is **upstream only** (`mesh-llm` CLI / documented install — do not reimplement the mesh).
 - No frozen Herdr integration target lists — use `herdr integration status` / `--help`.
 - No frozen model/peer catalogs for Mesh — use live `/v1/models` and CLI help.
@@ -19,8 +20,9 @@ Grok and other agents use this kit **after** the privileged Nix floor exists.
 ## Entry
 
 ```bash
+./scripts/agent-status.sh                      # AXI content-first live status (prefer for agents)
 ./scripts/ai-first-setup.sh --dry-run          # default: discover + verify, no mutate
 ./scripts/ai-first-setup.sh --apply --yes      # after approval
 ./scripts/discover-hosts.sh                    # local + network candidates
-./test/run-tests.sh                            # GPU gate + parsers
+./test/run-tests.sh                            # GPU gate + parsers + axi-out
 ```

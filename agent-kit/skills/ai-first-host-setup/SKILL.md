@@ -18,10 +18,15 @@ Setting up or verifying a Tyler Jewell machine (MBP, Studio, GPU Linux) after th
 ## Procedure
 
 1. **Ask for approval** with `ask_user_question` before any `--apply`, remote SSH mutation, or mass `herdr integration install`.
-2. Run discovery (dry-run):
+2. Prefer compact AXI status first:
    ```bash
-   ~/github-repos/tyler-jewell/agent-kit/scripts/ai-first-setup.sh --dry-run
+   agent-kit/scripts/agent-status.sh
    ```
+   Full dry-run:
+   ```bash
+   agent-kit/scripts/ai-first-setup.sh --dry-run
+   ```
+   All agent-facing kit CLIs must follow [AXI](https://axi.md) (umbrella rule 11).
 3. Confirm **≥1 LLM-capable GPU** for full-setup targets (`llm_gpu=yes` from live probe).
 4. For Studio/remote: verify `ssh <alias>` works; follow `~/github-repos/tyler-jewell/hosts/mac-studio/README.md`.
 5. Apply only after yes:
@@ -33,4 +38,4 @@ Setting up or verifying a Tyler Jewell machine (MBP, Studio, GPU Linux) after th
 
 ## Sacred
 
-Umbrella `tyler-jewell/AGENTS.md` rules 9–10 (live discovery + Mesh-LLM primary local/mesh LLM) and dual-write law.
+Umbrella `tyler-jewell/AGENTS.md` rules 9–11 (live discovery, Mesh-LLM, **[AXI](https://axi.md)** for every agent CLI/skill/MCP) and dual-write law. Scorecard: `docs/axi/axi-scorecard.md`.

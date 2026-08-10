@@ -13,6 +13,8 @@ source "${KIT_ROOT}/scripts/lib/gpu-classify.sh"
 source "${KIT_ROOT}/scripts/lib/herdr-ops.sh"
 # shellcheck source=/dev/null
 source "${KIT_ROOT}/scripts/lib/mesh-llm.sh"
+# shellcheck source=/dev/null
+source "${KIT_ROOT}/scripts/lib/axi-out.sh"
 
 export PATH="${HOME}/.local/bin:${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh 2>/dev/null || true
@@ -21,19 +23,26 @@ DRY_RUN=1
 APPLY=0
 YES=0
 PROPOSE_HOST=0
+SELF="$(cd "$(dirname "$0")" && pwd)/$(basename "$0")"
 
 usage() {
   cat <<'EOF'
-Usage: ai-first-setup.sh [options]
+ai-first-setup — discover host/GPU/mesh/herdr; optional apply (AXI-aligned)
 
-  --dry-run     Discover + verify only (default)
-  --apply       Allow host proposal write + optional herdr ops that mutate
-  --yes         Non-interactive approval (mirrors ask_user_question YES)
-  --propose-host  Write hosts/<slug>/ proposal from local facts (needs --apply)
-  -h, --help
+USAGE
+  ai-first-setup.sh [--dry-run] [--apply] [--yes] [--propose-host] [-h|--help]
 
-Approval: interactive Grok should use ask_user_question before --apply on
-remote/multi-host work. Never invent human consent.
+NO-ARGS
+  Same as --dry-run: live discovery + verify (content first). Never interactive.
+
+OPTIONS
+  --dry-run       Discover + verify only (default)
+  --apply         Allow host proposal write after approval
+  --yes           Non-interactive approval (mirrors ask_user_question YES)
+  --propose-host  Write hosts/<slug>/ proposal (needs --apply)
+  -h, --help      This help
+
+AXI: https://axi.md · Prefer agent-status.sh for compact live status.
 EOF
 }
 
@@ -43,8 +52,12 @@ while [[ $# -gt 0 ]]; do
     --apply) APPLY=1; DRY_RUN=0; shift ;;
     --yes) YES=1; shift ;;
     --propose-host) PROPOSE_HOST=1; shift ;;
-    -h|--help) usage; exit 0 ;;
-    *) echo "Unknown: $1" >&2; usage; exit 2 ;;
+    -h | --help) usage; exit 0 ;;
+    *)
+      axi_error 2 "unknown flag: $1"
+      axi_help "Run \`ai-first-setup.sh --help\`" "Run \`agent-status.sh\` for compact status"
+      exit 2
+      ;;
   esac
 done
 
@@ -215,21 +228,19 @@ else
   warn "mac-studio host template missing"
 fi
 
-# --- Summary ---
+# --- AXI summary (compact; principles 1–5, 8–9) ---
 echo
-echo "=== ai-first-setup summary ==="
-echo "mode=$([[ "$APPLY" -eq 1 ]] && echo apply || echo dry-run)"
-echo "local_slug=${SLUG}"
-echo "llm_gpu=${LLM_GPU}"
-echo "full_setup_eligible=${ELIGIBLE}"
-echo "herdr=$(herdr_bin || echo missing)"
-echo "mesh_llm_binary=${MESH_BIN}"
-echo "mesh_llm_role=${MESH_ROLE}"
-echo "mesh_llm_base_url=${MESH_BASE}"
-echo "umbrella=${UMBRELLA}"
-if [[ "$DRY_RUN" -eq 1 ]]; then
-  echo "next: review discovery; for mutations re-run with --apply --yes after approval"
-  echo "mesh: install/serve via upstream mesh-llm if binary missing; consumers use OPENAI_BASE_URL"
-  echo "remote Studio: ensure ssh works, then see hosts/mac-studio/README.md"
-fi
+axi_header "$SELF" "AI-first kit report (host, mesh, herdr) — Tyler Jewell"
+MODE_S="$([[ "$APPLY" -eq 1 ]] && echo apply || echo dry-run)"
+axi_count 1
+axi_table report "mode,slug,llm_gpu,full_setup,mesh_role,mesh_binary,herdr" \
+  "${MODE_S},${SLUG},${LLM_GPU},${ELIGIBLE},${MESH_ROLE},${MESH_BIN},$(herdr_bin >/dev/null 2>&1 && echo present || echo missing)"
+printf 'mesh_base_url: %s\n' "${MESH_BASE}"
+printf 'umbrella: %s\n' "$(axi_home_path "$UMBRELLA")"
+axi_help \
+  "Run \`agent-status.sh\` for compact AXI status" \
+  "Run \`discover-hosts.sh\` for network candidates" \
+  "Mutations: \`ai-first-setup.sh --apply --yes\` only after ask_user_question" \
+  "Mesh install: upstream mesh-llm only — see mesh_llm_install_hint" \
+  "AXI: https://axi.md · scorecard: docs/axi/axi-scorecard.md"
 ok "ai-first-setup finished"

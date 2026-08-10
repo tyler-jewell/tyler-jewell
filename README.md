@@ -74,6 +74,15 @@ After Nix exists on a machine:
 ./agent-kit/test/run-tests.sh
 ```
 
+### AXI (agent-facing CLIs)
+
+Every agent-runnable skill/tool/CLI/MCP we ship must follow **[AXI](https://axi.md)** (sacred rule 11).  
+Scorecard: [docs/axi/axi-scorecard.md](docs/axi/axi-scorecard.md). Preferred compact status:
+
+```bash
+./agent-kit/scripts/agent-status.sh
+```
+
 ### Mesh-LLM (primary local/mesh LLM layer)
 
 [Mesh-LLM](https://github.com/Mesh-LLM/mesh-llm) is the default **OpenAI-compatible** inference resource for hosts (`http://127.0.0.1:9337/v1`). Agent-kit reports live availability; install/serve via upstream CLI only. **No frozen model lists** — discover with `curl -s "$OPENAI_BASE_URL/models"`.

@@ -21,7 +21,7 @@ chmod +x "$ORDER" "$ROOT/scripts/pipe-agents.sh" 2>/dev/null || true
 lines=()
 while IFS= read -r line; do
   [[ -n "$line" ]] && lines+=("$line")
-done < <("$ORDER" "$PROBE")
+done < <("$ORDER" --raw "$PROBE")
 n="${#lines[@]}"
 
 echo "=== hierarchy-order ($n files) ==="

@@ -11,6 +11,8 @@ source "${KIT_ROOT}/scripts/lib/gpu-classify.sh"
 source "${KIT_ROOT}/scripts/lib/host-facts.sh"
 # shellcheck source=/dev/null
 source "${KIT_ROOT}/scripts/lib/mesh-llm.sh"
+# shellcheck source=/dev/null
+source "${KIT_ROOT}/scripts/lib/axi-out.sh"
 
 pass=0
 fail=0
@@ -135,6 +137,22 @@ else
   echo "WARN: mesh-llm not installed — binary=no is honest"
   assert 'echo "$MESH_LIVE" | grep -q "^mesh_llm_binary=no"' "missing binary reported honestly"
 fi
+
+# --- AXI pure formatters (shipped axi-out.sh) ---
+assert '[[ "$(axi_count 3)" == "count: 3" ]]' "axi_count definitive"
+assert 'echo "$(axi_empty items)" | grep -q "empty: 0 items"' "axi_empty definitive"
+assert 'echo "$(axi_empty items)" | grep -q "count: 0"' "axi_empty includes count 0"
+TAB="$(axi_table demo "a,b" "1,2" "3,4")"
+assert 'echo "$TAB" | grep -q "demo\[2\]{a,b}:"' "axi_table TOON-like header"
+assert 'echo "$(axi_help "next step")" | grep -q "help\[1\]:"' "axi_help contextual"
+assert 'echo "$(axi_error 2 "unknown flag")" | grep -q "code: 2"' "axi_error structured"
+SUM="$(axi_score_summary 10 10)"
+assert 'echo "$SUM" | grep -q "axi_score: 10/10"' "axi_score_summary 10/10"
+assert 'echo "$SUM" | grep -q "axi_ok: yes"' "axi_ok yes when perfect"
+assert 'echo "$(axi_score_summary 7 10)" | grep -q "axi_ok: no"' "axi_ok no when incomplete"
+LONG=$(python3 -c 'print("x"*50)')
+TRUNC="$(axi_truncate "$LONG" 10)"
+assert 'echo "$TRUNC" | grep -q truncated' "axi_truncate adds hint"
 
 # --- herdr live if present ---
 if command -v herdr >/dev/null 2>&1; then
