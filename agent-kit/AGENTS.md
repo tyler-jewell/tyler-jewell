@@ -24,5 +24,8 @@ Grok and other agents use this kit **after** the privileged Nix floor exists.
 ./scripts/ai-first-setup.sh --dry-run          # default: discover + verify, no mutate
 ./scripts/ai-first-setup.sh --apply --yes      # after approval
 ./scripts/discover-hosts.sh                    # local + network candidates
+./evals/run.sh run                             # kit compliance evals (≤10)
 ./test/run-tests.sh                            # GPU gate + parsers + axi-out
 ```
+
+**UI product:** isolatable **herdr-web** plugin (not this kit). Link: `herdr plugin link $HOME/github-repos/herdr-web`.

@@ -89,12 +89,33 @@ Scorecard: [docs/axi/axi-scorecard.md](docs/axi/axi-scorecard.md). Preferred com
 
 See [agent-kit/README.md](agent-kit/README.md). Studio SSH parity: [hosts/mac-studio/](hosts/mac-studio/).
 
-## herdr-web (separate public repo)
+## herdr-web (only isolatable product)
+
+Shared Integrations UI as a **Herdr plugin** (hot-reload by default). Core layers consume/contribute — no second UI.
 
 ```bash
 git clone https://github.com/tyler-jewell/herdr-web.git
-cd herdr-web && ./scripts/serve.sh
-# → http://127.0.0.1:8765/
+cd herdr-web
+./scripts/serve.sh                    # isolation (2 steps)
+# or side-by-side in Herdr:
+herdr plugin link .
+herdr plugin pane open --plugin tyler-jewell.herdr-web --entrypoint integrations
+```
+
+### Layered compliance evals (≤10 each)
+
+| Layer | Path |
+|-------|------|
+| Methodology | `evals/` |
+| Agent-kit | `agent-kit/evals/` |
+| herdr-web | (in herdr-web repo) `evals/` |
+
+```bash
+./evals/run.sh run
+./agent-kit/evals/run.sh run
+# multi-layer via plugin:
+HERDR_EVALS_LAYERS="$PWD/evals:$PWD/agent-kit/evals" \
+  bash ../herdr-web/scripts/evals.sh run
 ```
 
 ## Publish
