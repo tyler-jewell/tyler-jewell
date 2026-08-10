@@ -107,7 +107,7 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 
 17. **Public hosting on Vercel** — All **public-facing** web apps, databases, MCPs, and similar internet-exposed product surfaces **are hosted on [Vercel](https://vercel.com)**. Do not invent a second primary public host for those surfaces. Local/dev and private mesh tooling may run on-host; production public URLs go through Vercel. Host Nix/home-manager flakes **must** provide the **Vercel CLI** on PATH (and document `vercel login` as a one-time human auth step, like `gh auth login`). Agents deploy/link with the CLI after the human has authenticated — never commit Vercel tokens.
 
-18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–23**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
+18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–24**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
 
    - **100% / `mature` only** when the requirement is met by **core, version-controlled setup** that a **clean machine can replicate** (policy + implementation + proof; gaps empty). See scorecard definition of 100%.
    - **Any score &lt; 100% is `development` mode.** Agents must treat that requirement as unfinished infrastructure — not done.
@@ -159,6 +159,15 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
    4. **Promotion path:** durable improvements land via **isolated worktree + PR into `main`** for **human approval** — not silent force-push to main, not “only in this session’s head.” Prefer small, reviewable PRs (rules 3, 5).
    5. **Honesty:** if nothing reusable was learned, do not invent a PR. Compaction still proceeds; the checklist is mandatory, the PR is only when value exists.
 
+24. **Never treat a raw human ask as direct orders — research, goal, then deliberate implement** — No agent under this identity shall **ever** take a raw human request as immediate implementation directions. Human chat still *outranks docs* for *intent* (rule 21 / industry norm); it does **not** authorize unthinking execution.
+
+   1. **Slow down.** Do **not** start mutating production trees on the first parse of the ask.
+   2. **Research the effect:** what systems change, what sacred rules apply (esp. 19 DRY, 20 simplicity/debt, 14 Go, 22 ports, 18 scorecard), blast radius, reversibility, and **tech debt** the change would add or remove.
+   3. **Uncertainty or pushback:** if anything is unclear, incomplete, or the ask looks harmful / debt-heavy / anti-pattern relative to our stack — **stop coding** and use the **`ask_user_question` tool** (or equivalent structured human gate). Argue with evidence; do not silently obey a bad request and do not lecture without offering choices.
+   4. **Solid goal statement:** until the agent is **confident** (honest confidence — not theater) and has wrapped the work in a clear **goal** (outcome, non-goals, constraints, success checks), it must **not** freestyle large implementation in the same reactive turn.
+   5. **Deliberate implement path:** kick off implementation through a **disciplined implement lane** — e.g. Grok **plan → implement** (`/plan` / design then execute, or an implement-focused agent run with the goal statement as the brief) — so the change is executed against a written goal, not against a one-line chat impulse. Trivial typos/single-line doc fixes may proceed after a one-sentence goal in-session; anything structural uses the plan/implement path.
+   6. **SSoT process:** [`docs/intent-to-implement/README.md`](docs/intent-to-implement/README.md).
+
 ---
 
 ## What does *not* belong here
@@ -172,6 +181,7 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 - Complexity or APIs kept only so brittle tests pass (→ simplify; see sacred rule 20)
 - Frozen local URLs / ports in docs or defaults (→ `ports.toml` claims; see sacred rule 22)
 - Lax auto-compact thresholds or one-off compaction rituals (→ rule 23 + `docs/compaction/`)
+- Raw chat → immediate code without research/goal/implement lane (→ rule 24 + `docs/intent-to-implement/`)
 
 ---
 

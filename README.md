@@ -107,6 +107,10 @@ Sacred umbrella wins among project instruction layers; load AGENTS **outer→inn
 
 Auto-compact at **≤ 50%** context. Every compact is a chance to **promote reusable learnings** via **worktree + PR to `main`** (human approval). SSoT: [docs/compaction/](docs/compaction/).
 
+### Intent → implement (rule 24)
+
+**Never** treat a raw human ask as direct implementation orders. Research effect + debt, form a **solid goal**, use **`ask_user_question`** when unsure or pushing back, then kick a **deliberate implement** lane (plan → implement). SSoT: [docs/intent-to-implement/](docs/intent-to-implement/).
+
 ### Requirements maturity (rule 18) — public gate
 
 Every sacred requirement has an **honest score**, **mode** (`development` unless 100%), and **commit hash** in:

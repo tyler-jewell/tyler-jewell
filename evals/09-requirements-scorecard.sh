@@ -55,8 +55,15 @@ grep -qi 'PR\|pull request' "$A"
 test -f "$ROOT/docs/compaction/README.md"
 grep -qi 'auto_compact_threshold_percent' "$ROOT/docs/compaction/README.md"
 
-# Every requirement ID 1–23 appears as a scored row (markdown table)
-for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23; do
+# Sacred rule 24 intent → implement
+grep -E '^24\. \*\*Never treat a raw human ask' "$A"
+grep -qi 'ask_user_question' "$A"
+grep -qi 'goal statement\|solid goal' "$A"
+grep -qi 'implement' "$A"
+test -f "$ROOT/docs/intent-to-implement/README.md"
+
+# Every requirement ID 1–24 appears as a scored row (markdown table)
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24; do
   grep -E "^\\| *${i} +\\|" "$SC" >/dev/null || {
     echo "FAIL: scorecard missing row for requirement $i"
     exit 1
