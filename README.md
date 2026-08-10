@@ -5,6 +5,18 @@ This is a normal GitHub repo — **not** the OS home directory and not a dump of
 
 Related product: **[herdr-web](https://github.com/tyler-jewell/herdr-web)** — Integrations UI (clone + `./scripts/serve.sh`).
 
+## Manual prerequisites (human — before agents run the process)
+
+Do these **before** AI-first setup, publish, or multi-repo work. Agents must not invent credentials.
+
+| Order | Step | Notes |
+|------:|------|--------|
+| **1** | **`gh auth login`** | **Required early.** Browser/device OAuth for GitHub CLI. Without it, inventory, `gh repo create`, and push fail. |
+| 2 | `sudo …/privileged-setup.sh` (or Determinate Nix GUI) | Once per wiped Mac — CLT + Nix volume |
+| 3 | `grok login` (if needed) | Grok account/API; separate from GitHub |
+
+Cloning public repos with plain `git clone` does not need `gh auth`. **Creating/pushing** private or org repos does.
+
 ## Sacred overall AGENTS
 
 [`AGENTS.md`](AGENTS.md) is overall/primary. Host and project `AGENTS.md` files specialize; they never override sacred rules.
@@ -71,6 +83,8 @@ cd herdr-web && ./scripts/serve.sh
 ```
 
 ## Publish
+
+Requires **`gh auth login` already completed** (see prerequisites above).
 
 ```bash
 # methodology umbrella (this repo)

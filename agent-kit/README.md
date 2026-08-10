@@ -1,6 +1,8 @@
 # AI-first agent kit
 
-Orchestrates **agent-owned** setup after the Nix/privileged floor:
+Orchestrates **agent-owned** setup after the Nix/privileged floor.
+
+**Human first (manual):** if GitHub remotes, publish, or `gh` inventory are in scope, run **`gh auth login` before** starting this kit or the rest of day-0. Agents cannot complete GitHub OAuth.
 
 1. Discover local machine facts (live)
 2. Scan network/SSH candidates; accept full-setup only if **LLM-capable GPU**
