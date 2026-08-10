@@ -37,6 +37,21 @@ cat path/to/tyler-jewell/AGENTS.md
 6. **Identity of this umbrella** — Work attributed to Tyler Jewell under this tree follows this charter first; host and project files are secondary and tertiary specialization only.
 7. **Hosts registry** — Long-lived machines are recorded under `hosts/` (see `hosts/README.md`). Do not invent a second host inventory system.
 8. **Pipeable charter** — This file must remain plain Markdown, free of secrets, so it can be piped or pasted into any agent/tool.
+9. **Live CLI/API discovery — never hardcode enumerations that mirror a tool** — If a list, set of targets, flags, versions, hosts, or enum values is **owned by an underlying CLI or API** (and can grow/rename when that tool ships), do **not** hardcode it in our code, config, or docs as a frozen inventory. Prefer **live discovery** at runtime (`--help`, `status`, machine-readable list/JSON, OpenAPI, etc.) so when the CLI/API changes we update the tool, not every UI and script. Hand-maintained mirrors break silently or force churn.
+
+   **Bad (forbidden pattern):**
+   ```python
+   OFFICIAL_TARGETS = frozenset({
+       "pi", "omp", "claude", "codex", "copilot", "devin", "droid",
+       "kimi", "opencode", "kilo", "hermes", "qodercli", "cursor",
+       "mastracode", "antigravity-cli", "grok",
+   })
+   ```
+   That list belongs to `herdr integration install` / `status` (or equivalent). Parse help/status or let the CLI reject unknown targets.
+
+   **Good:** drive UI/actions from live `herdr integration status` (or `--help` possible-values), validate only structure (safe slug), and trust the CLI as source of truth.
+
+   **Allowed hardcoding:** our own stable policy (sacred rules, path layout we own), true constants that are not another product’s surface area, and tiny internal enums we fully control.
 
 ---
 
@@ -46,6 +61,7 @@ cat path/to/tyler-jewell/AGENTS.md
 - Language/framework preferences for one app (→ that project’s `AGENTS.md`)
 - Temporary experiments or “try this week” notes
 - Anything that already follows from git/gh/Grok defaults without our policy
+- Hardcoded copies of another CLI’s target/flag inventories (→ live discovery; see sacred rule 9)
 
 ---
 
