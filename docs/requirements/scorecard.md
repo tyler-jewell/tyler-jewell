@@ -6,15 +6,15 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | Meta | Value |
 |------|--------|
 | **Last rescore (UTC)** | 2026-08-10 |
-| **Rescore reason** | Rule 21 authority + herdr-kit core (flash/dry-run/wipe); product web/browser out of core |
-| **tyler-jewell @ score** | 10bd90117e0c8193970d667a929be3e6d28bb510 |
-| **herdr-web @ score** | parked / not in core flash path |
+| **Rescore reason** | Rule 22 ports.toml — no hardcoded local app ports |
+| **tyler-jewell @ score** | a3ed775b273aa3474360cae8ccff15ab2012b2cf |
+| **herdr-web @ score** | ports.toml claim + serve loads claim |
 | **host system flake** | floor only; methodology via herdr-kit |
 
 **Overall maturity:** **development**  
-**Rows mature (100%):** 0 / 21  
-**Rows in development:** 21 / 21  
-**Average (unweighted):** ~61%
+**Rows mature (100%):** 0 / 22  
+**Rows in development:** 22 / 22  
+**Average (unweighted):** ~59%
 
 ---
 
@@ -38,7 +38,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 
 ---
 
-## Scores (rules 1–21)
+## Scores (rules 1–22)
 
 | ID | Requirement | Score | Mode | Logged at (primary) | Evidence (honest) | Gaps to 100% |
 |----|-------------|------:|------|---------------------|-------------------|--------------|
@@ -63,6 +63,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | 19 | DRY / SSoT (stop multi-file copy) | **35** | development | tyler-jewell `df6a366` | Sacred rule 19 + README pointer; related to rule 9 live discovery | No mechanical “second/third file same fact” lint; known doc/code duplications not inventoried; agent habit not proven; shared libs/generators for repeated config still ad hoc |
 | 20 | Simplicity / tests must not drive debt | **35** | development | tyler-jewell `9db877c` | Sacred rule 20 + README; stop-and-fix paired with rule 19 | Cultural only so far; no review checklist automation; known over-complex tests/evals not inventoried; habit not proven across agents |
 | 21 | Instruction authority + herdr-kit flash | **45** | development | tyler-jewell `79d730d` | Rule 21 + authority section; herdr-kit with flash/wipe/bootstrap dry-run; docs/herdr-native | Mac soak not run; GitHub install path unproven; multi-agent inject not automatic; wipe apply not soak-logged |
+| 22 | No hardcoded local ports / ports.toml | **50** | development | tyler-jewell `0c4f6a6` + herdr-web | Rule 22; docs/ports; ports.toml beside AGENTS trees; herdr-web serve loads claim; sticky URL docs removed | Cross-tree claim conflict checker not automated; Mesh-LLM 9337 still prose default; all machines not proven |
 
 ---
 
@@ -70,12 +71,12 @@ Do **not** declare the core setup finished or “ready for public completion” 
 
 | Metric | Value |
 |--------|------:|
-| Requirements | 21 |
+| Requirements | 22 |
 | Mature (100%) | **0** |
-| Development | **21** |
+| Development | **22** |
 | Min score | **15** (rule 16 passkeys) |
 | Max score | **95** (rule 8 pipeable) |
-| Unweighted average | **~61%** |
+| Unweighted average | **~59%** |
 | **Public gate** | **BLOCKED** |
 
 ---
@@ -88,6 +89,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | 2026-08-10 | tyler-jewell `df6a366` (rule 19 DRY/SSoT + scorecard 1–19) · pin `cd6d2c6` | Add DRY core requirement; scorecard covers 1–19 | BLOCKED |
 | 2026-08-10 | tyler-jewell `9db877c` (rule 20 simplicity / tests-not-debt) | Add stop-and-fix simplicity requirement; scorecard 1–20 | BLOCKED |
 | 2026-08-10 | tyler-jewell `79d730d` (rule 21 + herdr-kit core) | Authority chain + flash/dry-run/wipe kit; web/browser out of core | BLOCKED |
+| 2026-08-10 | tyler-jewell `0c4f6a6` (rule 22 ports.toml) | No hardcoded local app ports; ports.toml claims | BLOCKED |
 
 *(Each rescore: append a row here and rewrite the table above — do not delete history rows.)*
 

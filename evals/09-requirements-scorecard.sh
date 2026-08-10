@@ -41,8 +41,14 @@ grep -E '^21\. \*\*Instruction authority' "$A"
 grep -qi 'outer→inner\|outer -> inner\|Load outer' "$A"
 grep -qi 'herdr-kit' "$A"
 
-# Every requirement ID 1–21 appears as a scored row (markdown table)
-for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21; do
+# Sacred rule 22 ports.toml
+grep -E '^22\. \*\*Never hardcode local app ports' "$A"
+grep -qi 'ports\.toml' "$A"
+test -f "$ROOT/docs/ports/README.md"
+test -f "$ROOT/ports.toml"
+
+# Every requirement ID 1–22 appears as a scored row (markdown table)
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22; do
   grep -E "^\\| *${i} +\\|" "$SC" >/dev/null || {
     echo "FAIL: scorecard missing row for requirement $i"
     exit 1

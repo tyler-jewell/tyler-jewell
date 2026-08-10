@@ -107,7 +107,7 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 
 17. **Public hosting on Vercel** — All **public-facing** web apps, databases, MCPs, and similar internet-exposed product surfaces **are hosted on [Vercel](https://vercel.com)**. Do not invent a second primary public host for those surfaces. Local/dev and private mesh tooling may run on-host; production public URLs go through Vercel. Host Nix/home-manager flakes **must** provide the **Vercel CLI** on PATH (and document `vercel login` as a one-time human auth step, like `gh auth login`). Agents deploy/link with the CLI after the human has authenticated — never commit Vercel tokens.
 
-18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–21**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
+18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–22**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
 
    - **100% / `mature` only** when the requirement is met by **core, version-controlled setup** that a **clean machine can replicate** (policy + implementation + proof; gaps empty). See scorecard definition of 100%.
    - **Any score &lt; 100% is `development` mode.** Agents must treat that requirement as unfinished infrastructure — not done.
@@ -141,6 +141,16 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
    - **Herdr:** Herdr is the **runtime** only. **herdr-kit** owns flash, dry-run, wipe/bootstrap helpers, and pipe/chain actions. Do not invent Herdr system-prompt hacks.
    - **Core path:** no herdr-web / browser product required for authority or flash. See `docs/herdr-native/` and `herdr-kit/`.
 
+22. **Never hardcode local app ports — claim them in `ports.toml`** — Many local web apps may run at once. Agents **must not** hardcode listen ports (or sticky URLs like `http://127.0.0.1:8765/`) in docs, READMEs, AGENTS text, scripts, or code defaults as if a number were universal.
+
+   - **SSoT:** Every directory that has an `AGENTS.md` **must** include a sibling **`ports.toml`** that **claims** which ports (if any) local web apps in that folder use, and for what.
+   - **Empty claims are fine** when the tree has no local HTTP(S) apps — still ship `ports.toml` with no `[[port]]` rows (or an explicit comment that claims are empty).
+   - **Before choosing a port:** read this tree’s `ports.toml` and parent claims when relevant; pick a free claim; **update `ports.toml` first**, then wire env/flags/code to **read the claim** (env override still allowed for one-off runs).
+   - **Docs/UI copy:** describe how to discover the URL (env, status output, ports.toml) — never teach a frozen port as the only answer.
+   - **Bad:** sticky “open http://127.0.0.1:&lt;fixed-port&gt;/…” as the only instruction for a UI.
+   - **Good:** claim in `ports.toml`, bind via env / loader from that claim, print the live URL at serve time; docs say “see `ports.toml` / serve status line.”
+   - **Not this rule:** documenting an **upstream** product’s well-known default (e.g. Mesh-LLM’s published default base URL) with env override — still prefer env/`ports.toml` when **we** host the process. See `docs/ports/README.md`.
+
 ---
 
 ## What does *not* belong here
@@ -152,6 +162,7 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 - Hardcoded copies of another CLI’s target/flag inventories (→ live discovery; see sacred rule 9)
 - Parallel hand-maintained copies of the same fact across files (→ DRY / SSoT; see sacred rule 19)
 - Complexity or APIs kept only so brittle tests pass (→ simplify; see sacred rule 20)
+- Frozen local URLs / ports in docs or defaults (→ `ports.toml` claims; see sacred rule 22)
 
 ---
 

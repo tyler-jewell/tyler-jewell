@@ -99,6 +99,10 @@ On every create or update: **Could this be simpler?** **Are tests driving tech d
 
 Sacred umbrella wins among project instruction layers; load AGENTS **outer→inner**. Core tooling: **`herdr-kit/`** (flash dry-run default, wipe/bootstrap, pipe-agents). See [docs/herdr-native/](docs/herdr-native/). **No herdr-web/browser in core path.** Multi-host only after Mac soak.
 
+### Local ports (rule 22)
+
+**Never hardcode** local app ports / sticky `http://127.0.0.1:NNNN/` in docs. Every `AGENTS.md` directory has **`ports.toml`** claims. See [docs/ports/](docs/ports/).
+
 ### Requirements maturity (rule 18) — public gate
 
 Every sacred requirement has an **honest score**, **mode** (`development` unless 100%), and **commit hash** in:
