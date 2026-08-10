@@ -1,7 +1,9 @@
 # tyler-jewell
 
-Starter kit and **identity umbrella** for Tyler Jewell agent work across machines.  
-This is a **normal GitHub repo**, not the OS home directory.
+Public **identity umbrella** and methodology for Tyler Jewell agent work across machines.  
+This is a normal GitHub repo — **not** the OS home directory and not a dump of private absolute paths.
+
+Related product: **[herdr-web](https://github.com/tyler-jewell/herdr-web)** — Integrations UI (clone + `./scripts/serve.sh`).
 
 ## Sacred overall AGENTS
 
@@ -10,15 +12,13 @@ This is a **normal GitHub repo**, not the OS home directory.
 ### Pipe into any tool
 
 ```bash
-# Local checkout:
-cat ~/github-repos/tyler-jewell/AGENTS.md
+# From a local checkout (any path):
+./scripts/pipe-agents.sh
 # or:
-~/github-repos/tyler-jewell/scripts/pipe-agents.sh
+cat AGENTS.md
 
-# After GitHub publish (private raw needs auth):
-gh api repos/OWNER/tyler-jewell/contents/AGENTS.md --jq .content | base64 -d
-# or public raw URL if the repo is public:
-# curl -fsSL https://raw.githubusercontent.com/OWNER/tyler-jewell/main/AGENTS.md
+# Public raw (after this repo is public):
+curl -fsSL https://raw.githubusercontent.com/tyler-jewell/tyler-jewell/main/AGENTS.md
 ```
 
 ## Layout
@@ -27,58 +27,31 @@ gh api repos/OWNER/tyler-jewell/contents/AGENTS.md --jq .content | base64 -d
 tyler-jewell/
   AGENTS.md                 # sacred umbrella (overall)
   README.md
-  scripts/
-    pipe-agents.sh          # emit umbrella AGENTS only
-    hierarchy-order.sh      # outer→inner AGENTS chain for a path
+  scripts/                  # pipe-agents, hierarchy-order
+  agent-kit/                # AI-first setup after Nix floor
   hosts/
-    AGENTS.md / README.md   # hosts registry
-    tylers-macbook-pro/     # first host
-      AGENTS.md / README.md
-      host.toml
-      projects/_hierarchy-probe/   # depth fixture for hierarchy proof
-        AGENTS.md / README.md
-  test/
-    run-hierarchy-check.sh
+    macbook-pro/            # primary laptop host class (portable docs)
+    mac-studio/             # Studio SSH parity template
+  test/run-hierarchy-check.sh
 ```
+
+Paths in docs use **`$HOME`**, **`~`**, and **relative** repo paths so the methodology works on any username or clone location.
 
 ## Hierarchy (authoritative order)
 
-For a working directory under this repo, agents must honor:
-
-1. `tyler-jewell/AGENTS.md` (umbrella — sacred)
-2. `hosts/<host>/AGENTS.md` (when under that host tree)
-3. Deeper project `AGENTS.md` files (specialization)
-
-Prove with:
+1. `AGENTS.md` (umbrella — sacred)
+2. `hosts/<host>/AGENTS.md`
+3. Deeper project `AGENTS.md` files
 
 ```bash
 ./test/run-hierarchy-check.sh
-./scripts/hierarchy-order.sh hosts/tylers-macbook-pro/projects/_hierarchy-probe
+./scripts/hierarchy-order.sh hosts/macbook-pro/projects/_hierarchy-probe
 ```
 
 ## Hosts
 
-Register each long-lived machine under `hosts/<slug>/`. First host: **tylers-macbook-pro** (Tylers-MacBook-Pro / user `mbp`).
-
-## Publish to GitHub
-
-`gh` must be logged in first:
-
-```bash
-gh auth login
-cd ~/github-repos/tyler-jewell
-gh repo create tyler-jewell --private --source=. --remote=origin --push
-# or under an org:
-# gh repo create ORG/tyler-jewell --private --source=. --remote=origin --push
-```
-
-Do **not** force-push. Prefer private until you intentionally open the charter.
-
-## Verify hierarchy
-
-```bash
-./test/run-hierarchy-check.sh
-```
+Register machines under `hosts/<slug>/`. Public examples: **macbook-pro**, **mac-studio**.  
+Full-setup targets need live **LLM-capable GPU** discovery (see agent-kit).
 
 ## AI-first agent kit
 
@@ -89,4 +62,22 @@ After Nix exists on a machine:
 ./agent-kit/test/run-tests.sh
 ```
 
-See [agent-kit/README.md](agent-kit/README.md). Studio SSH parity: [hosts/mac-studio/](hosts/mac-studio/).
+## herdr-web (separate public repo)
+
+```bash
+git clone https://github.com/tyler-jewell/herdr-web.git
+cd herdr-web && ./scripts/serve.sh
+# → http://127.0.0.1:8765/
+```
+
+## Publish
+
+```bash
+# methodology umbrella (this repo)
+gh repo create tyler-jewell/tyler-jewell --public --source=. --remote=origin --push
+
+# Integrations UI (sibling product)
+# see herdr-web README — two steps: clone + ./scripts/serve.sh
+```
+
+Do **not** force-push. Never publish secrets or private absolute home paths.

@@ -1,12 +1,12 @@
-# Copy to host.toml when a real Studio is enrolled. No secrets.
+# Copy to host.toml when a real Studio is enrolled. No secrets. No private absolute homes in public git.
 slug = "mac-studio"
-hostname = "REPLACE-hostname"
-username = "REPLACE-user"
+hostname = "REPLACE-with-hostname"
+username = "$USER"
 os = "macOS"
 arch = "aarch64"
-home = "/Users/REPLACE-user"
+home = "$HOME"
 llm_gpu = "yes"
 full_setup_eligible = "yes"
 role = "studio-workstation"
 ssh_alias = "studio"
-umbrella_local = "/Users/REPLACE-user/github-repos/tyler-jewell"
+umbrella_local = "$HOME/github-repos/tyler-jewell"

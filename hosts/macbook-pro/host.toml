@@ -1,0 +1,13 @@
+# Portable registry entry for the macbook-pro host class (public-safe).
+# Concrete absolute paths are machine-local — use host.toml.example + agent-kit propose.
+slug = "macbook-pro"
+hostname = "macbook-pro"   # replace with live `hostname` when binding a real box
+username = "$USER"
+os = "macOS"
+arch = "aarch64"
+home = "$HOME"
+role = "primary-laptop-admin"
+home_admin_agents = "$HOME/AGENTS.md"
+system_path = "$HOME/system"
+github_repos_path = "$HOME/github-repos"
+umbrella_local = "$HOME/github-repos/tyler-jewell"

@@ -5,10 +5,11 @@ Agents editing this tree maintain the **inventory of long-lived machines** under
 ## Rules
 
 1. Umbrella `../AGENTS.md` is sacred and overall — do not contradict it.
-2. One directory per host: `hosts/<slug>/` with dual-write `AGENTS.md` + `README.md` and a `host.toml` of stable facts.
-3. Slug is lowercase hyphenated (e.g. `tylers-macbook-pro`). Hostname in `host.toml` is the real OS hostname.
-4. Do not store secrets, SSH private keys, or API tokens here.
-5. Adding a host is a small, reviewable change — copy `tylers-macbook-pro/` as a template.
+2. One directory per host: `hosts/<slug>/` with dual-write `AGENTS.md` + `README.md` and portable `host.toml` / `host.toml.example`.
+3. Slug is lowercase hyphenated (e.g. `macbook-pro`). Hostname in machine-local binding comes from live `hostname`.
+4. Do not store secrets, SSH private keys, API tokens, or private absolute home paths in public files.
+5. Prefer `$HOME`, `~`, and relative repo paths in docs.
+6. Adding a host: copy `macbook-pro/` or `mac-studio/` as a template; or agent-kit `--propose-host` after approval.
 
 ## Chain position
 

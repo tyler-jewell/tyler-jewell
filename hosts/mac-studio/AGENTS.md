@@ -1,4 +1,4 @@
-# Host: Mac Studio (slug: mac-studio) — template
+# Host: Mac Studio (slug: `mac-studio`) — template
 
 **Secondary** host charter for a Mac Studio under Tyler Jewell.  
 Umbrella sacred rules remain overall.
@@ -7,13 +7,19 @@ Umbrella sacred rules remain overall.
 
 This directory is a **parity template**. It is not proof that a Studio is online.
 
+## Portable conventions
+
+| Fact | Convention |
+|------|------------|
+| Slug | `mac-studio` |
+| User | `$USER` on the Studio |
+| Home | `$HOME` on the Studio |
+| SSH | alias of your choice (e.g. `studio`) after `ssh-copy-id` |
+
 ## Agent scope (when SSH + permission exist)
 
-1. Same stack as MBP: umbrella AGENTS, `~/system` (or Studio home path), Herdr, integrations via live CLI, herdr-web, agent-kit.
+1. Same stack as MacBook Pro: umbrella AGENTS, `$HOME/system`, Herdr, integrations via live CLI, **herdr-web** (public clone), agent-kit.
 2. Full-setup only if live GPU probe reports LLM-capable GPU (Apple Silicon Metal — expected on Studio).
-3. Prefer agent-kit over SSH:
-   ```bash
-   ssh mac-studio 'bash -s' < ~/github-repos/tyler-jewell/agent-kit/scripts/ai-first-setup.sh -- --dry-run
-   ```
+3. Prefer agent-kit over SSH after the tree is seeded on the Studio.
 4. Privileged floor on Studio still needs human sudo once if Nix missing.
 5. Do not invent Studio inventory entries without a real probe or human request.

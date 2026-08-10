@@ -5,7 +5,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 ORDER="$ROOT/scripts/hierarchy-order.sh"
-PROBE="$ROOT/hosts/tylers-macbook-pro/projects/_hierarchy-probe"
+PROBE="$ROOT/hosts/macbook-pro/projects/_hierarchy-probe"
 
 die() { echo "FAIL: $*" >&2; exit 1; }
 
@@ -14,7 +14,7 @@ chmod +x "$ORDER" "$ROOT/scripts/pipe-agents.sh" 2>/dev/null || true
 
 [[ -d "$PROBE" ]] || die "missing fixture $PROBE"
 [[ -f "$ROOT/AGENTS.md" ]] || die "missing umbrella AGENTS.md"
-[[ -f "$ROOT/hosts/tylers-macbook-pro/AGENTS.md" ]] || die "missing host AGENTS.md"
+[[ -f "$ROOT/hosts/macbook-pro/AGENTS.md" ]] || die "missing host AGENTS.md"
 [[ -f "$PROBE/AGENTS.md" ]] || die "missing probe AGENTS.md"
 
 # Bash 3.2-compatible (macOS /bin/bash): no mapfile
@@ -41,7 +41,7 @@ host_hit=0
 i=0
 while [[ $i -lt $n ]]; do
   p="${lines[$i]}"
-  if [[ "$p" == "$ROOT/hosts/tylers-macbook-pro/AGENTS.md" ]]; then
+  if [[ "$p" == "$ROOT/hosts/macbook-pro/AGENTS.md" ]]; then
     host_hit=1
   fi
   i=$((i + 1))

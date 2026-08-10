@@ -1,11 +1,11 @@
 # Hosts
 
-Registry of machines under the Tyler Jewell umbrella.
+Registry of machines under the Tyler Jewell umbrella. **Public methodology only** — no private absolute home paths in docs.
 
-| Slug | Hostname | User | Role |
-|------|----------|------|------|
-| [tylers-macbook-pro](tylers-macbook-pro/) | Tylers-MacBook-Pro | `mbp` | Primary macOS laptop admin |
-| [mac-studio](mac-studio/) | *(template)* | — | Studio parity via SSH + agent-kit |
+| Slug | Class | Role |
+|------|-------|------|
+| [macbook-pro](macbook-pro/) | Primary macOS laptop | Day-0 admin + Nix + agent-kit |
+| [mac-studio](mac-studio/) | Mac Studio (template) | Same stack via SSH + agent-kit |
 
 ## Full-setup gate
 
@@ -13,7 +13,11 @@ A host is a **full-setup** target only if live discovery reports **≥1 LLM-capa
 
 ## Add a host
 
-1. Prefer: `agent-kit/scripts/ai-first-setup.sh --apply --yes --propose-host` on the machine
-2. Or copy `tylers-macbook-pro/` / `mac-studio/` → `hosts/<new-slug>/`
-3. Edit `host.toml`, dual-write `AGENTS.md` + `README.md`
-4. Commit in the tyler-jewell repo
+1. Prefer: `agent-kit/scripts/ai-first-setup.sh --apply --yes --propose-host` on the machine  
+2. Or copy `macbook-pro/` / `mac-studio/` → `hosts/<new-slug>/`  
+3. Dual-write `AGENTS.md` + `README.md`; keep paths as `$HOME` / `~` / relative  
+4. Commit in this repo (never secrets, never private absolute homes in public branches)
+
+## herdr-web
+
+Integrations UI is a **separate public repo**: [tyler-jewell/herdr-web](https://github.com/tyler-jewell/herdr-web) — two-step stand-up, no hosts registry.
