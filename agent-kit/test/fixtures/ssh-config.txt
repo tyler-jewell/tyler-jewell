@@ -1,0 +1,10 @@
+Host *
+  ServerAliveInterval 60
+
+Host studio
+  HostName mac-studio.local
+  User tyler
+
+Host gpu-box
+  HostName 10.0.0.50
+  User ml

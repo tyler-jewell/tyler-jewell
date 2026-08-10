@@ -1,0 +1,10 @@
+Graphics/Displays:
+
+    Apple M1:
+
+      Chipset Model: Apple M1
+      Type: GPU
+      Bus: Built-In
+      Total Number of Cores: 8
+      Vendor: Apple (0x106b)
+      Metal Support: Metal 4

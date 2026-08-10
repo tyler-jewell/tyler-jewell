@@ -79,3 +79,14 @@ Do **not** force-push. Prefer private until you intentionally open the charter.
 ```bash
 ./test/run-hierarchy-check.sh
 ```
+
+## AI-first agent kit
+
+After Nix exists on a machine:
+
+```bash
+./agent-kit/scripts/ai-first-setup.sh --dry-run
+./agent-kit/test/run-tests.sh
+```
+
+See [agent-kit/README.md](agent-kit/README.md). Studio SSH parity: [hosts/mac-studio/](hosts/mac-studio/).

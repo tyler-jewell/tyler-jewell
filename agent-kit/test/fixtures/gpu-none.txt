@@ -1,0 +1,2 @@
+No graphics devices reported.
+This host is CPU-only for compute purposes.
