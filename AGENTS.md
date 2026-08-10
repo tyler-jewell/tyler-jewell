@@ -107,7 +107,7 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 
 17. **Public hosting on Vercel** — All **public-facing** web apps, databases, MCPs, and similar internet-exposed product surfaces **are hosted on [Vercel](https://vercel.com)**. Do not invent a second primary public host for those surfaces. Local/dev and private mesh tooling may run on-host; production public URLs go through Vercel. Host Nix/home-manager flakes **must** provide the **Vercel CLI** on PATH (and document `vercel login` as a one-time human auth step, like `gh auth login`). Agents deploy/link with the CLI after the human has authenticated — never commit Vercel tokens.
 
-18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–22**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
+18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–23**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
 
    - **100% / `mature` only** when the requirement is met by **core, version-controlled setup** that a **clean machine can replicate** (policy + implementation + proof; gaps empty). See scorecard definition of 100%.
    - **Any score &lt; 100% is `development` mode.** Agents must treat that requirement as unfinished infrastructure — not done.
@@ -151,6 +151,14 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
    - **Good:** claim in `ports.toml`, bind via env / loader from that claim, print the live URL at serve time; docs say “see `ports.toml` / serve status line.”
    - **Not this rule:** documenting an **upstream** product’s well-known default (e.g. Mesh-LLM’s published default base URL) with env override — still prefer env/`ports.toml` when **we** host the process. See `docs/ports/README.md`.
 
+23. **Aggressive context compaction + compaction-as-system-improvement (SSoT)** — All agents under this identity keep **aggressive** auto-compaction settings and treat every compaction as a **system refinement opportunity**, not only a memory wipe.
+
+   1. **Threshold:** configure the agent runtime so auto-compaction fires at **≤ 50%** of the context window (e.g. Grok `~/.grok/config.toml` → `[session] auto_compact_threshold_percent = 50`). Prefer **50 or lower**, never a lax default (80–85%) for our sessions. Document other agent products’ equivalent settings in `docs/compaction/`.
+   2. **SSoT guidelines:** [`docs/compaction/README.md`](docs/compaction/README.md) is the single source of truth for *how* we compact and *what* we do after. Do not invent a parallel compaction playbook.
+   3. **On every compaction (manual `/compact` or auto):** pause briefly and ask: *Did this session produce learnings, conventions, fixes, or tooling that **future agents under us** should always have?* If yes → capture as a durable improvement (AGENTS, herdr-kit, host-runtime, evals, docs, flake packages, etc.).
+   4. **Promotion path:** durable improvements land via **isolated worktree + PR into `main`** for **human approval** — not silent force-push to main, not “only in this session’s head.” Prefer small, reviewable PRs (rules 3, 5).
+   5. **Honesty:** if nothing reusable was learned, do not invent a PR. Compaction still proceeds; the checklist is mandatory, the PR is only when value exists.
+
 ---
 
 ## What does *not* belong here
@@ -163,6 +171,7 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 - Parallel hand-maintained copies of the same fact across files (→ DRY / SSoT; see sacred rule 19)
 - Complexity or APIs kept only so brittle tests pass (→ simplify; see sacred rule 20)
 - Frozen local URLs / ports in docs or defaults (→ `ports.toml` claims; see sacred rule 22)
+- Lax auto-compact thresholds or one-off compaction rituals (→ rule 23 + `docs/compaction/`)
 
 ---
 

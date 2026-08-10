@@ -6,16 +6,16 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | Meta | Value |
 |------|--------|
 | **Last rescore (UTC)** | 2026-08-10 |
-| **Rescore reason** | Rule 22 ports.toml — no hardcoded local app ports |
-| **tyler-jewell @ score** | a3ed775b273aa3474360cae8ccff15ab2012b2cf |
+| **Rescore reason** | Rule 23 aggressive compact ≤50% + compaction-as-system-improvement |
+| **tyler-jewell @ score** | 457325520a7652a3626849420cb5d4eac4a412e0 |
 | **product UI** | removed from local stack |
-
 | **host system flake** | floor only; methodology via herdr-kit |
+| **Grok compact** | `~/.grok/config.toml` `[session] auto_compact_threshold_percent = 50` |
 
 **Overall maturity:** **development**  
-**Rows mature (100%):** 0 / 22  
-**Rows in development:** 22 / 22  
-**Average (unweighted):** ~59%
+**Rows mature (100%):** 0 / 23  
+**Rows in development:** 23 / 23  
+**Average (unweighted):** ~58%
 
 ---
 
@@ -39,7 +39,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 
 ---
 
-## Scores (rules 1–22)
+## Scores (rules 1–23)
 
 | ID | Requirement | Score | Mode | Logged at (primary) | Evidence (honest) | Gaps to 100% |
 |----|-------------|------:|------|---------------------|-------------------|--------------|
@@ -67,6 +67,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | 20 | Simplicity / tests must not drive debt | **35** | development | tyler-jewell `9db877c` | Sacred rule 20 + README; stop-and-fix paired with rule 19 | Cultural only so far; no review checklist automation; known over-complex tests/evals not inventoried; habit not proven across agents |
 | 21 | Instruction authority + herdr-kit flash | **45** | development | tyler-jewell `79d730d` | Rule 21 + authority section; herdr-kit with flash/wipe/bootstrap dry-run; docs/herdr-native | Mac soak not run; GitHub install path unproven; multi-agent inject not automatic; wipe apply not soak-logged |
 | 22 | No hardcoded local ports / ports.toml | **50** | development | tyler-jewell | Rule 22; docs/ports; ports.toml beside AGENTS trees; ports.toml on AGENTS trees | Cross-tree claim conflict checker not automated; Mesh-LLM 9337 still prose default; all machines not proven |
+| 23 | Aggressive compact + promote on compact | **45** | development | tyler-jewell + `~/.grok/config.toml` | Rule 23; docs/compaction; Grok `auto_compact_threshold_percent = 50` | Habit/PR-on-compact not proven; other agent products not configured; no CI check of grok config on all hosts |
 
 ---
 
@@ -74,12 +75,12 @@ Do **not** declare the core setup finished or “ready for public completion” 
 
 | Metric | Value |
 |--------|------:|
-| Requirements | 22 |
+| Requirements | 23 |
 | Mature (100%) | **0** |
-| Development | **22** |
+| Development | **23** |
 | Min score | **15** (rule 16 passkeys) |
 | Max score | **95** (rule 8 pipeable) |
-| Unweighted average | **~59%** |
+| Unweighted average | **~58%** |
 | **Public gate** | **BLOCKED** |
 
 ---
@@ -93,6 +94,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | 2026-08-10 | tyler-jewell `9db877c` (rule 20 simplicity / tests-not-debt) | Add stop-and-fix simplicity requirement; scorecard 1–20 | BLOCKED |
 | 2026-08-10 | tyler-jewell `79d730d` (rule 21 + herdr-kit core) | Authority chain + flash/dry-run/wipe kit; web/browser out of core | BLOCKED |
 | 2026-08-10 | tyler-jewell `0c4f6a6` (rule 22 ports.toml) | No hardcoded local app ports; ports.toml claims | BLOCKED |
+| 2026-08-10 | tyler-jewell `e8fc660` (rule 23 compaction) | ≤50% auto-compact; compact → worktree/PR promotion guidelines | BLOCKED |
 
 *(Each rescore: append a row here and rewrite the table above — do not delete history rows.)*
 

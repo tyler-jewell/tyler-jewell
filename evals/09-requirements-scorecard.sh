@@ -47,8 +47,16 @@ grep -qi 'ports\.toml' "$A"
 test -f "$ROOT/docs/ports/README.md"
 test -f "$ROOT/ports.toml"
 
-# Every requirement ID 1–22 appears as a scored row (markdown table)
-for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22; do
+# Sacred rule 23 compaction
+grep -E '^23\. \*\*Aggressive context compaction' "$A"
+grep -qi '50%' "$A"
+grep -qi 'worktree' "$A"
+grep -qi 'PR\|pull request' "$A"
+test -f "$ROOT/docs/compaction/README.md"
+grep -qi 'auto_compact_threshold_percent' "$ROOT/docs/compaction/README.md"
+
+# Every requirement ID 1–23 appears as a scored row (markdown table)
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23; do
   grep -E "^\\| *${i} +\\|" "$SC" >/dev/null || {
     echo "FAIL: scorecard missing row for requirement $i"
     exit 1

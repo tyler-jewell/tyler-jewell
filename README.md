@@ -103,6 +103,10 @@ Sacred umbrella wins among project instruction layers; load AGENTS **outer→inn
 
 **Never hardcode** local app ports / sticky `http://127.0.0.1:NNNN/` in docs. Every `AGENTS.md` directory has **`ports.toml`** claims. See [docs/ports/](docs/ports/).
 
+### Compaction (rule 23)
+
+Auto-compact at **≤ 50%** context. Every compact is a chance to **promote reusable learnings** via **worktree + PR to `main`** (human approval). SSoT: [docs/compaction/](docs/compaction/).
+
 ### Requirements maturity (rule 18) — public gate
 
 Every sacred requirement has an **honest score**, **mode** (`development` unless 100%), and **commit hash** in:
