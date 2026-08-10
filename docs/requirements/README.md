@@ -2,7 +2,16 @@
 
 **Single source of truth for scores:** [scorecard.md](scorecard.md)
 
-This tracks every **umbrella sacred requirement** (AGENTS.md rules 1–26) with:
+Sacred rules live in umbrella **AGENTS.md** in two sections (rule numbers stay global **1–26**):
+
+| Section | When |
+|---------|------|
+| **Core requirements** | Every agent session, always |
+| **Contributing requirements** | When updating code or the stack |
+
+Today both ship in session context; **Contributing** may later move to **hooks on update**.
+
+This scorecard tracks every sacred requirement with:
 
 | Field | Meaning |
 |-------|---------|

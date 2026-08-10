@@ -4,6 +4,17 @@ You are operating under the **Tyler Jewell** umbrella. This file is the **overal
 
 **Sacred:** do not add, edit, or weaken these rules lightly. Change only when certain that (1) the rule will remain true for years, (2) every agent under Tyler Jewell must follow it, and (3) tool defaults do not already enforce it.
 
+### How requirements are loaded (today vs later)
+
+| Section | When it applies | Loading today | Possible later |
+|---------|-----------------|---------------|----------------|
+| **Core requirements** | **Every agent session, always** | Full file in context | Stay in session/charter inject |
+| **Contributing requirements** | **When updating code or the stack** (implement, review, refactor, evals, flake, kits) | Full file in context (same as Core for now) | May move to **hooks on update** / change-triggered inject so idle sessions stay lighter |
+
+Until hooks exist, **both sections are provided in session context**. Agents still **weight** them: Core always; Contributing whenever the turn involves changing or reviewing the system.
+
+Rule **numbers stay global (1–26)** for the scorecard — sections only group when they apply.
+
 ---
 
 ## Authority order (overall → specialization)
@@ -32,20 +43,79 @@ herdr plugin action invoke tyler-jewell.herdr-kit.pipe-agents
 ./herdr-kit/scripts/agents-chain.sh <path-under-umbrella>
 ```
 
-Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No product web/browser in the core kit path. See `docs/herdr-native/`.
+Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). See `docs/herdr-native/`.
 
 ---
 
-## Sacred rules (every agent, every host)
+## Core requirements (every agent session, always)
+
+These govern **every** turn under this identity — chat, ops, discovery, and code work.
+
+2. **No secrets in git** — Never commit API keys, tokens, private keys, `.env` with secrets, auth dumps, session DBs, or credentials. Prefer env/secret managers.
+
+3. **No destructive git without explicit human ask** — No force-push to shared main/master, no history rewrite of published commits, no `reset --hard` of others’ work unless the human requested it.
+
+4. **Truth over theater** — Do not claim tests, publishes, or installs succeeded without running them. Do not hard-code fake success.
+
+5. **Prefer reversible local work** — Prefer edits and commits that can be reviewed; confirm before irreversible shared actions (public data wipe, prod deploys, org-wide permission changes).
+
+6. **Identity of this umbrella** — Work attributed to Tyler Jewell under this tree follows this charter first; host and project files are secondary and tertiary specialization only.
+
+8. **Pipeable charter** — This file must remain plain Markdown, free of secrets, so it can be piped or pasted into any agent/tool.
+
+21. **Instruction authority chain (umbrella supreme; full AGENTS chain)** — For every agent session under the Tyler Jewell identity (including agents started or supervised through **Herdr**), the **sacred rules in this file** are the **highest-priority project instruction layer**. They outrank host and project `AGENTS.md` files, agent-global instruction files, and any “closest AGENTS only” default when those would cancel sacred rules.
+
+   - **Chain:** Resolve every `AGENTS.md` from the **umbrella root along the work path to CWD** (tools: `hierarchy-order.sh`, herdr-kit `agents-chain` / `pipe-agents`). **Load outer→inner.**
+   - **Conflict:** deeper files may *specialize*; they may **never** contradict or cancel a sacred umbrella rule.
+   - **Honesty:** Vendor model system prompts remain; we do not claim to erase them. Explicit **human chat** for the current turn still outranks docs (industry standard). Nested git roots do **not** auto-load parents — agents **must** inject this charter when the session root is outside this repo.
+   - **Herdr:** Herdr is the **runtime** only. **herdr-kit** owns flash, dry-run, wipe/bootstrap helpers, and pipe/chain actions. Do not invent Herdr system-prompt hacks.
+   - **Core path:** herdr-kit only for methodology flash/authority — no product web UI required. See `docs/herdr-native/` and `herdr-kit/`.
+
+23. **Aggressive context compaction + compaction-as-system-improvement (SSoT)** — All agents under this identity keep **aggressive** auto-compaction settings and treat every compaction as a **system refinement opportunity**, not only a memory wipe.
+
+   1. **Threshold:** configure the agent runtime so auto-compaction fires at **≤ 50%** of the context window (prefer **50 or lower**; never a lax 80–85% default for our standard sessions). Host-local runtime config holds the number; methodology stays product-agnostic (rule 25). Details: `docs/compaction/`.
+   2. **SSoT guidelines:** [`docs/compaction/README.md`](docs/compaction/README.md) is the single source of truth for *how* we compact and *what* we do after. Do not invent a parallel compaction playbook.
+   3. **On every compaction (manual or auto):** pause briefly and ask: *Did this session produce learnings, conventions, fixes, or tooling that **future agents under us** should always have?* If yes → capture as a durable improvement (AGENTS, herdr-kit, host-runtime, evals, docs, flake packages, etc.).
+   4. **Promotion path:** durable improvements land via **isolated worktree + PR into `main`** for **human approval** — not silent force-push to main, not “only in this session’s head.” Prefer small, reviewable PRs (rules 3, 5).
+   5. **Honesty:** if nothing reusable was learned, do not invent a PR. Compaction still proceeds; the checklist is mandatory, the PR is only when value exists.
+
+24. **Never treat a raw human ask as direct orders — research, goal, then deliberate implement** — No agent under this identity shall **ever** take a raw human request as immediate implementation directions. Human chat still *outranks docs* for *intent* (rule 21 / industry norm); it does **not** authorize unthinking execution.
+
+   1. **Slow down.** Do **not** start mutating production trees on the first parse of the ask.
+   2. **Research the effect:** what systems change, what sacred rules apply (esp. Contributing rules when coding), blast radius, reversibility, and **tech debt** the change would add or remove.
+   3. **Uncertainty or pushback:** if anything is unclear, incomplete, or the ask looks harmful / debt-heavy / anti-pattern relative to our stack — **stop coding** and **use your ask-user-question capability** (structured choices for the human). Argue with evidence; do not silently obey a bad request and do not lecture without offering choices.
+   4. **Solid goal statement:** until the agent is **confident** (honest confidence — not theater) and has wrapped the work in a clear **goal** (outcome, non-goals, constraints, success checks), it must **not** freestyle large implementation in the same reactive turn.
+   5. **Deliberate implement path:** in natural language, **plan the work**, then **implement this plan** (or equivalent plain wording) so execution is against a written goal — not a one-line chat impulse and **not** product-specific slash hacks (rule 25). Trivial typos/single-line doc fixes may proceed after a one-sentence goal in-session; anything structural uses plan-then-implement.
+   6. **SSoT process:** [`docs/intent-to-implement/README.md`](docs/intent-to-implement/README.md).
+
+25. **99% integration-agnostic — natural language over product hacks** — Methodology, sacred rules, skills, and agent-facing docs stay **integration-agnostic**. Drive agents with **plain language** and their **built-in** planning, tools, and judgment — not vendor slash commands, brand-specific recipes, or brittle adapters that paper over weak prompting.
+
+   1. **Do not** write product-only slash-prefixed recipes (vendor “implement/plan/compact” command forms) just because one agent supports them. **Do** write plain language: **“Implement this plan: …”**, **“Plan the following: …”**, **“Compact context and promote learnings per our guidelines.”**
+   2. **Do not** brand the charter for one vendor (no “only works in …”, no name-dropping coding-agent products in sacred rules or process docs). Host install paths and binary names may appear in **machine/host** notes when a real filesystem path exists; methodology prose stays brand-neutral.
+   3. **Do not** say “use `ask_user_question` tool” as a magic token. **Do** say: **“Use your ask-user-question capability to …”** (or “ask the human with structured choices”).
+   4. **Capability bar:** agents that cannot follow clear natural-language plan/implement/compact/ask instructions **lose credibility** for this stack. Prefer better wording and planning over hacky wrapper code that exists only because an agent failed plain English.
+   5. **Avoid** new glue whose sole purpose is “agent X doesn’t understand NL.” Fix the prompt, the goal, or the agent choice — not another special-case script.
+   6. **SSoT:** [`docs/integration-agnostic/README.md`](docs/integration-agnostic/README.md).
+
+26. **Agent-driven commit workflow — humans never need to say “commit the changes”** — Completing durable work includes **shipping it to git** under a **strict, agent-run commit workflow**. The human should **not** have to prompt “commit the changes” as a separate afterthought.
+
+   1. **Default duty:** when an agent finishes a goal-scoped change that belongs in version control, the agent **runs the commit workflow** (checks → stage → commit message → commit). Push/PR when the goal requires shared visibility (rule 5 for irreversible shared actions).
+   2. **Strict workflow (SSoT):** [`docs/commit-workflow/README.md`](docs/commit-workflow/README.md) and portable entrypoint [`scripts/commit-workflow.sh`](scripts/commit-workflow.sh) — **runnable from any directory** (resolves the relevant git root from CWD or an explicit path).
+   3. **Agent-driven and contextual:** the workflow inspects **what changed** and **risk**, then runs **only the tests/checks needed** for that blast radius — not a blind full-suite tax on every one-line doc fix. High-risk or wide changes expand the check set.
+   4. **Unclear scope or risk:** **use your ask-user-question capability** before committing (or before expanding checks / pushing). Never invent consent for force-push, secrets, or destructive git (rules 2–3).
+   5. **Quality bar:** do not commit known-failing required checks; fix or explicitly document a blocked state with human-visible note. Prefer complete sentences in commit messages; group related work; no secrets.
+   6. **Not a license to spam commits:** still batch coherent units of work; still dual-write when layout/commands change; still re-score when requirements change (rule 18).
+
+---
+
+## Contributing requirements (when updating code or the stack)
+
+Apply whenever the session **implements, refactors, reviews, or ships** changes to code, config, evals, flakes, kits, or methodology trees. Today these are still loaded with Core in context; later they may inject via **hooks on update**.
 
 1. **Dual-write law** — Every directory an agent creates for ongoing work must include both `AGENTS.md` (agents) and `README.md` (humans), unless it is pure generated/cache output.
-2. **No secrets in git** — Never commit API keys, tokens, private keys, `.env` with secrets, auth dumps, session DBs, or credentials. Prefer env/secret managers.
-3. **No destructive git without explicit human ask** — No force-push to shared main/master, no history rewrite of published commits, no `reset --hard` of others’ work unless the human requested it.
-4. **Truth over theater** — Do not claim tests, publishes, or installs succeeded without running them. Do not hard-code fake success.
-5. **Prefer reversible local work** — Prefer edits and commits that can be reviewed; confirm before irreversible shared actions (public data wipe, prod deploys, org-wide permission changes).
-6. **Identity of this umbrella** — Work attributed to Tyler Jewell under this tree follows this charter first; host and project files are secondary and tertiary specialization only.
+
 7. **Hosts registry** — Long-lived machines are recorded under `hosts/` (see `hosts/README.md`). Do not invent a second host inventory system.
-8. **Pipeable charter** — This file must remain plain Markdown, free of secrets, so it can be piped or pasted into any agent/tool.
+
 9. **Live CLI/API discovery — never hardcode enumerations that mirror a tool** — If a list, set of targets, flags, versions, hosts, or enum values is **owned by an underlying CLI or API** (and can grow/rename when that tool ships), do **not** hardcode it in our code, config, or docs as a frozen inventory. Prefer **live discovery** at runtime (`--help`, `status`, machine-readable list/JSON, OpenAPI, etc.) so when the CLI/API changes we update the tool, not every UI and script. Hand-maintained mirrors break silently or force churn. This includes **Mesh-LLM model ids and mesh peers** — discover via the OpenAI-compatible `/v1/models` (and mesh CLI), never `OFFICIAL_MODELS=…` inventories.
 
    **Bad (forbidden pattern):**
@@ -133,14 +203,6 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
    - **On everyone:** agents and humans stay on the lookout during new work **and** refactors of old code. Prefer fewer concepts, fewer files, fewer flags, and direct code over cleverness.
    - **Not an excuse** to skip necessary tests, sacred evals, or safety checks — tests serve the product; the product does not contort to serve brittle tests.
 
-21. **Instruction authority chain (umbrella supreme; full AGENTS chain)** — For every agent session under the Tyler Jewell identity (including agents started or supervised through **Herdr**), the **sacred rules in this file** are the **highest-priority project instruction layer**. They outrank host and project `AGENTS.md` files, agent-global instruction files, and any “closest AGENTS only” default when those would cancel sacred rules.
-
-   - **Chain:** Resolve every `AGENTS.md` from the **umbrella root along the work path to CWD** (tools: `hierarchy-order.sh`, herdr-kit `agents-chain` / `pipe-agents`). **Load outer→inner.**
-   - **Conflict:** deeper files may *specialize*; they may **never** contradict or cancel a sacred umbrella rule.
-   - **Honesty:** Vendor model system prompts remain; we do not claim to erase them. Explicit **human chat** for the current turn still outranks docs (industry standard). Nested git roots do **not** auto-load parents — agents **must** inject this charter when the session root is outside this repo.
-   - **Herdr:** Herdr is the **runtime** only. **herdr-kit** owns flash, dry-run, wipe/bootstrap helpers, and pipe/chain actions. Do not invent Herdr system-prompt hacks.
-   - **Core path:** herdr-kit only for methodology flash/authority — no product web UI required. See `docs/herdr-native/` and `herdr-kit/`.
-
 22. **Never hardcode local app ports — claim them in `ports.toml`** — Many local web apps may run at once. Agents **must not** hardcode listen ports (or sticky URLs like `http://127.0.0.1:8765/`) in docs, READMEs, AGENTS text, scripts, or code defaults as if a number were universal.
 
    - **SSoT:** Every directory that has an `AGENTS.md` **must** include a sibling **`ports.toml`** that **claims** which ports (if any) local web apps in that folder use, and for what.
@@ -150,41 +212,6 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
    - **Bad:** sticky “open http://127.0.0.1:&lt;fixed-port&gt;/…” as the only instruction for a UI.
    - **Good:** claim in `ports.toml`, bind via env / loader from that claim, print the live URL at serve time; docs say “see `ports.toml` / serve status line.”
    - **Not this rule:** documenting an **upstream** product’s well-known default (e.g. Mesh-LLM’s published default base URL) with env override — still prefer env/`ports.toml` when **we** host the process. See `docs/ports/README.md`.
-
-23. **Aggressive context compaction + compaction-as-system-improvement (SSoT)** — All agents under this identity keep **aggressive** auto-compaction settings and treat every compaction as a **system refinement opportunity**, not only a memory wipe.
-
-   1. **Threshold:** configure the agent runtime so auto-compaction fires at **≤ 50%** of the context window (prefer **50 or lower**; never a lax 80–85% default for our standard sessions). Host-local runtime config holds the number; methodology stays product-agnostic (rule 25). Details: `docs/compaction/`.
-   2. **SSoT guidelines:** [`docs/compaction/README.md`](docs/compaction/README.md) is the single source of truth for *how* we compact and *what* we do after. Do not invent a parallel compaction playbook.
-   3. **On every compaction (manual or auto):** pause briefly and ask: *Did this session produce learnings, conventions, fixes, or tooling that **future agents under us** should always have?* If yes → capture as a durable improvement (AGENTS, herdr-kit, host-runtime, evals, docs, flake packages, etc.).
-   4. **Promotion path:** durable improvements land via **isolated worktree + PR into `main`** for **human approval** — not silent force-push to main, not “only in this session’s head.” Prefer small, reviewable PRs (rules 3, 5).
-   5. **Honesty:** if nothing reusable was learned, do not invent a PR. Compaction still proceeds; the checklist is mandatory, the PR is only when value exists.
-
-24. **Never treat a raw human ask as direct orders — research, goal, then deliberate implement** — No agent under this identity shall **ever** take a raw human request as immediate implementation directions. Human chat still *outranks docs* for *intent* (rule 21 / industry norm); it does **not** authorize unthinking execution.
-
-   1. **Slow down.** Do **not** start mutating production trees on the first parse of the ask.
-   2. **Research the effect:** what systems change, what sacred rules apply (esp. 19 DRY, 20 simplicity/debt, 14 Go, 22 ports, 18 scorecard), blast radius, reversibility, and **tech debt** the change would add or remove.
-   3. **Uncertainty or pushback:** if anything is unclear, incomplete, or the ask looks harmful / debt-heavy / anti-pattern relative to our stack — **stop coding** and **use your ask-user-question capability** (structured choices for the human). Argue with evidence; do not silently obey a bad request and do not lecture without offering choices.
-   4. **Solid goal statement:** until the agent is **confident** (honest confidence — not theater) and has wrapped the work in a clear **goal** (outcome, non-goals, constraints, success checks), it must **not** freestyle large implementation in the same reactive turn.
-   5. **Deliberate implement path:** in natural language, **plan the work**, then **implement this plan** (or equivalent plain wording) so execution is against a written goal — not a one-line chat impulse and **not** product-specific slash hacks (rule 25). Trivial typos/single-line doc fixes may proceed after a one-sentence goal in-session; anything structural uses plan-then-implement.
-   6. **SSoT process:** [`docs/intent-to-implement/README.md`](docs/intent-to-implement/README.md).
-
-25. **99% integration-agnostic — natural language over product hacks** — Methodology, sacred rules, skills, and agent-facing docs stay **integration-agnostic**. Drive agents with **plain language** and their **built-in** planning, tools, and judgment — not vendor slash commands, brand-specific recipes, or brittle adapters that paper over weak prompting.
-
-   1. **Do not** write product-only slash-prefixed recipes (vendor “implement/plan/compact” command forms) just because one agent supports them. **Do** write plain language: **“Implement this plan: …”**, **“Plan the following: …”**, **“Compact context and promote learnings per our guidelines.”**
-   2. **Do not** brand the charter for one vendor (no “only works in …”, no name-dropping coding-agent products in sacred rules or process docs). Host install paths and binary names may appear in **machine/host** notes when a real filesystem path exists; methodology prose stays brand-neutral.
-   3. **Do not** say “use `ask_user_question` tool” as a magic token. **Do** say: **“Use your ask-user-question capability to …”** (or “ask the human with structured choices”).
-   4. **Capability bar:** agents that cannot follow clear natural-language plan/implement/compact/ask instructions **lose credibility** for this stack. Prefer better wording and planning over hacky wrapper code that exists only because an agent failed plain English.
-   5. **Avoid** new glue whose sole purpose is “agent X doesn’t understand NL.” Fix the prompt, the goal, or the agent choice — not another special-case script.
-   6. **SSoT:** [`docs/integration-agnostic/README.md`](docs/integration-agnostic/README.md).
-
-26. **Agent-driven commit workflow — humans never need to say “commit the changes”** — Completing durable work includes **shipping it to git** under a **strict, agent-run commit workflow**. The human should **not** have to prompt “commit the changes” as a separate afterthought.
-
-   1. **Default duty:** when an agent finishes a goal-scoped change that belongs in version control, the agent **runs the commit workflow** (checks → stage → commit message → commit). Push/PR when the goal requires shared visibility (rule 5 for irreversible shared actions).
-   2. **Strict workflow (SSoT):** [`docs/commit-workflow/README.md`](docs/commit-workflow/README.md) and portable entrypoint [`scripts/commit-workflow.sh`](scripts/commit-workflow.sh) — **runnable from any directory** (resolves the relevant git root from CWD or an explicit path).
-   3. **Agent-driven and contextual:** the workflow inspects **what changed** and **risk**, then runs **only the tests/checks needed** for that blast radius — not a blind full-suite tax on every one-line doc fix. High-risk or wide changes expand the check set.
-   4. **Unclear scope or risk:** **use your ask-user-question capability** before committing (or before expanding checks / pushing). Never invent consent for force-push, secrets, or destructive git (rules 2–3).
-   5. **Quality bar:** do not commit known-failing required checks; fix or explicitly document a blocked state with human-visible note. Prefer complete sentences in commit messages; group related work; no secrets.
-   6. **Not a license to spam commits:** still batch coherent units of work; still dual-write when layout/commands change; still re-score when requirements change (rule 18).
 
 ---
 

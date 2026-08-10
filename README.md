@@ -19,7 +19,7 @@ Cloning public repos with plain `git clone` does not need `gh auth`. **Creating/
 
 ## Sacred overall AGENTS
 
-[`AGENTS.md`](AGENTS.md) is overall/primary. Host and project `AGENTS.md` files specialize; they never override sacred rules.
+[`AGENTS.md`](AGENTS.md) is overall/primary, split into **Core** (every session) and **Contributing** (when updating code). Host and project `AGENTS.md` files specialize; they never override sacred rules. Both sections load in context today; Contributing may later use hooks on update.
 
 ### Pipe into any tool
 

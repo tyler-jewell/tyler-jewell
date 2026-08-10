@@ -10,6 +10,11 @@ test -f "$SC"
 test -f "$RD"
 test -f "$ROOT/docs/requirements/AGENTS.md"
 
+# Two-section charter: Core (always) + Contributing (when updating code)
+grep -q '## Core requirements' "$A"
+grep -q '## Contributing requirements' "$A"
+grep -qi 'hooks on update\|hooks on code update\|on update' "$A"
+
 # Sacred rule 18 present
 grep -E '^18\. \*\*Requirements maturity' "$A"
 grep -qi 'scorecard' "$A"
