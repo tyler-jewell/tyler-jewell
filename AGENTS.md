@@ -98,13 +98,21 @@ cat path/to/tyler-jewell/AGENTS.md
 
 17. **Public hosting on Vercel** — All **public-facing** web apps, databases, MCPs, and similar internet-exposed product surfaces **are hosted on [Vercel](https://vercel.com)**. Do not invent a second primary public host for those surfaces. Local/dev and private mesh tooling may run on-host; production public URLs go through Vercel. Host Nix/home-manager flakes **must** provide the **Vercel CLI** on PATH (and document `vercel login` as a one-time human auth step, like `gh auth login`). Agents deploy/link with the CLI after the human has authenticated — never commit Vercel tokens.
 
-18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–17**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
+18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–19**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
 
    - **100% / `mature` only** when the requirement is met by **core, version-controlled setup** that a **clean machine can replicate** (policy + implementation + proof; gaps empty). See scorecard definition of 100%.
    - **Any score &lt; 100% is `development` mode.** Agents must treat that requirement as unfinished infrastructure — not done.
    - **Objectivity / honesty:** prefer under-scoring; no theater; do not mark mature on docs-only when runtime/product behavior is required.
    - **Mandatory re-score:** any learning, update, bugfix, issue found, or refinement that **affects** a scored requirement **must** update the scorecard (score, mode, evidence, gaps, commit hashes, rescore log) in the same change set when possible.
    - **Public gate:** we do **not** declare this overall setup finished / ready for public completion until **every** requirement is **100% / mature**. While the gate is **BLOCKED**, do not claim full maturity.
+
+19. **DRY — single source of truth (stop the multi-file copy edit)** — **Do not repeat yourself.** Every agent working on code (or config/docs that encode the same fact twice) must stay on the lookout for duplicated knowledge.
+
+   - **Trigger:** if a single logical change requires updating the **same fact, list, rule, schema, constant, path, version, or behavior** in a **second** file — and especially a **third** — **STOP**. Do not grind through N copies.
+   - **Then:** fully map **usage** (who reads it, who owns it, what is derived vs source), choose or create a **single source of truth (SSoT)** that matches our standards (version-controlled, live discovery when the surface is owned by a CLI/API — rule 9, dual-write AGENTS/README only for role split not content clone, pipeable charters, etc.).
+   - **Push the SSoT:** consolidate so other call sites **import, reference, generate, or discover** — they do not hand-maintain a parallel copy. Delete or thin the duplicates in the same change set when safe.
+   - **On everyone:** humans and agents alike; filing a “found duplication” note and fixing it is first-class work, not a distraction.
+   - **Not DRY violations:** intentional dual-write of *different audiences* (AGENTS vs README), thin wrappers, or generated output from an SSoT (as long as generation is the only edit path).
 
 ---
 
@@ -115,6 +123,7 @@ cat path/to/tyler-jewell/AGENTS.md
 - Temporary experiments or “try this week” notes
 - Anything that already follows from git/gh/Grok defaults without our policy
 - Hardcoded copies of another CLI’s target/flag inventories (→ live discovery; see sacred rule 9)
+- Parallel hand-maintained copies of the same fact across files (→ DRY / SSoT; see sacred rule 19)
 
 ---
 

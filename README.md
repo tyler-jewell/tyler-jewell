@@ -87,6 +87,10 @@ Sacred **rule 13**: every tree with `AGENTS.md` keeps public LSP setup for langu
 | **16 Passkeys** | WebAuthn passkeys for web app auth. |
 | **17 Vercel** | Public web apps / DBs / MCPs on **Vercel**; flake installs CLI; human **`vercel login`**. |
 
+### DRY / SSoT (rule 19)
+
+If a single change needs the **same fact** updated in a **second** (or **third**) file — **stop**, map usage, and push a **single source of truth**. Everyone is on the lookout; do not grind N copies.
+
 ### Requirements maturity (rule 18) — public gate
 
 Every sacred requirement has an **honest score**, **mode** (`development` unless 100%), and **commit hash** in:

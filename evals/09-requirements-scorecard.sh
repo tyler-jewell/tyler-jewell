@@ -25,8 +25,13 @@ grep -qi 'Logged at' "$SC"
 grep -qi 'development' "$SC"
 grep -qi 'mature' "$SC"
 
-# Every requirement ID 1–17 appears as a scored row (markdown table)
-for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17; do
+# Sacred rule 19 DRY present
+grep -E '^19\. \*\*DRY' "$A"
+grep -qi 'single source of truth\|SSoT' "$A"
+grep -qiE 'second|third' "$A"
+
+# Every requirement ID 1–19 appears as a scored row (markdown table)
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19; do
   grep -E "^\\| *${i} +\\|" "$SC" >/dev/null || {
     echo "FAIL: scorecard missing row for requirement $i"
     exit 1

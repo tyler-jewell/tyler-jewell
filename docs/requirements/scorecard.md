@@ -6,15 +6,15 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | Meta | Value |
 |------|--------|
 | **Last rescore (UTC)** | 2026-08-10 |
-| **Rescore reason** | Initial maturity scorecard (rule 18): objective baseline for rules 1–17 after Go/PWA/passkey/Vercel policy + herdr-web Go bridge |
-| **tyler-jewell @ score** | `f1b13fed354905540a78fd99b7141d31c2723f18` (scorecard introduction on `main`; this pin commit follows) |
+| **Rescore reason** | Add sacred rule 19 DRY/SSoT; extend scorecard to rules 1–19 |
+| **tyler-jewell @ score** | aea0a1df3d456200db62bb6bd0cf7122186931c0 |
 | **herdr-web @ score** | `e2b81becd9ecdb267c276f20b9b30cbf665fe6fd` |
 | **host system flake** | `go` / `gopls` / `vercel-cli.nix` present under `$HOME/system` but were **staged, not necessarily committed/pushed** at score time → **not fully replicable from git alone** |
 
 **Overall maturity:** **development**  
-**Rows mature (100%):** 0 / 17  
-**Rows in development:** 17 / 17  
-**Average (unweighted):** ~67%
+**Rows mature (100%):** 0 / 19  
+**Rows in development:** 19 / 19  
+**Average (unweighted):** ~65%
 
 ---
 
@@ -38,7 +38,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 
 ---
 
-## Scores (rules 1–17)
+## Scores (rules 1–19)
 
 | ID | Requirement | Score | Mode | Logged at (primary) | Evidence (honest) | Gaps to 100% |
 |----|-------------|------:|------|---------------------|-------------------|--------------|
@@ -59,6 +59,8 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | 15 | Frontend vanilla + PWA + shadcn | **40** | development | herdr-web `e2b81be` | Vanilla HTML/CSS/JS in herdr-web; shadcn named as only UI package; PWA SSoT URL documented | **No web app manifest / service worker / offline**; **no Lighthouse PWA score logged in VC**; shadcn not used (allowed if zero package) but PWA bar unmet; no release checklist automation |
 | 16 | WebAuthn passkeys | **15** | development | tyler-jewell `4e96e63` | Policy only (rule 16 + docs/web) | **No passkey implementation** in any web app/backend; no shared Go WebAuthn module; no eval |
 | 17 | Public hosting on Vercel | **40** | development | system `vercel-cli.nix` (local) · tyler-jewell `4e96e63` | Policy; Vercel CLI shim module; `vercel` on this host PATH after apply | **No public app/DB/MCP deployed on Vercel from this stack**; vercel login is human and not proven in VC; CLI install uses bun+XDG (replicable only after HM apply **and** network); module may be uncommitted; no `vercel.json` / project link in herdr-web |
+| 18 | Requirements maturity scoring | **70** | development | tyler-jewell `328c5a7` | Scorecard + rule 18 + eval `09-requirements-scorecard`; public gate BLOCKED | All rows mature; automated rescore discipline proven across sessions; host flake commits included in logged hashes |
+| 19 | DRY / SSoT (stop multi-file copy) | **35** | development | tyler-jewell `aea0a1d` | Sacred rule 19 + README pointer; related to rule 9 live discovery | No mechanical “second/third file same fact” lint; known doc/code duplications not inventoried; agent habit not proven; shared libs/generators for repeated config still ad hoc |
 
 ---
 
@@ -66,12 +68,12 @@ Do **not** declare the core setup finished or “ready for public completion” 
 
 | Metric | Value |
 |--------|------:|
-| Requirements | 17 |
+| Requirements | 19 |
 | Mature (100%) | **0** |
-| Development | **17** |
+| Development | **19** |
 | Min score | **15** (rule 16 passkeys) |
 | Max score | **95** (rule 8 pipeable) |
-| Unweighted average | **~67%** |
+| Unweighted average | **~65%** |
 | **Public gate** | **BLOCKED** |
 
 ---
@@ -81,6 +83,7 @@ Do **not** declare the core setup finished or “ready for public completion” 
 | UTC date | Primary commit(s) | Reason | Gate |
 |----------|-------------------|--------|------|
 | 2026-08-10 | tyler-jewell `f1b13fe` (scorecard + rule 18) · pin `62e5be9` · herdr-web `e2b81be` / `bed5218` | Baseline honest maturity scoring for all sacred requirements 1–17 | BLOCKED |
+| 2026-08-10 | tyler-jewell `aea0a1d` (rule 19 DRY/SSoT + scorecard 1–19) | Add DRY core requirement; scorecard covers 1–19 | BLOCKED |
 
 *(Each rescore: append a row here and rewrite the table above — do not delete history rows.)*
 
