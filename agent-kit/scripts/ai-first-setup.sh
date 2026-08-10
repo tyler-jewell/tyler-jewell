@@ -88,6 +88,29 @@ if ! command -v nix >/dev/null 2>&1; then
 fi
 ok "nix present: $(nix --version 2>/dev/null | head -1)"
 
+# --- 0b. Host runtime SSoT (always-on / restart services) — human must confirm ---
+log "Host runtime policy (SSoT: \$HOME/system/host-runtime.toml)"
+HR="${HOME}/system/host-runtime.toml"
+if [[ -f "$HR" ]]; then
+  echo "host_runtime_file: $HR"
+  grep -E '^(always_on|restart_services_on_boot|confirmed_by|herdr|mesh_llm)' "$HR" 2>/dev/null | sed 's/^/  /' || true
+  # also nested [policy] keys
+  grep -E 'always_on|restart_services|confirmed_by' "$HR" 2>/dev/null | sed 's/^/  /' || true
+  CB="$(grep -E '^confirmed_by\s*=' "$HR" 2>/dev/null | tail -1 | sed 's/.*=\s*"\?\([^"]*\)"\?/\1/' || true)"
+  if [[ "${CB// /}" != "human" ]]; then
+    warn "host-runtime not human-confirmed (confirmed_by=${CB:-missing})"
+    echo "  REQUIRED human questions (do not invent answers):"
+    echo "    1) Do you want this machine to always be on and active?"
+    echo "    2) Do you want managed services to start after power outage / reboot / macOS update?"
+    echo "  Write answers into: $HR  then: home-manager switch --flake \$HOME/system#mbp@darwin"
+    echo "  Mirror (read-only after apply): \$HOME/.config/tyler-host/runtime.toml"
+  else
+    ok "host-runtime confirmed_by=human"
+  fi
+else
+  warn "missing $HR — create from system template; ask human Q1 always_on Q2 restart_services"
+fi
+
 # --- 1. Discover local ---
 log "Discover local host (live)"
 FACTS="$(collect_local_host_facts)"

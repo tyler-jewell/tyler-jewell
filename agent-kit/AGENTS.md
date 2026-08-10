@@ -7,6 +7,10 @@ Grok and other agents use this kit **after** the privileged Nix floor exists.
 1. **Human / privileged:** `sudo ~/system/scripts/privileged-setup.sh` (CLT + Nix only).
 2. **Nix/HM:** packages via home-manager (`~/system`).
 3. **This kit:** live host/GPU discovery, pure `herdr` primitives, herdr-web verify, **Mesh-LLM** availability (primary local/mesh OpenAI-compatible LLM layer), hosts registry proposals. Multi-host / privileged mutation requires **approval** (`ask_user_question` in interactive Grok, or explicit `--apply --yes` — never invent consent).
+4. **Host runtime policy (human questions):** On host setup / first AI-first apply, **ask the human** (never invent):
+   1. Always on and active?
+   2. Restart managed services after power outage / reboot / macOS update?
+   Write only to **`$HOME/system/host-runtime.toml`** (SSoT), set `confirmed_by = "human"`, then HM switch. See `$HOME/system/AGENTS.md`.
 
 ## Sacred constraints
 

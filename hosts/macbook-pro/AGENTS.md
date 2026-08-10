@@ -29,6 +29,10 @@ Do **not** commit machine-private absolute paths into public docs. Use `$HOME`, 
 8. All agent-invokable CLIs/skills must follow [AXI](https://axi.md) (umbrella rule 11).
 9. **LSP (umbrella rule 13):** any coding under this host’s projects must use public LSPs per language; agents MUST use LSP tools; no ignore/suppression workarounds; root-cause only.
 10. Do not put app-specific coding standards in this host file.
+11. **Host runtime (always-on / restart services)** — On day-0 or any host setup session, **ask the human**:
+    1. Do you want this machine to always be on and active?
+    2. Do you want managed services to start after power outage / reboot / macOS update restart?
+    Write answers only into **`$HOME/system/host-runtime.toml`** (SSoT), set `confirmed_by = "human"`, then `home-manager switch`. See `$HOME/system/AGENTS.md` rule 13. Never invent yes/no.
 
 ## Hierarchy
 
