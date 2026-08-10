@@ -98,7 +98,7 @@ cat path/to/tyler-jewell/AGENTS.md
 
 17. **Public hosting on Vercel** — All **public-facing** web apps, databases, MCPs, and similar internet-exposed product surfaces **are hosted on [Vercel](https://vercel.com)**. Do not invent a second primary public host for those surfaces. Local/dev and private mesh tooling may run on-host; production public URLs go through Vercel. Host Nix/home-manager flakes **must** provide the **Vercel CLI** on PATH (and document `vercel login` as a one-time human auth step, like `gh auth login`). Agents deploy/link with the CLI after the human has authenticated — never commit Vercel tokens.
 
-18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–19**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
+18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–20**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
 
    - **100% / `mature` only** when the requirement is met by **core, version-controlled setup** that a **clean machine can replicate** (policy + implementation + proof; gaps empty). See scorecard definition of 100%.
    - **Any score &lt; 100% is `development` mode.** Agents must treat that requirement as unfinished infrastructure — not done.
@@ -114,6 +114,16 @@ cat path/to/tyler-jewell/AGENTS.md
    - **On everyone:** humans and agents alike; filing a “found duplication” note and fixing it is first-class work, not a distraction.
    - **Not DRY violations:** intentional dual-write of *different audiences* (AGENTS vs README), thin wrappers, or generated output from an SSoT (as long as generation is the only edit path).
 
+20. **Simplicity first — tests must not drive tech debt (stop and fix)** — Anytime you are **creating new code** or **updating existing code**, ask yourself, out loud in the work if needed:
+
+   1. **Could this be simpler?**
+   2. **Are tests (or evals, fixtures, mocks, “make CI green” scaffolding) driving tech debt** — forcing awkward APIs, copy-paste setup, leaky abstractions, or production shapes that exist only to satisfy the harness?
+
+   - **If yes to either in a material way:** this is a **STOP and fix** situation — **same urgency as DRY (rule 19)**. Do not push complexity forward “to finish the task.”
+   - **Then:** simplify the design, collapse layers, delete dead paths, rewrite tests so they **protect behavior** without dictating a worse product shape, or thin the surface until the honest answer is “this is as simple as the problem allows.”
+   - **On everyone:** agents and humans stay on the lookout during new work **and** refactors of old code. Prefer fewer concepts, fewer files, fewer flags, and direct code over cleverness.
+   - **Not an excuse** to skip necessary tests, sacred evals, or safety checks — tests serve the product; the product does not contort to serve brittle tests.
+
 ---
 
 ## What does *not* belong here
@@ -124,6 +134,7 @@ cat path/to/tyler-jewell/AGENTS.md
 - Anything that already follows from git/gh/Grok defaults without our policy
 - Hardcoded copies of another CLI’s target/flag inventories (→ live discovery; see sacred rule 9)
 - Parallel hand-maintained copies of the same fact across files (→ DRY / SSoT; see sacred rule 19)
+- Complexity or APIs kept only so brittle tests pass (→ simplify; see sacred rule 20)
 
 ---
 

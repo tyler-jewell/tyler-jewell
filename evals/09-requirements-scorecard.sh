@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# DO: sacred rule 18 — requirements scorecard exists, scores all 1–17, development/public gate honesty.
+# DO: sacred rule 18 — requirements scorecard exists, scores all 1–20, development/public gate honesty.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 A="$ROOT/AGENTS.md"
@@ -30,8 +30,14 @@ grep -E '^19\. \*\*DRY' "$A"
 grep -qi 'single source of truth\|SSoT' "$A"
 grep -qiE 'second|third' "$A"
 
-# Every requirement ID 1–19 appears as a scored row (markdown table)
-for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19; do
+# Sacred rule 20 simplicity / tests-not-debt present
+grep -E '^20\. \*\*Simplicity' "$A"
+grep -qi 'Could this be simpler' "$A"
+grep -qi 'tech debt' "$A"
+grep -qi 'STOP and fix\|stop and fix' "$A"
+
+# Every requirement ID 1–20 appears as a scored row (markdown table)
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
   grep -E "^\\| *${i} +\\|" "$SC" >/dev/null || {
     echo "FAIL: scorecard missing row for requirement $i"
     exit 1

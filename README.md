@@ -91,6 +91,10 @@ Sacred **rule 13**: every tree with `AGENTS.md` keeps public LSP setup for langu
 
 If a single change needs the **same fact** updated in a **second** (or **third**) file — **stop**, map usage, and push a **single source of truth**. Everyone is on the lookout; do not grind N copies.
 
+### Simplicity / tests vs debt (rule 20)
+
+On every create or update: **Could this be simpler?** **Are tests driving tech debt?** If yes → **stop and fix** (same bar as DRY). Tests protect behavior; they must not force worse product shape.
+
 ### Requirements maturity (rule 18) — public gate
 
 Every sacred requirement has an **honest score**, **mode** (`development` unless 100%), and **commit hash** in:

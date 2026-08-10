@@ -2,7 +2,7 @@
 
 ## Authority
 
-Umbrella **AGENTS.md** sacred rules 1–19 plus **maturity / re-score** obligations documented in [README.md](README.md). Include **rule 19 DRY/SSoT**: stop on the 2nd/3rd multi-file same-fact edit and consolidate.
+Umbrella **AGENTS.md** sacred rules 1–20 plus **maturity / re-score** obligations documented in [README.md](README.md). Include **rule 19 DRY/SSoT** and **rule 20 simplicity / tests-not-debt**: stop-and-fix when complexity or harness-driven design appears.
 
 ## Rules for agents
 
