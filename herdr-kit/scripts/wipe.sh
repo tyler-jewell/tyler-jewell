@@ -22,7 +22,7 @@ USAGE
 LEVELS
   soft    Reset managed herdr config.toml to empty/minimal plan (keep plugins)
   herdr   Stop herdr server; backup; clear ~/.config/herdr runtime; uninstall kit plugin reg
-  agents  herdr level + purge Grok user state under ~/.grok (auth kept unless --purge-auth)
+  agents  herdr level + purge coding-agent user state under known runtime home dirs under ~/.grok (auth kept unless --purge-auth)
 
 NEVER DELETES
   /nix, ~/system, ~/github-repos/tyler-jewell, ~/.ssh

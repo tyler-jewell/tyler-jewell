@@ -38,7 +38,7 @@ NO-ARGS
 OPTIONS
   --dry-run       Discover + verify only (default)
   --apply         Allow host proposal write after approval
-  --yes           Non-interactive approval (mirrors ask_user_question YES)
+  --yes           Non-interactive approval (mirrors human YES after structured ask)
   --propose-host  Write hosts/<slug>/ proposal (needs --apply)
   -h, --help      This help
 
@@ -73,7 +73,7 @@ require_approval() {
     return 0
   fi
   if [[ "$APPLY" -eq 1 && "$YES" -eq 0 ]]; then
-    err "Refusing '$what' without approval. Re-run with --yes after ask_user_question, or use --dry-run."
+    err "Refusing '$what' without approval. Re-run with --yes after human YES (ask-user-question capability), or use --dry-run."
     return 1
   fi
   return 0

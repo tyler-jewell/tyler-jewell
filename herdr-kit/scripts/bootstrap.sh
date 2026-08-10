@@ -45,7 +45,7 @@ echo "plan[1]: require herdr binary"
 echo "plan[2]: plugin link $KIT_ROOT (or install tyler-jewell/tyler-jewell/herdr-kit)"
 echo "plan[3]: flash --apply"
 echo "plan[4]: status"
-echo "plan[5]: grok reinstall is HUMAN if missing (no curl installer here)"
+echo "plan[5]: coding-agent reinstall is HUMAN if missing (no curl installer here)"
 
 if [[ "$APPLY" -eq 0 ]]; then
   echo "result: dry-run"
@@ -62,7 +62,7 @@ if ! command -v herdr >/dev/null 2>&1; then
 fi
 
 if ! command -v grok >/dev/null 2>&1; then
-  echo "warn: grok not on PATH — human must reinstall Grok (official installer), then re-run bootstrap if hooks needed"
+  echo "warn: coding agent binary not on PATH — human must reinstall Grok (official installer), then re-run bootstrap if hooks needed"
 fi
 
 echo "link: $KIT_ROOT"

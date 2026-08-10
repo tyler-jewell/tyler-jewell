@@ -1,37 +1,23 @@
 # Context compaction — SSoT guidelines (rule 23)
 
-Canon: umbrella **AGENTS.md sacred rule 23**.
+Canon: umbrella **AGENTS.md sacred rule 23**. Product-agnostic (rule 25).
 
 ## Aggressive threshold
 
-| Runtime | Setting | Our bar |
-|---------|---------|--------|
-| **Grok** | `~/.grok/config.toml` → `[session] auto_compact_threshold_percent` | **≤ 50** (default product is often 80–85 — too late for us) |
-| Other agents | product equivalent (session compact %, context budget) | **≤ 50%** of context before auto-compact |
+Configure the **agent runtime** so auto-compaction fires at **≤ 50%** of the context window. Prefer **50 or lower**. Lax defaults (often 80–85%) are **not** our standard.
 
-Agents configuring Grok under Tyler Jewell **must** keep:
-
-```toml
-[session]
-auto_compact_threshold_percent = 50
-```
-
-Lower than 50 is allowed if the human prefers even more aggressive compacting. **Higher than 50 is not** for our standard setups without an explicit human override recorded in notes.
+Host-local runtime config holds the actual key (varies by product). Methodology never requires a brand-specific slash command to compact.
 
 ## Compaction is system improvement time
 
-Every compaction (auto or `/compact`) is a **checkpoint** for the methodology stack:
+Every compaction (auto or manual) is a **checkpoint**:
 
-1. **What did we learn?** bugs fixed, better defaults, missing sacred detail, host runtime, ports, evals, kit actions, flake packages, agent gotchas.
-2. **Would future agents benefit?** If the knowledge dies with this transcript, that is a failure mode when the answer is yes.
-3. **If yes → promote:**
-   - Branch / **worktree** off `main` (or current integration branch).
-   - Apply durable updates (AGENTS, docs, herdr-kit, system/host-runtime, evals, …).
-   - Open a **PR into `main`** for **human approval**.
-   - Do **not** force-push main; do **not** leave “session-only” truth when it belongs in VC.
-4. **If no reusable learning:** compact and continue. No theater PR.
+1. **What did we learn?**
+2. **Would future agents benefit?**
+3. **If yes →** worktree + **PR into `main`** for human approval
+4. **If no** → compact and continue (no theater PR)
 
-## Checklist (agents — at compact)
+## Checklist (at compact)
 
 ```text
 [ ] Threshold still ≤ 50% for this runtime?
@@ -43,19 +29,4 @@ Every compaction (auto or `/compact`) is a **checkpoint** for the methodology st
 
 ## Related
 
-| Rule | Link |
-|------|------|
-| Truth over theater | sacred 4 |
-| Reversible / human on shared actions | sacred 3, 5 |
-| DRY / SSoT | sacred 19 |
-| Maturity re-score | sacred 18 |
-| Instruction authority | sacred 21 |
-
-## Anti-patterns
-
-| Bad | Good |
-|-----|------|
-| Compact at 85% and lose half a session of methodology | Compact at ≤50%; promote learnings earlier |
-| “I’ll remember for next time” only in chat | PR to `main` via worktree |
-| Dump entire transcript into AGENTS | Small, reviewable diffs; dual-write only when layout changes |
-| Force-push main after compact | Human-approved PR |
+Rules 3–5, 18–21, 25. Prefer plain language: “compact context and promote learnings per our guidelines.”

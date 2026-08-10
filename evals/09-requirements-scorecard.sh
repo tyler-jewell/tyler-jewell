@@ -53,17 +53,27 @@ grep -qi '50%' "$A"
 grep -qi 'worktree' "$A"
 grep -qi 'PR\|pull request' "$A"
 test -f "$ROOT/docs/compaction/README.md"
-grep -qi 'auto_compact_threshold_percent' "$ROOT/docs/compaction/README.md"
 
 # Sacred rule 24 intent → implement
 grep -E '^24\. \*\*Never treat a raw human ask' "$A"
-grep -qi 'ask_user_question' "$A"
-grep -qi 'goal statement\|solid goal' "$A"
-grep -qi 'implement' "$A"
+grep -qi 'ask-user-question\|ask user question' "$A"
+grep -qi 'goal statement\|solid goal\|clear \*\*goal\*\*' "$A"
+grep -qi 'implement this plan\|implement path\|deliberate implement' "$A"
 test -f "$ROOT/docs/intent-to-implement/README.md"
 
-# Every requirement ID 1–24 appears as a scored row (markdown table)
-for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24; do
+# Sacred rule 25 integration-agnostic
+grep -E '^25\. \*\*99% integration-agnostic' "$A"
+grep -qi 'natural language' "$A"
+grep -qi 'implement this plan' "$A"
+test -f "$ROOT/docs/integration-agnostic/README.md"
+# Sacred AGENTS must not prescribe product slash implement form as the required path
+if grep -nE 'always (run|use) `/|prefer `/implement|prefer `/plan' "$A" 2>/dev/null; then
+  echo "FAIL: product slash commands required in sacred AGENTS (rule 25)"
+  exit 1
+fi
+
+# Every requirement ID 1–25 appears as a scored row (markdown table)
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25; do
   grep -E "^\\| *${i} +\\|" "$SC" >/dev/null || {
     echo "FAIL: scorecard missing row for requirement $i"
     exit 1

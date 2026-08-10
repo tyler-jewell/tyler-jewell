@@ -1,12 +1,12 @@
 # agent-kit — AI-first host setup (Herdr-first)
 
-Grok and other agents use this kit **after** the privileged Nix floor exists.
+Coding agents use this kit **after** the privileged Nix floor exists.
 
 ## Layering
 
 1. **Human / privileged:** `sudo ~/system/scripts/privileged-setup.sh` (CLT + Nix only).
 2. **Nix/HM:** packages via home-manager (`~/system`).
-3. **This kit:** live host/GPU discovery, pure `herdr` primitives, herdr-kit verify, **Mesh-LLM** availability (primary local/mesh OpenAI-compatible LLM layer), hosts registry proposals. Multi-host / privileged mutation requires **approval** (`ask_user_question` in interactive Grok, or explicit `--apply --yes` — never invent consent).
+3. **This kit:** live host/GPU discovery, pure `herdr` primitives, herdr-kit verify, **Mesh-LLM** availability (primary local/mesh OpenAI-compatible LLM layer), hosts registry proposals. Multi-host / privileged mutation requires **approval** (use your ask-user-question capability, or explicit `--apply --yes` — never invent consent).
 4. **Host runtime policy (human questions):** On host setup / first AI-first apply, **ask the human** (never invent):
    1. Always on and active?
    2. Restart managed services after power outage / reboot / macOS update?
@@ -17,7 +17,7 @@ Grok and other agents use this kit **after** the privileged Nix floor exists.
 - Umbrella `../AGENTS.md` (esp. dual-write, no secrets, **live CLI discovery**, **AXI rule 11**, **LSP rule 13**).
 - Every agent-invokable kit CLI/skill must meet applicable AXI principles (see `docs/axi/axi-scorecard.md`). Prefer **`scripts/agent-status.sh`** as the compact AXI status entry.
 - **Languages in use:** Bash. **Public LSP:** bash-language-server. Agents MUST use LSP tools when coding; no suppressions-as-fix; root-cause only (rule 13).
-- No curl installers for Grok/Herdr here; Mesh-LLM install is **upstream only** (`mesh-llm` CLI / documented install — do not reimplement the mesh).
+- No curl installers for coding-agent products or Herdr here; Mesh-LLM install is **upstream only** (`mesh-llm` CLI / documented install — do not reimplement the mesh).
 - No frozen Herdr integration target lists — use `herdr integration status` / `--help`.
 - No frozen model/peer catalogs for Mesh — use live `/v1/models` and CLI help.
 - Full-setup **serve** targets require **≥1 LLM-capable GPU** (live classify); GPU-less hosts are mesh **clients** via `OPENAI_BASE_URL`.

@@ -16,7 +16,7 @@ Setting up or verifying a Tyler Jewell machine (MBP, Studio, GPU Linux) after th
 
 ## Procedure
 
-1. **Ask for approval** with `ask_user_question` before any `--apply`, remote SSH mutation, or mass `herdr integration install`.
+1. **Ask for approval** with your ask-user-question capability before any `--apply`, remote SSH mutation, or mass `herdr integration install`.
 2. Prefer compact AXI status first:
    ```bash
    agent-kit/scripts/agent-status.sh

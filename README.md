@@ -13,7 +13,7 @@ Do these **before** AI-first setup, publish, or multi-repo work. Agents must not
 |------:|------|--------|
 | **1** | **`gh auth login`** | **Required early.** Browser/device OAuth for GitHub CLI. Without it, inventory, `gh repo create`, and push fail. |
 | 2 | `sudo …/privileged-setup.sh` (or Determinate Nix GUI) | Once per wiped Mac — CLT + Nix volume |
-| 3 | `grok login` (if needed) | Grok account/API; separate from GitHub |
+| 3 | Coding-agent product login (if needed) | Account/API for whichever agent you run; separate from GitHub |
 
 Cloning public repos with plain `git clone` does not need `gh auth`. **Creating/pushing** private or org repos does.
 
@@ -109,7 +109,11 @@ Auto-compact at **≤ 50%** context. Every compact is a chance to **promote reus
 
 ### Intent → implement (rule 24)
 
-**Never** treat a raw human ask as direct implementation orders. Research effect + debt, form a **solid goal**, use **`ask_user_question`** when unsure or pushing back, then kick a **deliberate implement** lane (plan → implement). SSoT: [docs/intent-to-implement/](docs/intent-to-implement/).
+**Never** treat a raw human ask as direct implementation orders. Research effect + debt, form a **solid goal**, use your **ask-user-question capability** when unsure or pushing back, then **plan** and **implement this plan** in plain language. SSoT: [docs/intent-to-implement/](docs/intent-to-implement/).
+
+### Integration-agnostic (rule 25)
+
+Stay **~99% product-agnostic**. Prefer natural language (“implement this plan”) over vendor slash hacks. SSoT: [docs/integration-agnostic/](docs/integration-agnostic/).
 
 ### Requirements maturity (rule 18) — public gate
 

@@ -16,7 +16,7 @@ You are operating under the **Tyler Jewell** umbrella. This file is the **overal
 1. **Sacred rules in this file** (umbrella)  
 2. **Deepest** `AGENTS.md` on the work path (specialization)  
 3. Parent `AGENTS.md` files walking up toward host / umbrella non-sacred sections  
-4. Optional short agent-global pointers (`~/.codex/AGENTS.md`, …)  
+4. Optional short agent-global instruction files (per runtime home)  
 5. Vendor model system prompt (always present — we do **not** claim to erase it)
 
 **Load / merge order** for tools we control: **outer → inner** (umbrella first, deepest last).
@@ -62,7 +62,7 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 
    **Allowed hardcoding:** our own stable policy (sacred rules, path layout we own), true constants that are not another product’s surface area, and tiny internal enums we fully control.
 
-10. **Mesh-LLM as primary local/mesh LLM resource** — For host inference capacity, prefer Mesh-LLM’s OpenAI-compatible API (`OPENAI_BASE_URL`, default `http://127.0.0.1:9337/v1`) over ad-hoc per-tool model wiring. Install and serve through **upstream** Mesh-LLM only; do not reimplement the mesh. GPU-less hosts consume the mesh as clients. Grok cloud/product auth remains separate unless explicitly pointed at the mesh base URL.
+10. **Mesh-LLM as primary local/mesh LLM resource** — For host inference capacity, prefer Mesh-LLM’s OpenAI-compatible API (`OPENAI_BASE_URL`, default `http://127.0.0.1:9337/v1`) over ad-hoc per-tool model wiring. Install and serve through **upstream** Mesh-LLM only; do not reimplement the mesh. GPU-less hosts consume the mesh as clients. Separate cloud LLM product auth remains separate unless explicitly pointed at the mesh base URL.
 
 11. **AXI alignment for every agent-invokable interface** — Any skill, tool, CLI, MCP surface, shell script, or API that **agents** run or call must stay in full alignment with the [AXI guidelines](https://axi.md) (Agent eXperience Interface). This is non-negotiable for new agent-facing surfaces and a continuous bar for owned ones. Prefer [AXI catalog](https://axi.md) wrappers (e.g. `gh-axi`) over raw human CLIs when an AXI exists. Do **not** ship new agent-facing interfaces that ignore AXI.
 
@@ -107,7 +107,7 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 
 17. **Public hosting on Vercel** — All **public-facing** web apps, databases, MCPs, and similar internet-exposed product surfaces **are hosted on [Vercel](https://vercel.com)**. Do not invent a second primary public host for those surfaces. Local/dev and private mesh tooling may run on-host; production public URLs go through Vercel. Host Nix/home-manager flakes **must** provide the **Vercel CLI** on PATH (and document `vercel login` as a one-time human auth step, like `gh auth login`). Agents deploy/link with the CLI after the human has authenticated — never commit Vercel tokens.
 
-18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–24**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
+18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–25**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
 
    - **100% / `mature` only** when the requirement is met by **core, version-controlled setup** that a **clean machine can replicate** (policy + implementation + proof; gaps empty). See scorecard definition of 100%.
    - **Any score &lt; 100% is `development` mode.** Agents must treat that requirement as unfinished infrastructure — not done.
@@ -153,9 +153,9 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 
 23. **Aggressive context compaction + compaction-as-system-improvement (SSoT)** — All agents under this identity keep **aggressive** auto-compaction settings and treat every compaction as a **system refinement opportunity**, not only a memory wipe.
 
-   1. **Threshold:** configure the agent runtime so auto-compaction fires at **≤ 50%** of the context window (e.g. Grok `~/.grok/config.toml` → `[session] auto_compact_threshold_percent = 50`). Prefer **50 or lower**, never a lax default (80–85%) for our sessions. Document other agent products’ equivalent settings in `docs/compaction/`.
+   1. **Threshold:** configure the agent runtime so auto-compaction fires at **≤ 50%** of the context window (prefer **50 or lower**; never a lax 80–85% default for our standard sessions). Host-local runtime config holds the number; methodology stays product-agnostic (rule 25). Details: `docs/compaction/`.
    2. **SSoT guidelines:** [`docs/compaction/README.md`](docs/compaction/README.md) is the single source of truth for *how* we compact and *what* we do after. Do not invent a parallel compaction playbook.
-   3. **On every compaction (manual `/compact` or auto):** pause briefly and ask: *Did this session produce learnings, conventions, fixes, or tooling that **future agents under us** should always have?* If yes → capture as a durable improvement (AGENTS, herdr-kit, host-runtime, evals, docs, flake packages, etc.).
+   3. **On every compaction (manual or auto):** pause briefly and ask: *Did this session produce learnings, conventions, fixes, or tooling that **future agents under us** should always have?* If yes → capture as a durable improvement (AGENTS, herdr-kit, host-runtime, evals, docs, flake packages, etc.).
    4. **Promotion path:** durable improvements land via **isolated worktree + PR into `main`** for **human approval** — not silent force-push to main, not “only in this session’s head.” Prefer small, reviewable PRs (rules 3, 5).
    5. **Honesty:** if nothing reusable was learned, do not invent a PR. Compaction still proceeds; the checklist is mandatory, the PR is only when value exists.
 
@@ -163,10 +163,19 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 
    1. **Slow down.** Do **not** start mutating production trees on the first parse of the ask.
    2. **Research the effect:** what systems change, what sacred rules apply (esp. 19 DRY, 20 simplicity/debt, 14 Go, 22 ports, 18 scorecard), blast radius, reversibility, and **tech debt** the change would add or remove.
-   3. **Uncertainty or pushback:** if anything is unclear, incomplete, or the ask looks harmful / debt-heavy / anti-pattern relative to our stack — **stop coding** and use the **`ask_user_question` tool** (or equivalent structured human gate). Argue with evidence; do not silently obey a bad request and do not lecture without offering choices.
+   3. **Uncertainty or pushback:** if anything is unclear, incomplete, or the ask looks harmful / debt-heavy / anti-pattern relative to our stack — **stop coding** and **use your ask-user-question capability** (structured choices for the human). Argue with evidence; do not silently obey a bad request and do not lecture without offering choices.
    4. **Solid goal statement:** until the agent is **confident** (honest confidence — not theater) and has wrapped the work in a clear **goal** (outcome, non-goals, constraints, success checks), it must **not** freestyle large implementation in the same reactive turn.
-   5. **Deliberate implement path:** kick off implementation through a **disciplined implement lane** — e.g. Grok **plan → implement** (`/plan` / design then execute, or an implement-focused agent run with the goal statement as the brief) — so the change is executed against a written goal, not against a one-line chat impulse. Trivial typos/single-line doc fixes may proceed after a one-sentence goal in-session; anything structural uses the plan/implement path.
+   5. **Deliberate implement path:** in natural language, **plan the work**, then **implement this plan** (or equivalent plain wording) so execution is against a written goal — not a one-line chat impulse and **not** product-specific slash hacks (rule 25). Trivial typos/single-line doc fixes may proceed after a one-sentence goal in-session; anything structural uses plan-then-implement.
    6. **SSoT process:** [`docs/intent-to-implement/README.md`](docs/intent-to-implement/README.md).
+
+25. **99% integration-agnostic — natural language over product hacks** — Methodology, sacred rules, skills, and agent-facing docs stay **integration-agnostic**. Drive agents with **plain language** and their **built-in** planning, tools, and judgment — not vendor slash commands, brand-specific recipes, or brittle adapters that paper over weak prompting.
+
+   1. **Do not** write product-only slash-prefixed recipes (vendor “implement/plan/compact” command forms) just because one agent supports them. **Do** write plain language: **“Implement this plan: …”**, **“Plan the following: …”**, **“Compact context and promote learnings per our guidelines.”**
+   2. **Do not** brand the charter for one vendor (no “only works in …”, no name-dropping coding-agent products in sacred rules or process docs). Host install paths and binary names may appear in **machine/host** notes when a real filesystem path exists; methodology prose stays brand-neutral.
+   3. **Do not** say “use `ask_user_question` tool” as a magic token. **Do** say: **“Use your ask-user-question capability to …”** (or “ask the human with structured choices”).
+   4. **Capability bar:** agents that cannot follow clear natural-language plan/implement/compact/ask instructions **lose credibility** for this stack. Prefer better wording and planning over hacky wrapper code that exists only because an agent failed plain English.
+   5. **Avoid** new glue whose sole purpose is “agent X doesn’t understand NL.” Fix the prompt, the goal, or the agent choice — not another special-case script.
+   6. **SSoT:** [`docs/integration-agnostic/README.md`](docs/integration-agnostic/README.md).
 
 ---
 
@@ -175,13 +184,14 @@ Core flash/recovery: **herdr-kit** (GitHub-installable; dry-run default). No pro
 - Hostname, username, OS version, package lists (→ `hosts/<name>/`)
 - Language/framework preferences for one app (→ that project’s `AGENTS.md`)
 - Temporary experiments or “try this week” notes
-- Anything that already follows from git/gh/Grok defaults without our policy
+- Anything that already follows from git/gh defaults without our policy
 - Hardcoded copies of another CLI’s target/flag inventories (→ live discovery; see sacred rule 9)
 - Parallel hand-maintained copies of the same fact across files (→ DRY / SSoT; see sacred rule 19)
 - Complexity or APIs kept only so brittle tests pass (→ simplify; see sacred rule 20)
 - Frozen local URLs / ports in docs or defaults (→ `ports.toml` claims; see sacred rule 22)
 - Lax auto-compact thresholds or one-off compaction rituals (→ rule 23 + `docs/compaction/`)
 - Raw chat → immediate code without research/goal/implement lane (→ rule 24 + `docs/intent-to-implement/`)
+- Product-specific slash commands, brand-named agent recipes, or tool-id magic strings in methodology (→ rule 25 + `docs/integration-agnostic/`)
 
 ---
 
