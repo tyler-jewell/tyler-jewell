@@ -4,7 +4,7 @@ Agents editing this tree maintain the **inventory of long-lived machines** under
 
 ## Rules
 
-1. Umbrella `../AGENTS.md` is sacred and overall — do not contradict it.
+1. Umbrella `../AGENTS.md` is sacred and overall — do not contradict it (includes **AXI rule 11** — https://axi.md).
 2. One directory per host: `hosts/<slug>/` with dual-write `AGENTS.md` + `README.md` and portable `host.toml` / `host.toml.example`.
 3. Slug is lowercase hyphenated (e.g. `macbook-pro`). Hostname in machine-local binding comes from live `hostname`.
 4. Do not store secrets, SSH private keys, API tokens, or private absolute home paths in public files.
