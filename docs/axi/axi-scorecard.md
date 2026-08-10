@@ -33,7 +33,7 @@ Last audited: 2026-08-09 (post skeptic re-score) · Owner surfaces under `tyler-
 | `scripts/hierarchy-order.sh` | CLI | **ours** | met | met | na | met | met | met | na | met | met | met | **8/8** | Outer→inner paths; empty fails loud |
 | `agent-kit/skills/ai-first-host-setup/SKILL.md` | skill | **ours** | met | met | na | met | na | met | met | met | met | met | **8/8** | Ambient guidance; points to AXI status |
 | `herdr-web/scripts/serve.sh` | CLI | **ours** | met | met | na | met | met | met | na | met | met | met | **8/8** | --help, exit 2 unknown flags, structured errors; starts only after parse |
-| `herdr-web/scripts/bridge.py` | API | **ours** | met | met | na | na | met | met | na | na | na | na | **4/4** | Validates argv only; pure herdr subprocess; not a full CLI |
+| `herdr-web/cmd/bridge` (Go) | API | **ours** | met | met | na | na | met | met | na | na | na | na | **4/4** | Go bridge; validates argv only; pure herdr subprocess; not a full CLI |
 | `herdr-web` UI (browser) | UI | **ours** | na | na | na | met | met | na | na | met | met | na | **4/4** | Human UI; agent path is CLI/bridge |
 | `herdr` CLI | upstream | third-party | — | — | — | — | — | — | — | — | — | — | **prefer AXI/wrap** | Do not claim 10/10; use live status via our adapters |
 | `mesh-llm` CLI | upstream | third-party | — | — | — | — | — | — | — | — | — | — | **prefer AXI/wrap** | Our mesh helpers + `/v1/models` live |

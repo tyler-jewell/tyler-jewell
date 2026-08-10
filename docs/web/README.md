@@ -1,6 +1,7 @@
 # Web apps — stack bar (rules 15–17)
 
-Canon: umbrella **AGENTS.md** rules **15**, **16**, **17**.
+Canon: umbrella **AGENTS.md** rules **15**, **16**, **17**.  
+**Maturity scores (honest):** [../requirements/scorecard.md](../requirements/scorecard.md) — re-score on any related change (rule 18). Public gate stays **BLOCKED** until all sacred requirements are 100%.
 
 ## Frontend
 

@@ -98,6 +98,14 @@ cat path/to/tyler-jewell/AGENTS.md
 
 17. **Public hosting on Vercel** — All **public-facing** web apps, databases, MCPs, and similar internet-exposed product surfaces **are hosted on [Vercel](https://vercel.com)**. Do not invent a second primary public host for those surfaces. Local/dev and private mesh tooling may run on-host; production public URLs go through Vercel. Host Nix/home-manager flakes **must** provide the **Vercel CLI** on PATH (and document `vercel login` as a one-time human auth step, like `gh auth login`). Agents deploy/link with the CLI after the human has authenticated — never commit Vercel tokens.
 
+18. **Requirements maturity scoring (honest, version-controlled, re-score on change)** — Every sacred requirement (rules **1–17**) carries a **current score (0–100)**, a **mode**, and a **logged commit hash** in the SSoT scorecard: [`docs/requirements/scorecard.md`](docs/requirements/scorecard.md) (process: [`docs/requirements/README.md`](docs/requirements/README.md)).
+
+   - **100% / `mature` only** when the requirement is met by **core, version-controlled setup** that a **clean machine can replicate** (policy + implementation + proof; gaps empty). See scorecard definition of 100%.
+   - **Any score &lt; 100% is `development` mode.** Agents must treat that requirement as unfinished infrastructure — not done.
+   - **Objectivity / honesty:** prefer under-scoring; no theater; do not mark mature on docs-only when runtime/product behavior is required.
+   - **Mandatory re-score:** any learning, update, bugfix, issue found, or refinement that **affects** a scored requirement **must** update the scorecard (score, mode, evidence, gaps, commit hashes, rescore log) in the same change set when possible.
+   - **Public gate:** we do **not** declare this overall setup finished / ready for public completion until **every** requirement is **100% / mature**. While the gate is **BLOCKED**, do not claim full maturity.
+
 ---
 
 ## What does *not* belong here

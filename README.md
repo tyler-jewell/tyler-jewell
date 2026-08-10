@@ -87,6 +87,15 @@ Sacred **rule 13**: every tree with `AGENTS.md` keeps public LSP setup for langu
 | **16 Passkeys** | WebAuthn passkeys for web app auth. |
 | **17 Vercel** | Public web apps / DBs / MCPs on **Vercel**; flake installs CLI; human **`vercel login`**. |
 
+### Requirements maturity (rule 18) — public gate
+
+Every sacred requirement has an **honest score**, **mode** (`development` unless 100%), and **commit hash** in:
+
+**[docs/requirements/scorecard.md](docs/requirements/scorecard.md)** · process: [docs/requirements/README.md](docs/requirements/README.md)
+
+- **&lt; 100% ⇒ development** — agents must re-score when they change anything that affects a requirement.
+- **Public gate BLOCKED** until **all** requirements are **100% / mature** (version-controlled, clean-machine replicable). Do not claim the core setup is finished while blocked.
+
 ### AXI (agent-facing CLIs)
 
 Every agent-runnable skill/tool/CLI/MCP we ship must follow **[AXI](https://axi.md)** (sacred rule 11).  
