@@ -24,8 +24,9 @@ Do **not** commit machine-private absolute paths into public docs. Use `$HOME`, 
    `sudo "$HOME/system/scripts/privileged-setup.sh"`
 4. GitHub-oriented clones: `$HOME/github-repos/` (or your preferred clone root).
 5. Public Herdr UI: clone **herdr-web** and run its two-step stand-up (`./scripts/serve.sh`).
-6. AI-first stack after Nix: `agent-kit/scripts/ai-first-setup.sh --dry-run`
-7. Do not put app-specific coding standards in this host file.
+6. **Mesh-LLM** is the primary local/mesh LLM resource: OpenAI-compatible `OPENAI_BASE_URL` (default `http://127.0.0.1:9337/v1`). Install/serve via upstream `mesh-llm`; discover models live at `/v1/models` — never freeze a model list.
+7. AI-first stack after Nix: `agent-kit/scripts/ai-first-setup.sh --dry-run`
+8. Do not put app-specific coding standards in this host file.
 
 ## Hierarchy
 

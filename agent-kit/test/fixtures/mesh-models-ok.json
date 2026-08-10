@@ -1,0 +1,7 @@
+{
+  "object": "list",
+  "data": [
+    { "id": "example-model-a", "object": "model" },
+    { "id": "example-model-b", "object": "model" }
+  ]
+}

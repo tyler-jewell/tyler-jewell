@@ -11,6 +11,8 @@ source "${KIT_ROOT}/scripts/lib/host-facts.sh"
 source "${KIT_ROOT}/scripts/lib/gpu-classify.sh"
 # shellcheck source=/dev/null
 source "${KIT_ROOT}/scripts/lib/herdr-ops.sh"
+# shellcheck source=/dev/null
+source "${KIT_ROOT}/scripts/lib/mesh-llm.sh"
 
 export PATH="${HOME}/.local/bin:${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh 2>/dev/null || true
@@ -115,7 +117,38 @@ if grep -R --include='*.sh' -nE 'OFFICIAL_TARGETS\s*=' "${KIT_ROOT}/scripts" 2>/
 fi
 ok "agent-kit scripts: no frozen integration inventory"
 
-# --- 4. herdr-web ---
+# --- 4. Mesh-LLM (primary local/mesh OpenAI-compatible layer) ---
+log "Mesh-LLM availability (primary LLM resource — live probe, no model catalog)"
+MESH_FACTS="$(collect_mesh_facts "$LLM_GPU")"
+echo "$MESH_FACTS"
+MESH_ROLE="$(echo "$MESH_FACTS" | sed -n 's/^mesh_llm_role=//p')"
+MESH_BIN="$(echo "$MESH_FACTS" | sed -n 's/^mesh_llm_binary=//p')"
+MESH_EP="$(echo "$MESH_FACTS" | sed -n 's/^mesh_llm_endpoint_ok=//p')"
+MESH_BASE="$(echo "$MESH_FACTS" | sed -n 's/^mesh_llm_base_url=//p')"
+if [[ "$MESH_BIN" == "yes" ]]; then
+  ok "mesh-llm on PATH"
+else
+  warn "mesh-llm binary missing — install via upstream (see mesh_llm_install_hint)"
+  mesh_llm_install_hint | sed 's/^/  /'
+fi
+if [[ "$MESH_EP" == "yes" ]]; then
+  ok "OpenAI-compatible endpoint up: ${MESH_BASE}"
+else
+  warn "endpoint not reachable at ${MESH_BASE} (start with: mesh-llm serve --auto)"
+fi
+ok "mesh role=${MESH_ROLE} (server|server-capable|client-only|unavailable)"
+echo "--- consumer env contract ---"
+mesh_env_export_lines "$MESH_BASE" | sed 's/^/  /'
+
+# Guard: no frozen model inventories in kit
+if grep -R --include='*.sh' -nE 'OFFICIAL_MODELS\s*=' "${KIT_ROOT}/scripts" 2>/dev/null \
+  || grep -R --include='*.sh' -nE 'MODEL_CATALOG\s*=' "${KIT_ROOT}/scripts" 2>/dev/null; then
+  err "kit must not hardcode model inventories"
+  exit 1
+fi
+ok "no frozen OFFICIAL_MODELS in agent-kit"
+
+# --- 5. herdr-web ---
 log "herdr-web frozen-target guard + tests"
 herdr_web_no_frozen_targets || warn "herdr-web guard failed"
 if [[ "${SKIP_HERDR_WEB_TESTS:-0}" != "1" ]]; then
@@ -128,7 +161,7 @@ else
   warn "SKIP_HERDR_WEB_TESTS=1"
 fi
 
-# --- 5. Optional host proposal ---
+# --- 6. Optional host proposal ---
 if [[ "$PROPOSE_HOST" -eq 1 ]]; then
   require_approval "write hosts/${SLUG} proposal" || exit 1
   DEST="${UMBRELLA}/hosts/${SLUG}"
@@ -148,6 +181,8 @@ arch = "$(echo "$FACTS" | sed -n 's/^arch=//p')"
 home = "$(echo "$FACTS" | sed -n 's/^home=//p')"
 llm_gpu = "${LLM_GPU}"
 full_setup_eligible = "${ELIGIBLE}"
+mesh_llm_role = "${MESH_ROLE}"
+mesh_llm_base_url = "${MESH_BASE}"
 role = "auto-proposed"
 umbrella_local = "${UMBRELLA}"
 EOF
@@ -172,7 +207,7 @@ EOF
   fi
 fi
 
-# --- 6. Studio path pointer ---
+# --- 7. Studio path pointer ---
 log "Studio / remote parity"
 if [[ -d "${UMBRELLA}/hosts/mac-studio" ]]; then
   ok "hosts/mac-studio template present — see README for SSH apply"
@@ -188,9 +223,13 @@ echo "local_slug=${SLUG}"
 echo "llm_gpu=${LLM_GPU}"
 echo "full_setup_eligible=${ELIGIBLE}"
 echo "herdr=$(herdr_bin || echo missing)"
+echo "mesh_llm_binary=${MESH_BIN}"
+echo "mesh_llm_role=${MESH_ROLE}"
+echo "mesh_llm_base_url=${MESH_BASE}"
 echo "umbrella=${UMBRELLA}"
 if [[ "$DRY_RUN" -eq 1 ]]; then
   echo "next: review discovery; for mutations re-run with --apply --yes after approval"
+  echo "mesh: install/serve via upstream mesh-llm if binary missing; consumers use OPENAI_BASE_URL"
   echo "remote Studio: ensure ssh works, then see hosts/mac-studio/README.md"
 fi
 ok "ai-first-setup finished"

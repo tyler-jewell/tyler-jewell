@@ -74,6 +74,12 @@ After Nix exists on a machine:
 ./agent-kit/test/run-tests.sh
 ```
 
+### Mesh-LLM (primary local/mesh LLM layer)
+
+[Mesh-LLM](https://github.com/Mesh-LLM/mesh-llm) is the default **OpenAI-compatible** inference resource for hosts (`http://127.0.0.1:9337/v1`). Agent-kit reports live availability; install/serve via upstream CLI only. **No frozen model lists** — discover with `curl -s "$OPENAI_BASE_URL/models"`.
+
+See [agent-kit/README.md](agent-kit/README.md). Studio SSH parity: [hosts/mac-studio/](hosts/mac-studio/).
+
 ## herdr-web (separate public repo)
 
 ```bash

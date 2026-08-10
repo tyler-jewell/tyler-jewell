@@ -13,7 +13,7 @@ Setting up or verifying a Tyler Jewell machine (MBP, Studio, GPU Linux) after th
 
 1. **Privileged (human):** `sudo ~/system/scripts/privileged-setup.sh` — CLT + Nix only.
 2. **Nix/HM:** `home-manager switch --flake ~/system#…`
-3. **This skill / agent-kit:** Herdr, integrations (live CLI), herdr-web, hosts registry, remote apply.
+3. **This skill / agent-kit:** Herdr, integrations (live CLI), herdr-web, **Mesh-LLM** (primary OpenAI-compatible mesh at `/v1`), hosts registry, remote apply.
 
 ## Procedure
 
@@ -29,7 +29,8 @@ Setting up or verifying a Tyler Jewell machine (MBP, Studio, GPU Linux) after th
    ~/github-repos/tyler-jewell/agent-kit/scripts/ai-first-setup.sh --apply --yes --propose-host
    ```
 6. Never hardcode Herdr integration target lists — use live `herdr integration status` / `--help`.
+7. Mesh-LLM: report live status; install/serve only via upstream `mesh-llm`; set `OPENAI_BASE_URL` to the mesh `/v1` URL; discover models with `GET …/v1/models` only.
 
 ## Sacred
 
-Umbrella `tyler-jewell/AGENTS.md` rule 9 (live discovery) and dual-write law.
+Umbrella `tyler-jewell/AGENTS.md` rules 9–10 (live discovery + Mesh-LLM primary local/mesh LLM) and dual-write law.

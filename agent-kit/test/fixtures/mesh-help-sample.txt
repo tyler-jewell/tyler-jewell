@@ -1,0 +1,14 @@
+Mesh LLM pools GPUs and memory across machines and exposes the result as one
+OpenAI-compatible API at http://localhost:9337/v1
+
+Usage: mesh-llm [OPTIONS] <COMMAND>
+
+Commands:
+  setup   Finish first-time setup
+  serve   Start serving / join mesh
+  client  Run an API-only client
+  help    Print this message
+
+Options:
+  --port <PORT>  OpenAI API port [default: 9337]
+  -h, --help     Print help

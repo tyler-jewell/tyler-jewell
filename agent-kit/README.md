@@ -6,10 +6,22 @@ Orchestrates **agent-owned** setup after the Nix/privileged floor.
 
 1. Discover local machine facts (live)
 2. Scan network/SSH candidates; accept full-setup only if **LLM-capable GPU**
-3. Propose/update tyler-jewell `hosts/` entries
-4. Run pure `herdr` health + integration status
-5. Verify herdr-web Integrations path
-6. Document Studio (or any remote Mac) parity via SSH
+3. Report **Mesh-LLM** status (primary local/mesh OpenAI-compatible layer at `…/v1`, default port `9337`)
+4. Propose/update tyler-jewell `hosts/` entries
+5. Run pure `herdr` health + integration status
+6. Verify herdr-web Integrations path
+7. Document Studio (or any remote Mac) parity via SSH
+
+### Mesh-LLM (main LLM availability)
+
+| Role | When | Action |
+|------|------|--------|
+| **server** | endpoint answering `/v1/models` | Prefer `OPENAI_BASE_URL=http://127.0.0.1:9337/v1` |
+| **server-capable** | `mesh-llm` on PATH + LLM GPU, not serving yet | `mesh-llm setup` then `mesh-llm serve --auto` (upstream) |
+| **client-only** | binary or network peer, no local serve | Point tools at mesh base URL; `mesh-llm client --auto` |
+| **unavailable** | no binary, no endpoint | Install via [upstream](https://github.com/Mesh-LLM/mesh-llm); still document client contract |
+
+Never hardcode model ids — list them live: `curl -s "$OPENAI_BASE_URL/models"`.
 
 ## Commands
 

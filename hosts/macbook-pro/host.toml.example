@@ -12,3 +12,6 @@ system_path = "$HOME/system"
 github_repos_path = "$HOME/github-repos"
 umbrella_local = "$HOME/github-repos/tyler-jewell"
 llm_gpu = "yes"   # only if live Metal / LLM GPU probe says so
+# Mesh-LLM — primary OpenAI-compatible local/mesh layer (no model name inventory here)
+mesh_llm_base_url = "http://127.0.0.1:9337/v1"
+mesh_llm_role = "server-capable"   # server | server-capable | client-only | unavailable

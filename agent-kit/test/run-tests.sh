@@ -9,6 +9,8 @@ FIX="${KIT_ROOT}/test/fixtures"
 source "${KIT_ROOT}/scripts/lib/gpu-classify.sh"
 # shellcheck source=/dev/null
 source "${KIT_ROOT}/scripts/lib/host-facts.sh"
+# shellcheck source=/dev/null
+source "${KIT_ROOT}/scripts/lib/mesh-llm.sh"
 
 pass=0
 fail=0
@@ -70,8 +72,55 @@ assert 'echo "$FACTS" | grep -q "^slug="' "live facts have slug"
 assert '! grep -R --include="*.sh" -nE "OFFICIAL_TARGETS\s*=" "${KIT_ROOT}/scripts"' "no OFFICIAL_TARGETS= in kit"
 assert '! grep -R --include="*.sh" -nE "\"pi\",[[:space:]]*\"omp\",[[:space:]]*\"claude\"" "${KIT_ROOT}/scripts"' "no frozen pi/omp/claude list in kit"
 
-# --- herdr live if present ---
+# --- Mesh-LLM pure helpers (shipped mesh-llm.sh) ---
+HELP_MESH="$(cat "${FIX}/mesh-help-sample.txt")"
+PORT_PARSED="$(parse_mesh_openai_port_from_text "$HELP_MESH")"
+assert '[[ "$PORT_PARSED" == "9337" ]]' "parse default OpenAI port 9337 from help text"
+BASE_U="$(mesh_openai_base_url 127.0.0.1 9337)"
+assert '[[ "$BASE_U" == "http://127.0.0.1:9337/v1" ]]' "base URL contract /v1"
+
+assert '[[ "$(classify_mesh_role yes yes yes)" == "server" ]]' "bin+endpoint+gpu → server"
+assert '[[ "$(classify_mesh_role yes no yes)" == "server-capable" ]]' "bin+gpu no endpoint → server-capable"
+assert '[[ "$(classify_mesh_role yes no no)" == "client-only" ]]' "bin no gpu → client-only"
+assert '[[ "$(classify_mesh_role no no no)" == "unavailable" ]]' "no bin no endpoint → unavailable"
+assert '[[ "$(classify_mesh_role no yes no)" == "server" ]]' "endpoint without local bin still server (remote mesh)"
+
+assert 'mesh_can_consume server' "server can consume"
+assert 'mesh_can_consume client-only' "client-only can consume"
+assert '! mesh_can_consume unavailable' "unavailable cannot consume"
+assert 'mesh_can_serve server-capable' "server-capable can serve"
+assert '! mesh_can_serve client-only' "client-only cannot serve"
+
+MODELS_OK="$(cat "${FIX}/mesh-models-ok.json")"
+IDS="$(parse_openai_models_json "$MODELS_OK")"
+assert 'echo "$IDS" | grep -qx example-model-a' "parse models json id a (live-shaped fixture)"
+assert 'echo "$IDS" | grep -qx example-model-b' "parse models json id b"
+assert '[[ "$(echo "$IDS" | grep -c .)" == "2" ]]' "exactly two ids from fixture (not hardcoded catalog)"
+
+MODELS_EMPTY="$(cat "${FIX}/mesh-models-empty.json")"
+IDS_E="$(parse_openai_models_json "$MODELS_EMPTY")"
+assert '[[ -z "$(echo "$IDS_E" | tr -d "[:space:]")" ]]' "empty models list parses to no ids"
+
+ENV_LINES="$(mesh_env_export_lines "http://127.0.0.1:9337/v1")"
+assert 'echo "$ENV_LINES" | grep -q "OPENAI_BASE_URL=http://127.0.0.1:9337/v1"' "env export OPENAI_BASE_URL"
+
+assert '! grep -R --include="*.sh" -nE "OFFICIAL_MODELS\s*=" "${KIT_ROOT}/scripts"' "no OFFICIAL_MODELS= in kit"
+assert '! grep -R --include="*.sh" -nE "\"GLM-4.7|Qwen3-8B-Q4" "${KIT_ROOT}/scripts/lib/mesh-llm.sh"' "no frozen model names in mesh-llm.sh"
+
+# Live mesh binary optional
 export PATH="${HOME}/.local/bin:${PATH}"
+MESH_LIVE="$(collect_mesh_facts yes 2>/dev/null || true)"
+assert 'echo "$MESH_LIVE" | grep -q "^mesh_llm_binary="' "collect_mesh_facts emits binary key"
+assert 'echo "$MESH_LIVE" | grep -q "^mesh_llm_role="' "collect_mesh_facts emits role"
+assert 'echo "$MESH_LIVE" | grep -q "^mesh_llm_base_url="' "collect_mesh_facts emits base_url"
+if command -v mesh-llm >/dev/null 2>&1; then
+  assert 'echo "$MESH_LIVE" | grep -q "^mesh_llm_binary=yes"' "live mesh-llm binary present"
+else
+  echo "WARN: mesh-llm not installed — binary=no is honest"
+  assert 'echo "$MESH_LIVE" | grep -q "^mesh_llm_binary=no"' "missing binary reported honestly"
+fi
+
+# --- herdr live if present ---
 if command -v herdr >/dev/null 2>&1; then
   # shellcheck source=/dev/null
   source "${KIT_ROOT}/scripts/lib/herdr-ops.sh"
