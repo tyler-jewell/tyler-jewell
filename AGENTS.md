@@ -38,10 +38,24 @@ cat path/to/tyler-jewell/AGENTS.md
 7. **Hosts registry** — Long-lived machines are recorded under `hosts/` (see `hosts/README.md`). Do not invent a second host inventory system.
 8. **Pipeable charter** — This file must remain plain Markdown, free of secrets, so it can be piped or pasted into any agent/tool.
 9. **Live CLI/API discovery — never hardcode enumerations that mirror a tool** — If a list, set of targets, flags, versions, hosts, or enum values is **owned by an underlying CLI or API** (and can grow/rename when that tool ships), do **not** hardcode it in our code, config, or docs as a frozen inventory. Prefer **live discovery** at runtime (`--help`, `status`, machine-readable list/JSON, OpenAPI, etc.) so when the CLI/API changes we update the tool, not every UI and script. Hand-maintained mirrors break silently or force churn. This includes **Mesh-LLM model ids and mesh peers** — discover via the OpenAI-compatible `/v1/models` (and mesh CLI), never `OFFICIAL_MODELS=…` inventories.
+
+   **Bad (forbidden pattern):**
+   ```python
+   OFFICIAL_TARGETS = frozenset({
+       "pi", "omp", "claude", "codex", "copilot", "devin", "droid",
+       "kimi", "opencode", "kilo", "hermes", "qodercli", "cursor",
+       "mastracode", "antigravity-cli", "grok",
+   })
+   ```
+   That list belongs to `herdr integration install` / `status` (or equivalent). Parse help/status or let the CLI reject unknown targets.
+
+   **Good:** drive UI/actions from live `herdr integration status` (or `--help` possible-values), validate only structure (safe slug), and trust the CLI as source of truth.
+
+   **Allowed hardcoding:** our own stable policy (sacred rules, path layout we own), true constants that are not another product’s surface area, and tiny internal enums we fully control.
+
 10. **Mesh-LLM as primary local/mesh LLM resource** — For host inference capacity, prefer Mesh-LLM’s OpenAI-compatible API (`OPENAI_BASE_URL`, default `http://127.0.0.1:9337/v1`) over ad-hoc per-tool model wiring. Install and serve through **upstream** Mesh-LLM only; do not reimplement the mesh. GPU-less hosts consume the mesh as clients. Grok cloud/product auth remains separate unless explicitly pointed at the mesh base URL.
+
 11. **AXI alignment for every agent-invokable interface** — Any skill, tool, CLI, MCP surface, shell script, or API that **agents** run or call must stay in full alignment with the [AXI guidelines](https://axi.md) (Agent eXperience Interface). This is non-negotiable for new agent-facing surfaces and a continuous bar for owned ones. Prefer [AXI catalog](https://axi.md) wrappers (e.g. `gh-axi`) over raw human CLIs when an AXI exists. Do **not** ship new agent-facing interfaces that ignore AXI.
-12. **herdr-web is the isolatable UI product** — The only stack surface meant to be setup/run without the full umbrella is **[herdr-web](https://github.com/tyler-jewell/herdr-web)** (Herdr plugin + hot-reload Integrations UI). Methodology and agent-kit **consume and contribute** to it; do not invent a parallel web product. Each layer ships `evals/` compliance checks (≤10, do/don't policy).
-13. **LSP setup and agent use of language servers** — Every project/folder that has an `AGENTS.md` must keep a **proper Language Server Protocol (LSP) setup for every language in active use** in that tree (config + public server that editors/agents can attach). **If no public LSP exists for a language, that language must not be used** in that tree. When coding, agents **MUST** use available LSP tools (diagnostics, go-to-definition, references, hover, format/rename as exposed), treat **strict** diagnostics as binding, and **must not** paper over issues with custom overrides, suppressions, or ignore directives in code or config (examples of forbidden “make it green” workarounds: `// eslint-disable`, `# noqa`, `@ts-ignore` / `@ts-expect-error` as the fix, blanket `// shellcheck disable` without fixing the root cause, turning off typechecking). Agents must identify the **root cause** of diagnostics and resolve it so the codebase stays well-maintained. Honest “LSP not available in this session” is allowed when tools are missing; shipping a tree without project LSP setup for languages it uses is **not**. Declare languages + public LSP names in each tree’s `AGENTS.md` (live project declaration — not a frozen global language allowlist). See `docs/lsp/README.md`.
 
    **The 10 AXI principles** (see https://axi.md — source of truth):
 
@@ -60,19 +74,15 @@ cat path/to/tyler-jewell/AGENTS.md
 
    Owned agent entrypoints under this umbrella (agent-kit, pipe/hierarchy helpers, herdr-web bridge agents invoke) must score **10/10 on applicable principles**. Upstream binaries we do not control (`herdr`, `mesh-llm`, `gh`, …) are **not** claimed as 10/10 — prefer AXI wrappers / thin AXI adapters; document honestly. Inventory: `docs/axi/axi-scorecard.md`.
 
-   **Bad (forbidden pattern):**
-   ```python
-   OFFICIAL_TARGETS = frozenset({
-       "pi", "omp", "claude", "codex", "copilot", "devin", "droid",
-       "kimi", "opencode", "kilo", "hermes", "qodercli", "cursor",
-       "mastracode", "antigravity-cli", "grok",
-   })
-   ```
-   That list belongs to `herdr integration install` / `status` (or equivalent). Parse help/status or let the CLI reject unknown targets.
+12. **herdr-web is the isolatable UI product** — The only stack surface meant to be setup/run without the full umbrella is **[herdr-web](https://github.com/tyler-jewell/herdr-web)** (Herdr plugin + hot-reload Integrations UI). Methodology and agent-kit **consume and contribute** to it; do not invent a parallel web product. Each layer ships `evals/` compliance checks (≤10, do/don't policy).
 
-   **Good:** drive UI/actions from live `herdr integration status` (or `--help` possible-values), validate only structure (safe slug), and trust the CLI as source of truth.
+13. **LSP setup and agent use of language servers** — Every project/folder that has an `AGENTS.md` must keep a **proper Language Server Protocol (LSP) setup for every language in active use** in that tree (config + public server that editors/agents can attach). **If no public LSP exists for a language, that language must not be used** in that tree. When coding, agents **MUST** use available LSP tools (diagnostics, go-to-definition, references, hover, format/rename as exposed), treat **strict** diagnostics as binding, and **must not** paper over issues with custom overrides, suppressions, or ignore directives in code or config (examples of forbidden “make it green” workarounds: `// eslint-disable`, `# noqa`, `@ts-ignore` / `@ts-expect-error` as the fix, blanket `// shellcheck disable` without fixing the root cause, turning off typechecking). Agents must identify the **root cause** of diagnostics and resolve it so the codebase stays well-maintained. Honest “LSP not available in this session” is allowed when tools are missing; shipping a tree without project LSP setup for languages it uses is **not**. Declare languages + public LSP names in each tree’s `AGENTS.md` (live project declaration — not a frozen global language allowlist). See `docs/lsp/README.md`.
 
-   **Allowed hardcoding:** our own stable policy (sacred rules, path layout we own), true constants that are not another product’s surface area, and tiny internal enums we fully control.
+   **This umbrella tree (languages in active use):**
+
+   | Language | Public LSP |
+   |----------|------------|
+   | Bash (`scripts/`, `evals/`, `agent-kit/`) | [bash-language-server](https://github.com/bash-lsp/bash-language-server) |
 
 ---
 
